@@ -44,11 +44,11 @@ public class NpcPlayerHelperImpl implements NpcPlayerHelper {
         ServerLevel worldServer = ((CraftWorld) player.getWorld()).getHandle();
         Location l = player.getLocation();
 
-        npcPlayer.spawnIn(worldServer);
+        npcPlayer.setServerLevel(worldServer);
         npcPlayer.snapTo(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
         npcPlayer.connection.resetPosition();
         npcPlayer.gameMode.setLevel(worldServer);
-        npcPlayer.invulnerableTime = 0;
+        npcPlayer.setInvulnerableTime(0);
 
         for (ServerPlayer serverPlayer : MinecraftServer.getServer().getPlayerList().getPlayers()) {
             if (serverPlayer instanceof NpcPlayer) continue;
@@ -139,7 +139,7 @@ public class NpcPlayerHelperImpl implements NpcPlayerHelper {
         Player p = Bukkit.getPlayer(identity.getId());
         if (p != null && p.isOnline()) return;
 
-        PlayerDataStorage worldStorage = ((CraftWorld) Bukkit.getWorlds().getFirst()).getHandle().getServer().playerDataStorage;
+        PlayerDataStorage worldStorage = getPlayerDataStorage(((CraftWorld) Bukkit.getWorlds().getFirst()).getHandle().getServer());
         CompoundTag playerNbt = worldStorage.load(new NameAndId(identity.getId(), identity.getName())).orElse(null);
 
         playerNbt.putShort("Air", (short) entity.getAirSupply());
@@ -190,6 +190,16 @@ public class NpcPlayerHelperImpl implements NpcPlayerHelper {
         for (ServerPlayer serverPlayer : MinecraftServer.getServer().getPlayerList().getPlayers()) {
             ClientboundPlayerInfoRemovePacket packet = new ClientboundPlayerInfoRemovePacket(List.of(serverPlayer.getUUID()));
             p.connection.send(packet);
+        }
+    }
+
+    private static PlayerDataStorage getPlayerDataStorage(MinecraftServer server) {
+        try {
+            java.lang.reflect.Field field = MinecraftServer.class.getDeclaredField("playerDataStorage");
+            field.setAccessible(true);
+            return (PlayerDataStorage) field.get(server);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Could not access playerDataStorage", e);
         }
     }
 }

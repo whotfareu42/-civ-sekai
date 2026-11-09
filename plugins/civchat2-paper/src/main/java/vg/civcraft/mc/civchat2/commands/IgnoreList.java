@@ -65,10 +65,7 @@ public final class IgnoreList extends BaseCommand {
                 .content(name)
                 .color(NamedTextColor.YELLOW)
                 .decoration(TextDecoration.UNDERLINED, TextDecoration.State.TRUE)
-                .clickEvent(ClickEvent.clickEvent(
-                    ClickEvent.Action.COPY_TO_CLIPBOARD,
-                    formattedCommand.formatted(name)
-                ))
+                .clickEvent(ClickEvent.copyToClipboard(formattedCommand.formatted(name)))
                 .hoverEvent(HoverEvent.showText(Component.text("Click to copy un-ignore command")))
                 .build();
             if (hasPreviousName.get()) {

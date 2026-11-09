@@ -134,7 +134,7 @@ public class HologramManager {
                 return;
             }
 
-            this.hologramId = Bukkit.getUnsafe().nextEntityId();
+            this.hologramId = Bukkit.getUnsafe().nextEntityId(player.getWorld());
 
             Location location = getHoloLocation(reinforcement, player);
             Vector3d position = new Vector3d(location.getX(), location.getY(), location.getZ());
