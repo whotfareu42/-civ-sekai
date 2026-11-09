@@ -1,7 +1,11 @@
 name: Test
 on: push
 jobs:
-  hello:
+  a:
     runs-on: ubuntu-latest
     steps:
-      - run: echo hallo
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
