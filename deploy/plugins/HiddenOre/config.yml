@@ -143,22 +143,26 @@ tools:
       maxAmount: 0.0
 states:
   normal:
-    haste: [ 1.0, 1.0 ]
-    fatigue: [ 1.0, 1.0 ]
+    haste:
+    - 1.0
+    - 1.0
+    fatigue:
+    - 1.0
+    - 1.0
 drops:
   iron_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: IRON_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: IRON_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 80
     chance: 0.025
     minAmount: 2
@@ -169,18 +173,18 @@ drops:
     state: normal
   deepslate_iron_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_IRON_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_IRON_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 80
+    maxY: 0
     chance: 0.025
     minAmount: 2
     maxAmount: 4
@@ -190,19 +194,19 @@ drops:
     state: normal
   copper_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: COPPER_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: COPPER_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 128
-    chance: 0.05
+    chance: 0.04
     minAmount: 3
     maxAmount: 7
     transformIfAble: true
@@ -211,19 +215,19 @@ drops:
     state: normal
   deepslate_copper_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_COPPER_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_COPPER_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 128
-    chance: 0.05
+    maxY: 0
+    chance: 0.04
     minAmount: 3
     maxAmount: 7
     transformIfAble: true
@@ -232,16 +236,16 @@ drops:
     state: normal
   gold_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: GOLD_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: GOLD_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 32
     chance: 0.008
     minAmount: 1
@@ -252,17 +256,17 @@ drops:
     state: normal
   deepslate_gold_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_GOLD_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_GOLD_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 32
+    maxY: 0
     chance: 0.008
     minAmount: 1
     maxAmount: 3
@@ -272,16 +276,16 @@ drops:
     state: normal
   redstone_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: REDSTONE_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: REDSTONE_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 16
     chance: 0.01
     minAmount: 2
@@ -292,17 +296,17 @@ drops:
     state: normal
   deepslate_redstone_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_REDSTONE_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_REDSTONE_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 16
+    maxY: 0
     chance: 0.01
     minAmount: 2
     maxAmount: 5
@@ -312,17 +316,17 @@ drops:
     state: normal
   lapis_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: LAPIS_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: LAPIS_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 64
     chance: 0.007
     minAmount: 2
@@ -333,18 +337,18 @@ drops:
     state: normal
   deepslate_lapis_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_LAPIS_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_LAPIS_ORE
+      amount: 1
     tools:
-      - stone_pickaxe
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 64
+    maxY: 0
     chance: 0.007
     minAmount: 2
     maxAmount: 4
@@ -354,16 +358,16 @@ drops:
     state: normal
   diamond_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DIAMOND_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DIAMOND_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -64
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 16
     chance: 0.002
     minAmount: 1
@@ -374,17 +378,17 @@ drops:
     state: normal
   deepslate_diamond_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_DIAMOND_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_DIAMOND_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -64
-    maxY: 16
+    maxY: 0
     chance: 0.002
     minAmount: 1
     maxAmount: 2
@@ -394,16 +398,16 @@ drops:
     state: normal
   emerald_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: EMERALD_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: EMERALD_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
-    minY: -16
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    minY: 1
     maxY: 320
     chance: 0.001
     minAmount: 1
@@ -414,17 +418,17 @@ drops:
     state: normal
   deepslate_emerald_ore:
     package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: DEEPSLATE_EMERALD_ORE
-        amount: 1
+    - ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DEEPSLATE_EMERALD_ORE
+      amount: 1
     tools:
-      - iron_pickaxe
-      - golden_pickaxe
-      - diamond_pickaxe
-      - netherite_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
     minY: -16
-    maxY: 320
+    maxY: 0
     chance: 0.001
     minAmount: 1
     maxAmount: 1
@@ -438,100 +442,114 @@ blocks:
     validTransforms:
       stone:
         material: STONE
-      andesite:
-        material: ANDESITE
-      diorite:
-        material: DIORITE
-      granite:
-        material: GRANITE
+      deepslate:
+        material: DEEPSLATE
       tuff:
         material: TUFF
-    dropMultiple: false
-    dropList:
-      - iron_ore
-      - copper_ore
-      - gold_ore
-      - redstone_ore
-      - lapis_ore
-      - diamond_ore
-      - emerald_ore
-  andesite:
-    material: ANDESITE
-    validTransforms:
-      stone:
-        material: STONE
       andesite:
         material: ANDESITE
-    dropMultiple: false
-    dropList:
-      - iron_ore
-      - copper_ore
-      - gold_ore
-      - redstone_ore
-      - lapis_ore
-      - diamond_ore
-      - emerald_ore
-  diorite:
-    material: DIORITE
-    validTransforms:
-      stone:
-        material: STONE
       diorite:
         material: DIORITE
-    dropMultiple: false
-    dropList:
-      - iron_ore
-      - copper_ore
-      - gold_ore
-      - redstone_ore
-      - lapis_ore
-      - diamond_ore
-      - emerald_ore
-  granite:
-    material: GRANITE
-    validTransforms:
-      stone:
-        material: STONE
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList:
-      - iron_ore
-      - copper_ore
-      - gold_ore
-      - redstone_ore
-      - lapis_ore
-      - diamond_ore
-      - emerald_ore
+    dropList: &id001
+    - iron_ore
+    - deepslate_iron_ore
+    - copper_ore
+    - deepslate_copper_ore
+    - gold_ore
+    - deepslate_gold_ore
+    - redstone_ore
+    - deepslate_redstone_ore
+    - lapis_ore
+    - deepslate_lapis_ore
+    - diamond_ore
+    - deepslate_diamond_ore
+    - emerald_ore
+    - deepslate_emerald_ore
+  deepslate:
+    material: DEEPSLATE
+    validTransforms:
+      stone:
+        material: STONE
+      deepslate:
+        material: DEEPSLATE
+      tuff:
+        material: TUFF
+      andesite:
+        material: ANDESITE
+      diorite:
+        material: DIORITE
+      granite:
+        material: GRANITE
+    dropMultiple: false
+    dropList: *id001
   tuff:
     material: TUFF
     validTransforms:
       stone:
         material: STONE
-      tuff:
-        material: TUFF
-    dropMultiple: false
-    dropList:
-      - iron_ore
-      - copper_ore
-      - gold_ore
-      - redstone_ore
-      - lapis_ore
-      - diamond_ore
-      - emerald_ore
-  deepslate:
-    material: DEEPSLATE
-    validTransforms:
       deepslate:
         material: DEEPSLATE
       tuff:
         material: TUFF
+      andesite:
+        material: ANDESITE
+      diorite:
+        material: DIORITE
+      granite:
+        material: GRANITE
     dropMultiple: false
-    dropList:
-      - deepslate_iron_ore
-      - deepslate_copper_ore
-      - deepslate_gold_ore
-      - deepslate_redstone_ore
-      - deepslate_lapis_ore
-      - deepslate_diamond_ore
-      - deepslate_emerald_ore
+    dropList: *id001
+  andesite:
+    material: ANDESITE
+    validTransforms:
+      stone:
+        material: STONE
+      deepslate:
+        material: DEEPSLATE
+      tuff:
+        material: TUFF
+      andesite:
+        material: ANDESITE
+      diorite:
+        material: DIORITE
+      granite:
+        material: GRANITE
+    dropMultiple: false
+    dropList: *id001
+  diorite:
+    material: DIORITE
+    validTransforms:
+      stone:
+        material: STONE
+      deepslate:
+        material: DEEPSLATE
+      tuff:
+        material: TUFF
+      andesite:
+        material: ANDESITE
+      diorite:
+        material: DIORITE
+      granite:
+        material: GRANITE
+    dropMultiple: false
+    dropList: *id001
+  granite:
+    material: GRANITE
+    validTransforms:
+      stone:
+        material: STONE
+      deepslate:
+        material: DEEPSLATE
+      tuff:
+        material: TUFF
+      andesite:
+        material: ANDESITE
+      diorite:
+        material: DIORITE
+      granite:
+        material: GRANITE
+    dropMultiple: false
+    dropList: *id001
