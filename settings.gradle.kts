@@ -14,12 +14,10 @@ plugins {
     id("com.gradle.enterprise") version "3.16.2"
 }
 
-include(":ansible")
 
 include(":libraries:name-api")
 include(":libraries:namelayer-sync")
 
-include(":plugins:announcements-velocity")
 include(":plugins:banstick-paper")
 include(":plugins:bastion-paper")
 include(":plugins:castlegates-paper")
@@ -34,7 +32,6 @@ include(":plugins:itemexchange-paper")
 include(":plugins:jukealert-paper")
 // TODO include(":plugins:namelayer-bungee")
 include(":plugins:namelayer-paper")
-include(":plugins:namelayer-velocity")
 include(":plugins:randomspawn-paper")
 include(":plugins:realisticbiomes-paper")
 include(":plugins:realisticbiomes2-paper")
@@ -46,11 +43,6 @@ include(":plugins:railswitch-paper")
 include(":plugins:civduties-paper")
 include(":plugins:namecolors-paper")
 include(":plugins:kirabukkitgateway-paper")
-include(":plugins:kitpvp-paper")
-include(":plugins:voidworld-paper")
 include(":plugins:heliodor-paper")
 include(":plugins:zorweth-paper")
-include(":plugins:zorweth-velocity")
-include(":plugins:civproxy-velocity")
 include(":plugins:secureboot-paper")
-include(":plugins:kiragateway-velocity")
