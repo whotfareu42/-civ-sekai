@@ -1,0 +1,35 @@
+server-name: main
+destination-server: zorweth
+destination-world: sekai
+transfer-failure-message: Unable to complete rocket transfer. Please reconnect and try again.
+source-world: sekai
+
+world-radius: 9850
+rocket-centre-x: 0
+rocket-centre-z: 0
+delta-v-meters-per-second: 10000
+
+database:
+  ==: vg.civcraft.mc.civmodcore.dao.DatabaseCredentials
+  hostname: __DB_HOST__
+  dbname: __DB_NAME__
+  username: __DB_USER__
+  password: __DB_PASS__
+  poolsize: 10
+  port: 3306
+  connection_timeout: 10000
+  idle_timeout: 600000
+  max_lifetime: 7200000
+
+mechanics:
+  enabled: true
+  world: sekai
+
+pioneer-end-timestamp: 1783116000000
+
+research:
+  enabled: false
+  shop-enabled: true
+  disable-progress-until: 0
+  phase-one-runs: 22500
+  phase-two-runs: 12500

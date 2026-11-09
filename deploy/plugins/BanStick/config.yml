@@ -53,7 +53,7 @@ banplayer:
 database:
   host: __DB_HOST__
   port: 3306
-  database: banstick # shared (TODO is this safe?)
+  database: __DB_NAME__
   user: __DB_USER__
   password: __DB_PASS__
   poolsize: 15

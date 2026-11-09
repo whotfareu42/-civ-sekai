@@ -46,6 +46,12 @@ public class NameLayerPlugin extends ACivMod {
     private FileConfiguration config;
     private NameLayerInvalidationConsumer invalidationConsumer;
     private NameLayerWriteClient writeClient;
+    private boolean localMode;
+    private DataSource localDataSource;
+
+    public static boolean isLocalMode() {
+        return instance != null && instance.localMode;
+    }
     private BukkitTask freshnessCheckTask;
     private long stateLocalVersion;
     private long staleVersionDetectedAtMillis;
@@ -67,7 +73,15 @@ public class NameLayerPlugin extends ACivMod {
         loadDatabases();
         ClassHandler.Initialize(Bukkit.getServer());
 
-        NameLayerAPI.init(new GroupManager(), getNameApiDataSource());
+        final DataSource nameApiDataSource = getNameApiDataSource();
+        localMode = !config.getBoolean("rabbitmq.enabled", true);
+        if (localMode) {
+            // Sekai: no Velocity proxy, so this server owns the NameLayer schema and writes.
+            localDataSource = nameApiDataSource;
+            new net.civmc.nameapi.NameAPI(getSLF4JLogger(), nameApiDataSource).migrate();
+            vg.civcraft.mc.namelayer.local.NameLayerLocalDatabaseMigrator.migrate(nameApiDataSource, getSLF4JLogger());
+        }
+        NameLayerAPI.init(new GroupManager(), nameApiDataSource);
         getServer().getPluginManager().registerEvents(new NameLayerAPI(), this);
 
         registerListener(new PlayerListener());
@@ -113,7 +127,13 @@ public class NameLayerPlugin extends ACivMod {
             return;
         }
         if (!rabbitMqConfig.enabled()) {
-            getLogger().log(Level.INFO, "NameLayer RabbitMQ invalidation consumer is disabled");
+            getLogger().log(Level.INFO, "NameLayer RabbitMQ disabled, using local single-server write mode");
+            final vg.civcraft.mc.namelayer.local.NameLayerLocalWriteCoordinator coordinator =
+                new vg.civcraft.mc.namelayer.local.NameLayerLocalWriteCoordinator(
+                    localDataSource,
+                    invalidation -> NameLayerInvalidationConsumer.applyInvalidation(getLogger(), invalidation),
+                    getSLF4JLogger());
+            writeClient = NameLayerWriteClient.local(this, coordinator::handle);
             return;
         }
         invalidationConsumer = new NameLayerInvalidationConsumer(

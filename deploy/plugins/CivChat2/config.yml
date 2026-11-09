@@ -39,7 +39,7 @@ info:
   chatRangeWarn: true
 mysql:
   host: __DB_HOST__
-  dbname: civchat2
+  dbname: __DB_NAME__
   port: 3306
   username: __DB_USER__
   password: __DB_PASS__

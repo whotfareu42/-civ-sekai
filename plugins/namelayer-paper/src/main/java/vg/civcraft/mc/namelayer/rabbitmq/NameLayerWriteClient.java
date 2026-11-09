@@ -38,6 +38,7 @@ public final class NameLayerWriteClient implements AutoCloseable {
     private Channel channel;
     private final JavaPlugin plugin;
     private volatile boolean ready = false;
+    private java.util.function.Function<NameLayerWriteRequest, NameLayerWriteResponse> localHandler;
 
     private String queue;
 
@@ -78,7 +79,23 @@ public final class NameLayerWriteClient implements AutoCloseable {
         }
     }
 
+    /**
+     * Sekai: single-server mode without proxy/RabbitMQ. Writes are executed directly against the database.
+     */
+    public static NameLayerWriteClient local(
+        final JavaPlugin plugin,
+        final java.util.function.Function<NameLayerWriteRequest, NameLayerWriteResponse> handler
+    ) {
+        final NameLayerWriteClient client = new NameLayerWriteClient(null, plugin.getLogger(), plugin);
+        client.localHandler = handler;
+        client.ready = true;
+        return client;
+    }
+
     public CompletableFuture<NameLayerWriteResponse> send(final NameLayerWriteRequest request) {
+        if (localHandler != null) {
+            return CompletableFuture.supplyAsync(() -> localHandler.apply(request));
+        }
         final CompletableFuture<NameLayerWriteResponse> responseFuture = new CompletableFuture<>();
         if (!ready || channel == null || !channel.isOpen()) {
             responseFuture.completeExceptionally(new IllegalStateException("NameLayer write client is not connected"));

@@ -1,7 +1,7 @@
 Database:
   Host: __DB_HOST__
   Port: 3306
-  Schema: castlegates
+  Schema: __DB_NAME__
   User: __DB_USER__
   Password: __DB_PASS__
 Settings:

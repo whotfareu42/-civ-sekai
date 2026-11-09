@@ -110,6 +110,10 @@ public final class NameLayerInvalidationConsumer implements AutoCloseable {
     }
 
     private boolean applyInvalidation(final NameLayerInvalidationMessage invalidation) {
+        return applyInvalidation(logger, invalidation);
+    }
+
+    public static boolean applyInvalidation(final Logger logger, final NameLayerInvalidationMessage invalidation) {
         if (invalidation.requiresFullResync()) {
             logger.log(Level.INFO, "Applying NameLayer full-resync invalidation");
             GroupManager.fullResyncCache();

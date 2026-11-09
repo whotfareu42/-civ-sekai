@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,6 +55,14 @@ public class NameLayerAPI implements Listener {
 
     public static @Nullable String getCurrentName(UUID uuid) {
         return toName.get(uuid);
+    }
+
+    @EventHandler
+    public void onPreLogin(AsyncPlayerPreLoginEvent event) {
+        // Sekai: without the CivProxy, register players in Name_player here
+        if (NameLayerPlugin.isLocalMode() && event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
+            nameAPI.addPlayer(event.getName(), event.getUniqueId());
+        }
     }
 
     @EventHandler
