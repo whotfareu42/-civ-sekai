@@ -26,11 +26,17 @@ jobs:
       - name: Build
         run: |
           CI=true ./gradlew build -x test --continue 2>&1 | tee build.log || true
+      - name: Klassen-Signaturen (javap) fuer Portierung
+        if: always()
+        run: |
+          echo "" > javap.txt
+          CP=$(find ~/.gradle /home/runner/work -name "*.jar" \( -path "*paperweight*" -o -path "*/.gradle/caches/modules-2/*" \) 2>/dev/null | tr '\n' ':')
+          while read c; do [ -z "$c" ] && continue; echo "=== $c" >> javap.txt; javap -p -cp "$CP" "$c" >> javap.txt 2>&1 || true; done < tools/javap-classes.txt
       - name: Ergebnis in Branch build-output speichern
         if: always()
         run: |
           mkdir -p /tmp/out/jars
-          cp build.log versions.txt /tmp/out/ 2>/dev/null || true
+          cp build.log versions.txt javap.txt /tmp/out/ 2>/dev/null || true
           grep -E "error:|FAILED|What went wrong|Could not" build.log | head -800 > /tmp/out/errors.txt || true
           cp plugins/*-paper/build/libs/*.jar /tmp/out/jars/ 2>/dev/null || true
           cd /tmp/out

@@ -77,7 +77,7 @@ public class NpcPlayerHelperImpl implements NpcPlayerHelper {
         }
 
         ServerLevel worldServer = entity.level();
-        worldServer.chunkSource.removeEntity(entity);
+        worldServer.getChunkSource().removeEntity(entity);
         worldServer.getPlayers(serverPlayer -> serverPlayer instanceof NpcPlayer).remove(entity);
         removePlayerList(player);
     }
@@ -123,7 +123,7 @@ public class NpcPlayerHelperImpl implements NpcPlayerHelper {
             List<Pair<EquipmentSlot, ItemStack>> list = Lists.newArrayList();
             list.add(Pair.of(slot, item));
             Packet<ClientGamePacketListener> packet = new ClientboundSetEquipmentPacket(entity.getId(), list);
-            entity.level().chunkSource.sendToTrackingPlayers(entity, packet);
+            entity.level().getChunkSource().sendToTrackingPlayers(entity, packet);
         }
     }
 

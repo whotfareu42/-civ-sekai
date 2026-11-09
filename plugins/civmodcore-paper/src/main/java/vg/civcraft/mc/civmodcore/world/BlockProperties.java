@@ -51,7 +51,7 @@ public final class BlockProperties {
         final CraftBlock craftBlock = (CraftBlock) block;
         final CraftWorld craftWorld = (CraftWorld) block.getWorld();
         // Deobf path: net.minecraft.world.level.Level.setBlock()
-        craftWorld.getHandle().setBlock(craftBlock.getPosition(), craftBlock.getNMS().setValue(state, valueToSet),
+        craftWorld.getHandle().setBlock(craftBlock.getPosition(), craftWorld.getHandle().getBlockState(craftBlock.getPosition()).setValue(state, valueToSet),
             // This value is named "flag" and appears to be a set of bitwise indicators for block updates
             2); // 2 and 3 being used in NMS code and stuck to that
         return true;
