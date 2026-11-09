@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -108,9 +107,6 @@ public class PseudoPlayer extends CraftPlayer {
         }
     }
 
-    public void sendMessage(Identity identity, Component message, MessageType type) {
-        this.feedback.accept(message);
-    }
 
     public void closeInventory() {
         throw new InvalidCommandAttemptException();

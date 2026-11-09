@@ -64,7 +64,7 @@ public class MobListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSlimePathfind(SlimePathfindEvent event) {
-        Slime slime = event.getEntity();
+        org.bukkit.entity.Mob slime = event.getEntity();
         Set<BastionBlock> blocking = blockManager.getBlockingBastions(slime.getLocation(), b -> b.getType().isBlockMobs() && b.isMature());
         if (blocking.isEmpty()) {
             return;
