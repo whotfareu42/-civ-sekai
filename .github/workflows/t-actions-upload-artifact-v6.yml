@@ -1,0 +1,11 @@
+name: T-actions-upload-artifact-v6
+on: push
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v6
+        with:
+          name: x
+          path: README.md
