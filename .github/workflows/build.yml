@@ -21,10 +21,12 @@ jobs:
           sed -i "s/paper-userdev = { id = \"io.papermc.paperweight.userdev\", version = \"[^\"]*\"/paper-userdev = { id = \"io.papermc.paperweight.userdev\", version = \"$PW\"/" gradle/libs.versions.toml
           grep -E '^paper =|paper-userdev' gradle/libs.versions.toml
       - name: Build
-        run: CI=true ./gradlew build -x test --continue 2>&1 | tee build.log || true
+        run: |
+          CI=true ./gradlew build -x test --continue 2>&1 | tee build.log || true
       - name: Fehler zusammenfassen
         if: always()
-        run: grep -E "^e: |error:|warning: \[removal\]|FAILED|What went wrong|Could not" build.log | grep -v "warning:" | head -600 > errors.txt || true
+        run: |
+          grep -E "error:|FAILED|What went wrong|Could not" build.log | head -600 > errors.txt || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
