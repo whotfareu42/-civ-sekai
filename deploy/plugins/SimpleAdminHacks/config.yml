@@ -637,14 +637,14 @@ hacks:
     enabled: true
     limits:
       - ==: com.programmerdan.minecraft.simpleadminhacks.framework.utilities.BuildLimit
-        sekai: "sekai_nether"
+        world: "sekai_nether"
         type: ALTITUDE
         min_y: -64
         max_y: 128
   PortalConnect:
     enabled: false
     server: main
-    sekai: sekai
+    world: sekai
   TooHappyGhasts:
     enabled: true
   PlayerCap:

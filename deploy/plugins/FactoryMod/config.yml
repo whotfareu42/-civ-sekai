@@ -2065,7 +2065,7 @@ recipes:
     production_time: 4s
     name: Build Rocket
     type: BUILD_ROCKET
-    sekai: sekai
+    world: sekai
     input:
       iron_block:
         v: 3839
