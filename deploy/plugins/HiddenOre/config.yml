@@ -200,11 +200,11 @@ drops:
       - golden_pickaxe
       - diamond_pickaxe
       - netherite_pickaxe
-    minY: -16
-    maxY: 112
-    chance: 0.03
-    minAmount: 2
-    maxAmount: 5
+    minY: -64
+    maxY: 128
+    chance: 0.05
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -221,11 +221,11 @@ drops:
       - golden_pickaxe
       - diamond_pickaxe
       - netherite_pickaxe
-    minY: -16
-    maxY: 112
-    chance: 0.03
-    minAmount: 2
-    maxAmount: 5
+    minY: -64
+    maxY: 128
+    chance: 0.05
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
