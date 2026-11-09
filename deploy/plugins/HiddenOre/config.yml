@@ -1,39 +1,31 @@
-# This file shows an example of how to do veins for HiddenOre backed by noise generators.
-# Portions of this are deeply inspired by the work by TealNerd in his CivClassic fork of
-#  HiddenOre.
-prefix: You found a hidden vein ore!
+# HiddenOre fuer Sekai: Erze nur als versteckte Adern (CivMC-Stil). Kohle spawnt natuerlich.
+prefix: Du hast eine Erzader gefunden!
 alert_user: true
 list_drops: true
 debug: false
-# As of 1.4.0, a new tracking was added that keeps a per-block record of "activity" and discards revealed blocks as
-# sources for transformation. This tracking requires a LOT of space and memory, compared to ordinary exploit prevention.
-# It's mostly a quality of life addition. Set this to false to turn it off. Default (if unset) is to turn it on.
-# Example for 1.5.2 is to set to false, as it will incur some additional runtime impact.
 map_save_active: false
 ignore_silktouch: true
 caveOres: false
-# For each potential transformation in a generate event, how many attempts at most will be made?
-# Keep this value small, or performance _will_ suffer.
 transform_attempt_multiplier: 3
 clear_ores:
-  main_world:
+  overworld:
     world: sekai
     replace:
       IRON_ORE: STONE
-      REDSTONE_ORE: STONE
+      DEEPSLATE_IRON_ORE: DEEPSLATE
       GOLD_ORE: STONE
+      DEEPSLATE_GOLD_ORE: DEEPSLATE
       DIAMOND_ORE: STONE
+      DEEPSLATE_DIAMOND_ORE: DEEPSLATE
+      REDSTONE_ORE: STONE
+      DEEPSLATE_REDSTONE_ORE: DEEPSLATE
       EMERALD_ORE: STONE
+      DEEPSLATE_EMERALD_ORE: DEEPSLATE
       LAPIS_ORE: STONE
-  end_world:
-    world: sekai_nether
-    replace:
-      NETHER_QUARTZ_ORE: NETHERRACK
+      DEEPSLATE_LAPIS_ORE: DEEPSLATE
+      COPPER_ORE: STONE
+      DEEPSLATE_COPPER_ORE: DEEPSLATE
 tools:
-  # Giving a tool ignore:all:true will make it the default catchall, if specified in a config.
-  # So if you have a "default" behavior you want for any non-specified tool, use that.
-  # Great for things that are often broken by hand or with random crap held, like dirt, sand, gravel.
-  # "ignore" section is ignored but "modifiers" section will be applied.
   anything:
     ignore:
       all: true
@@ -41,110 +33,119 @@ tools:
       dropChance: 1.0
       minAmount: 0.0
       maxAmount: 0.0
+  wooden_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: WOODEN_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
+  stone_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: STONE_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
+  iron_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: IRON_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
+  golden_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: GOLDEN_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
+  diamond_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: DIAMOND_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
+  netherite_pickaxe:
+    template:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1
+      type: NETHERITE_PICKAXE
+      amount: 1
+    ignore:
+      amount: true
+      durability: true
+      enchants: true
+      otherEnchants: true
+      enchantsLvl: true
+      lore: true
+      name: true
+    modifiers:
+      dropChance: 1.0
+      minAmount: 0.0
+      maxAmount: 0.0
 states:
-  # These allow modification of drop chance based on the player's state
-  # Give each "set" of modifications a name
-  # For each specific type of player state (haste / fatigue / nausea, etc) provide an array
-  # The chance is picked from this array by matching Level of effect to the named effect.
-  # So for [0.8, 0.5] -- haste I has a 0.8 reduction, haste II has a 0.5 reduction.
-  generalRebalance:
-    haste: [ 0.9, 0.7 ]
-    fatigue: [ 1.1, 1.3 ]
-    nausea: [ 0.5, 0.3, 0.1 ]
-    luck: [ 2.0, 3.0, 4.0 ]
-    badluck: [ 0.1, 0.01, 0.002 ]
-    blindness: [ 0.0, 0.0, 0.0 ]
+  normal:
+    haste: [ 1.0, 1.0 ]
+    fatigue: [ 1.0, 1.0 ]
 drops:
-  # As of 1.3.2, you can now specify a command to run instead of (or in addition to) drops.
-  fancy_cmd:
-    minY: 1
-    maxY: 255
-    chance: 0.0001
-    command: '/give %player% iron_ingot 1'
-    # You can specify tool and biome, and state modifiers like any other drop.
-    tools:
-      - wood_pickaxe
-  # Here we define all the potential drops for this material/subtype. Give each "drop config" a friendly name.
-  coal_ore:
-    # Package is the list of ConfigurationSerializeable ItemStack that should constitutes this drop.
-    # You can specify one or _many_ items, to emulate the true "drop chest" experience.
-    package:
-      - ==: org.bukkit.inventory.ItemStack
-        v: 1
-        type: COAL_ORE
-        # Amount is _not_ ignored. Use this as the "base" multipler. This amount will be multiplied by the randomly chosen "amount" configured
-        # later and modified per tool and biome.
-        amount: 1
-    # A String list here of all the tool friendly-names that you defined in the root "tools" section which can trigger this drop.
-    tools:
-      - wood_pickaxe
-      - stone_pickaxe
-      - iron_pickaxe
-      - gold_pickaxe
-      - diamond_pickaxe
-    # lowest Y in the map that this drop can be found.
-    # acts as "areaHeight" if areaHeight isn't set on veinNature.
-    minY: 1
-    # highest Y in the map that this drop can be found.
-    maxY: 131
-    # Base chance for this drop. This is percent chance / 100 -- so 1 is 100%, 0.1 is 10%, and 0.01 is 1%.
-    chance: 0.01
-    # multipliers of package's amount. Specify these separately or "amount" for a fixed value. If min and max are used,
-    #  and this drop is selected, then a random value between min and max is chosen, after min and max are adjusted
-    #  by biome or tool.
-    minAmount: 2
-    maxAmount: 8
-    # Instead of dropping the package, attempts to transform nearby blocks of the same type as triggered this
-    # drop into the package. If portions of the drop can't be transformed, they are still just dropped.
-    # Default is false.
-    transformIfAble: true
-    # If for some reason transformation can't find a place to do its magic, should we use normal drop behavior?
-    # Default is false.
-    transformDropIfFails: false
-    # If we do use normal drop behavior, what's the maximum drop size (after being constrained by maxAmount above)
-    # Default is 1.
-    transformMaxDropsIfFails: 1
-    # Describes which state by name to use from the `states` section above.
-    state: generalRebalance
-    # drop configurations can also have a vein nature
-    veinNature:
-      # Controls the "intensity" of the noise function, or, the overall likelihood at peak noise
-      density: .5
-      # This controls in the tailoff distribution across the vein span region, such that
-      # it helps to form a cosine distribution centered around the "center" of the
-      # vein as bounded by areaHeight, areaSpan, and the height seed.
-      maxSpan: 10
-      # After raw density [-1,1] is computed, add this value to the computation, then multiply by density.
-      densityBonus: 0.1
-      # Offset Y for vein. This is the midpoint for vein centers.
-      areaHeight: 30
-      # Preferred radius/spread on Y for vein. Vein will be
-      # again subject to drop's minY maxY. Full vein center distribution vertically is
-      # controlled by [areaHeight - areaSpan, areaHeight + areaSpan]
-      #
-      # Full spread is [areaHeight - areaSpan - maxSpan, areaHeight + areaSpan + maxSpan]
-      # where maxSpan is max distance from the chosen midpoint that has a
-      # chance of being in the vein, subject to a cosine function decaying out
-      # from the center, with point of highest chance at the chosen midpoint, and
-      # lowest chance at maxSpan distance away from that midpoint.
-      #
-      # All of these spans are constrained by [minY, maxY]
-      areaSpan: 20
-      # This is a divider against the "height noise map". Basically, smaller values results in more severe vein height
-      # transitions. heigher values, more gradual.
-      heightLength: 0.5
-      # This is a divider against the "density noise map". smaller values result in smaller overall veins in terms of
-      # density. Conversely, large values; larger regions of density. Some trial and error is necessary to determine the
-      # relative "feel" of the resulting vein structures.
-      densityLength: 2
-      # A number indicating the height seed to use in the noise function.
-      heightSeed: 129382
-      # A number indicating the density seed to use
-      densitySeed: 384837
-      # Basically, if a vein block condition is met, check all immediate neighboring, and now visible blocks
-      # if they should be revealed, subject to the drop & block configurations.
-      # revealed as well
-      forceVisibleTransform: true
   iron_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -154,211 +155,537 @@ drops:
     tools:
       - stone_pickaxe
       - iron_pickaxe
+      - golden_pickaxe
       - diamond_pickaxe
-    # Chance for XP to drop when this gen/drop occurs
-    # you can add this section to "biomes" as well for unique biome-level drops
-    # chance and amount are modified by tool.
-    xp:
-      # standard amount config; amount for "always" value, minAmount/maxAmount for randomized size
-      amount: 1
-      # Chance of XP to generate; this is a separate chance and computed separately for XP
-      chance: 1.0
-    minY: 1
-    maxY: 67
-    chance: 0.007
+      - netherite_pickaxe
+    minY: -64
+    maxY: 80
+    chance: 0.02
     minAmount: 1
     maxAmount: 4
-    state: generalRebalance
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 16
+      areaSpan: 40
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 439563
+      densitySeed: 258176
+      forceVisibleTransform: true
+  deepslate_iron_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_IRON_ORE
+        amount: 1
+    tools:
+      - stone_pickaxe
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 80
+    chance: 0.02
+    minAmount: 1
+    maxAmount: 4
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 16
+      areaSpan: 40
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 514002
+      densitySeed: 782554
+      forceVisibleTransform: true
+  copper_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: COPPER_ORE
+        amount: 1
+    tools:
+      - stone_pickaxe
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -16
+    maxY: 112
+    chance: 0.02
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 48
+      areaSpan: 40
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 150631
+      densitySeed: 175954
+      forceVisibleTransform: true
+  deepslate_copper_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_COPPER_ORE
+        amount: 1
+    tools:
+      - stone_pickaxe
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -16
+    maxY: 112
+    chance: 0.02
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 48
+      areaSpan: 40
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 961168
+      densitySeed: 661913
+      forceVisibleTransform: true
+  gold_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: GOLD_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 32
+    chance: 0.006
+    minAmount: 1
+    maxAmount: 3
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -16
+      areaSpan: 30
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 198702
+      densitySeed: 483452
+      forceVisibleTransform: true
+  deepslate_gold_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_GOLD_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 32
+    chance: 0.006
+    minAmount: 1
+    maxAmount: 3
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -16
+      areaSpan: 30
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 711097
+      densitySeed: 160816
+      forceVisibleTransform: true
+  redstone_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: REDSTONE_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 16
+    chance: 0.01
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -40
+      areaSpan: 20
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 632084
+      densitySeed: 325127
+      forceVisibleTransform: true
+  deepslate_redstone_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_REDSTONE_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 16
+    chance: 0.01
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -40
+      areaSpan: 20
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 139317
+      densitySeed: 190122
+      forceVisibleTransform: true
+  lapis_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: LAPIS_ORE
+        amount: 1
+    tools:
+      - stone_pickaxe
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 64
+    chance: 0.006
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 0
+      areaSpan: 30
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 554710
+      densitySeed: 538485
+      forceVisibleTransform: true
+  deepslate_lapis_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_LAPIS_ORE
+        amount: 1
+    tools:
+      - stone_pickaxe
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 64
+    chance: 0.006
+    minAmount: 2
+    maxAmount: 6
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 0
+      areaSpan: 30
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 173248
+      densitySeed: 352353
+      forceVisibleTransform: true
+  diamond_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DIAMOND_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 16
+    chance: 0.0015
+    minAmount: 1
+    maxAmount: 2
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -50
+      areaSpan: 12
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 195119
+      densitySeed: 677814
+      forceVisibleTransform: true
+  deepslate_diamond_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_DIAMOND_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -64
+    maxY: 16
+    chance: 0.0015
+    minAmount: 1
+    maxAmount: 2
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: -50
+      areaSpan: 12
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 545140
+      densitySeed: 161981
+      forceVisibleTransform: true
+  emerald_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: EMERALD_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -16
+    maxY: 320
+    chance: 0.0008
+    minAmount: 1
+    maxAmount: 2
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 100
+      areaSpan: 80
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 967017
+      densitySeed: 692921
+      forceVisibleTransform: true
+  deepslate_emerald_ore:
+    package:
+      - ==: org.bukkit.inventory.ItemStack
+        v: 1
+        type: DEEPSLATE_EMERALD_ORE
+        amount: 1
+    tools:
+      - iron_pickaxe
+      - golden_pickaxe
+      - diamond_pickaxe
+      - netherite_pickaxe
+    minY: -16
+    maxY: 320
+    chance: 0.0008
+    minAmount: 1
+    maxAmount: 2
+    transformIfAble: true
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    veinNature:
+      density: .5
+      maxSpan: 10
+      densityBonus: 0.1
+      areaHeight: 100
+      areaSpan: 80
+      heightLength: 0.5
+      densityLength: 2
+      heightSeed: 229815
+      densitySeed: 334083
+      forceVisibleTransform: true
 blocks:
-  # This defines for which types of things drops are possible. Give each "block config" a friendly name.
   stone:
-    # Name the 'root type' of this block config using its Bukkit material name.
     material: STONE
-    # If any of the drops for this block have Transform mode enabled, you can specify a list of blocks that,
-    # in addition to the block defined above, can be transformed.
     validTransforms:
-      # Use the same style of definition as above. Throwaway label, then 'material' and either 'allTypes' true, or define a "types" list.
-      cobblestone:
-        material: COBBLESTONE
-      dirt:
-        material: DIRT
+      stone:
+        material: STONE
       andesite:
         material: ANDESITE
       diorite:
         material: DIORITE
       granite:
         material: GRANITE
-    # Drop mode. Multiple drops means that every possible drop is evaluated separately and all RNG-winners are grouped together in one big drop.
-    #   false is more of a "classic" mode, where every possible drop's chance is accumulated, then a single Random number is generated and
-    #   evaluated, resulting in either one or no drop.
+      tuff:
+        material: TUFF
     dropMultiple: false
     dropList:
-      # As of 1.5.1, you can now specify a list of drops, configured in a master drops section, to apply.
-      - fancy_cmd
-      - coal_ore
-      - gold_ore
-      - diamond_ore
-      - lapis_ore
       - iron_ore
+      - copper_ore
+      - gold_ore
       - redstone_ore
+      - lapis_ore
+      - diamond_ore
       - emerald_ore
-      # As of 1.5.1, you can skip this if you use the dropList above.
-    #drops:
-  # As of 1.5.1 you can indicate a list of materials that all share this config,
-  # and it will be replicated for each one.
-  aggregates:
-    # Note, use "materials" instead of "material" (1.5.1) for it to work (pick just one -- no mixnmatch here)
-    materials:
-      andesite:
-        # we preserve this structure in anticipation of future features for 1.13 and beyond, where we can specify block
-        # natures and otherwise limit or enhance our recognition of specific blocks and block types.
-        material: ANDESITE
-      diorite:
-        material: DIORITE
-      granite:
-        material: GRANITE
+  andesite:
+    material: ANDESITE
     validTransforms:
-      cobblestone:
-        material: COBBLESTONE
-      dirt:
-        material: DIRT
+      stone:
+        material: STONE
+      andesite:
+        material: ANDESITE
+    dropMultiple: false
+    dropList:
+      - iron_ore
+      - copper_ore
+      - gold_ore
+      - redstone_ore
+      - lapis_ore
+      - diamond_ore
+      - emerald_ore
+  diorite:
+    material: DIORITE
+    validTransforms:
       stone:
         material: STONE
       diorite:
         material: DIORITE
+    dropMultiple: false
+    dropList:
+      - iron_ore
+      - copper_ore
+      - gold_ore
+      - redstone_ore
+      - lapis_ore
+      - diamond_ore
+      - emerald_ore
+  granite:
+    material: GRANITE
+    validTransforms:
+      stone:
+        material: STONE
       granite:
         material: GRANITE
-      andesite:
-        material: ANDESITE
     dropMultiple: false
-    # As of 1.5.1 you can mix and match new dropList and prior drops
     dropList:
-      - fancy_cmd
-    drops:
-      coal_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: COAL_ORE
-            amount: 1
-        tools:
-          - wood_pickaxe
-          - stone_pickaxe
-          - iron_pickaxe
-          - gold_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 131
-        chance: 0.01
-        minAmount: 2
-        maxAmount: 8
-        transformIfAble: true
-        transformDropIfFails: false
-        transformMaxDropsIfFails: 1
-        state: generalRebalance
-      iron_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: IRON_ORE
-            amount: 1
-        tools:
-          - stone_pickaxe
-          - iron_pickaxe
-          - diamond_pickaxe
-        xp:
-          amount: 1
-          chance: 1.0
-        minY: 1
-        maxY: 67
-        chance: 0.007
-        minAmount: 1
-        maxAmount: 4
-        state: hasteDebuff
-      gold_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: GOLD_ORE
-            amount: 1
-        tools:
-          - iron_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 33
-        chance: 0.001437
-        minAmount: 1
-        maxAmount: 4
-        state: generalRebalance
-      diamond_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: DIAMOND_ORE
-            amount: 1
-        tools:
-          - iron_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 15
-        chance: 0.0005427
-        minAmount: 1
-        maxAmount: 3
-        state: generalRebalance
-      redstone_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: REDSTONE_ORE
-            amount: 1
-        tools:
-          - iron_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 15
-        chance: 0.01025
-        minAmount: 1
-        maxAmount: 4
-        state: generalRebalance
-      lapis_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: LAPIS_ORE
-            amount: 1
-        tools:
-          - stone_pickaxe
-          - iron_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 33
-        chance: 0.000597
-        minAmount: 1
-        maxAmount: 3
-        state: fatigueBuff
-      emerald_ore:
-        package:
-          - ==: org.bukkit.inventory.ItemStack
-            v: 1
-            type: EMERALD_ORE
-            amount: 1
-        tools:
-          - iron_pickaxe
-          - diamond_pickaxe
-        minY: 1
-        maxY: 32
-        chance: 0.0
-        minAmount: 1
-        maxAmount: 2
-        state: generalRebalance
-        biomes:
-          EXTREME_HILLS:
-            chance: 0.001437
-            state: fatigueBuff
-          MUTATED_EXTREME_HILLS:
-            chance: 0.001437
-            state: hasteDebuff
-          EXTREME_HILLS_WITH_TREES:
-            chance: 0.001437
-          MUTATED_EXTREME_HILLS_WITH_TREES:
-            chance: 0.001437
+      - iron_ore
+      - copper_ore
+      - gold_ore
+      - redstone_ore
+      - lapis_ore
+      - diamond_ore
+      - emerald_ore
+  tuff:
+    material: TUFF
+    validTransforms:
+      stone:
+        material: STONE
+      tuff:
+        material: TUFF
+    dropMultiple: false
+    dropList:
+      - iron_ore
+      - copper_ore
+      - gold_ore
+      - redstone_ore
+      - lapis_ore
+      - diamond_ore
+      - emerald_ore
+  deepslate:
+    material: DEEPSLATE
+    validTransforms:
+      deepslate:
+        material: DEEPSLATE
+      tuff:
+        material: TUFF
+    dropMultiple: false
+    dropList:
+      - deepslate_iron_ore
+      - deepslate_copper_ore
+      - deepslate_gold_ore
+      - deepslate_redstone_ore
+      - deepslate_lapis_ore
+      - deepslate_diamond_ore
+      - deepslate_emerald_ore
