@@ -160,9 +160,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 80
-    chance: 0.06
+    chance: 0.01
     minAmount: 2
-    maxAmount: 6
+    maxAmount: 4
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -181,9 +181,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 80
-    chance: 0.06
+    chance: 0.01
     minAmount: 2
-    maxAmount: 6
+    maxAmount: 4
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -202,9 +202,9 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 112
-    chance: 0.08
-    minAmount: 3
-    maxAmount: 9
+    chance: 0.012
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -223,9 +223,9 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 112
-    chance: 0.08
-    minAmount: 3
-    maxAmount: 9
+    chance: 0.012
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -243,9 +243,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 32
-    chance: 0.025
-    minAmount: 2
-    maxAmount: 5
+    chance: 0.003
+    minAmount: 1
+    maxAmount: 3
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -263,9 +263,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 32
-    chance: 0.025
-    minAmount: 2
-    maxAmount: 5
+    chance: 0.003
+    minAmount: 1
+    maxAmount: 3
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -283,9 +283,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.03
-    minAmount: 3
-    maxAmount: 7
+    chance: 0.004
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -303,9 +303,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.03
-    minAmount: 3
-    maxAmount: 7
+    chance: 0.004
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -324,9 +324,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 64
-    chance: 0.02
-    minAmount: 3
-    maxAmount: 7
+    chance: 0.0025
+    minAmount: 2
+    maxAmount: 4
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -345,9 +345,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 64
-    chance: 0.02
-    minAmount: 3
-    maxAmount: 7
+    chance: 0.0025
+    minAmount: 2
+    maxAmount: 4
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -365,9 +365,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.006
+    chance: 0.0008
     minAmount: 1
-    maxAmount: 3
+    maxAmount: 2
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -385,9 +385,9 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.006
+    chance: 0.0008
     minAmount: 1
-    maxAmount: 3
+    maxAmount: 2
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -405,9 +405,9 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 320
-    chance: 0.003
+    chance: 0.0004
     minAmount: 1
-    maxAmount: 2
+    maxAmount: 1
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
@@ -425,9 +425,9 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 320
-    chance: 0.003
+    chance: 0.0004
     minAmount: 1
-    maxAmount: 2
+    maxAmount: 1
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
