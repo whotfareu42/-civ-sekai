@@ -11,7 +11,7 @@ jobs:
         with:
           java-version: '25'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Paper 26.3 Dev-Bundle + paperweight setzen
         run: |
           DB=$(curl -s https://repo.papermc.io/repository/maven-public/io/papermc/paper/dev-bundle/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | sed 's/<version>//' | tail -1)
@@ -27,7 +27,7 @@ jobs:
         if: always()
         run: |
           grep -E "error:|FAILED|What went wrong|Could not" build.log | head -600 > errors.txt || true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: build-log
@@ -35,7 +35,7 @@ jobs:
             build.log
             errors.txt
             versions.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: plugins
