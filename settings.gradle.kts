@@ -1,0 +1,56 @@
+// Update Gradle Wrapper using: ./gradlew wrapper --distribution-type bin --gradle-version <version>
+// See Gradle's releases here: https://gradle.org/releases/
+
+rootProject.name = "Civ"
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://repo.papermc.io/repository/maven-public/")
+    }
+}
+
+plugins {
+    id("com.gradle.enterprise") version "3.16.2"
+}
+
+include(":ansible")
+
+include(":libraries:name-api")
+include(":libraries:namelayer-sync")
+
+include(":plugins:announcements-velocity")
+include(":plugins:banstick-paper")
+include(":plugins:bastion-paper")
+include(":plugins:castlegates-paper")
+include(":plugins:citadel-paper")
+include(":plugins:civchat2-paper")
+include(":plugins:civmodcore-paper")
+include(":plugins:combattagplus-paper")
+include(":plugins:donum-paper")
+include(":plugins:essenceglue-paper")
+include(":plugins:exilepearl-paper")
+include(":plugins:itemexchange-paper")
+include(":plugins:jukealert-paper")
+// TODO include(":plugins:namelayer-bungee")
+include(":plugins:namelayer-paper")
+include(":plugins:namelayer-velocity")
+include(":plugins:randomspawn-paper")
+include(":plugins:realisticbiomes-paper")
+include(":plugins:realisticbiomes2-paper")
+include(":plugins:simpleadminhacks-paper")
+include(":plugins:factorymod-paper")
+include(":plugins:finale-paper")
+include(":plugins:hiddenore-paper")
+include(":plugins:railswitch-paper")
+include(":plugins:civduties-paper")
+include(":plugins:namecolors-paper")
+include(":plugins:kirabukkitgateway-paper")
+include(":plugins:kitpvp-paper")
+include(":plugins:voidworld-paper")
+include(":plugins:heliodor-paper")
+include(":plugins:zorweth-paper")
+include(":plugins:zorweth-velocity")
+include(":plugins:civproxy-velocity")
+include(":plugins:secureboot-paper")
+include(":plugins:kiragateway-velocity")

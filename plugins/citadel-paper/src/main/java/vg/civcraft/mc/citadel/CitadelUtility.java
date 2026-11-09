@@ -1,0 +1,262 @@
+package vg.civcraft.mc.citadel;
+
+import java.util.logging.Level;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import vg.civcraft.mc.citadel.acidtypes.AcidType;
+import vg.civcraft.mc.citadel.model.AcidManager;
+import vg.civcraft.mc.citadel.model.Reinforcement;
+import vg.civcraft.mc.citadel.reinforcementtypes.ReinforcementType;
+import vg.civcraft.mc.civmodcore.inventory.items.ItemMap;
+import vg.civcraft.mc.namelayer.NameLayerAPI;
+import vg.civcraft.mc.namelayer.group.Group;
+
+/**
+ * Just a useful class with general and misplaced methods that can be called
+ * from anywhere.
+ */
+public class CitadelUtility {
+
+    private CitadelUtility() {
+    }
+
+    public static boolean isPlant(Block plant) {
+        switch (plant.getType()) {
+            case DANDELION:
+            case POPPY:
+            case BLUE_ORCHID:
+            case ALLIUM:
+            case AZURE_BLUET:
+            case ORANGE_TULIP:
+            case RED_TULIP:
+            case PINK_TULIP:
+            case WHITE_TULIP:
+            case OXEYE_DAISY:
+            case PINK_PETALS:
+            case ACACIA_SAPLING:
+            case BIRCH_SAPLING:
+            case DARK_OAK_SAPLING:
+            case JUNGLE_SAPLING:
+            case OAK_SAPLING:
+            case SPRUCE_SAPLING:
+            case FLOWERING_AZALEA:
+            case CHERRY_SAPLING:
+            case MANGROVE_PROPAGULE:
+            case PALE_OAK_SAPLING:
+            case WHEAT:
+            case CARROTS:
+            case POTATOES:
+            case BEETROOTS:
+            case MELON_STEM:
+            case PUMPKIN_STEM:
+            case ATTACHED_MELON_STEM:
+            case ATTACHED_PUMPKIN_STEM:
+            case NETHER_WART:
+            case SUGAR_CANE:
+            case CACTUS:
+            case SUNFLOWER:
+            case LILAC:
+            case PEONY:
+            case ROSE_BUSH:
+            case TORCHFLOWER:
+            case PITCHER_PLANT:
+            case TALL_GRASS:
+            case SHORT_GRASS:
+            case TWISTING_VINES:
+            case TWISTING_VINES_PLANT:
+            case WEEPING_VINES:
+            case WEEPING_VINES_PLANT:
+            case CRIMSON_FUNGUS:
+            case CRIMSON_ROOTS:
+            case WARPED_FUNGUS:
+            case WARPED_ROOTS:
+            case NETHER_SPROUTS:
+            case KELP:
+            case KELP_PLANT:
+            case SPORE_BLOSSOM:
+            case BIG_DRIPLEAF:
+            case BIG_DRIPLEAF_STEM:
+            case CAVE_VINES:
+            case CAVE_VINES_PLANT:
+            case SMALL_DRIPLEAF:
+            case SWEET_BERRY_BUSH:
+            case BAMBOO:
+            case BAMBOO_SAPLING:
+            case SEA_PICKLE:
+            case POINTED_DRIPSTONE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static void sendAndLog(CommandSender receiver, ChatColor color, String message) {
+        receiver.sendMessage(color + message);
+        if (Citadel.getInstance().getConfigManager().logMessages()) {
+            Citadel.getInstance().getLogger().log(Level.INFO, "Sent {0} reply {1}",
+                new Object[]{receiver.getName(), message});
+        }
+    }
+
+    public static void sendAndLog(CommandSender receiver, ChatColor color, String message, Location location) {
+        final Component component = LegacyComponentSerializer.legacySection().deserialize(color + message);
+        receiver.sendMessage(addCoordsHoverComponent(component, location));
+        if (Citadel.getInstance().getConfigManager().logMessages()) {
+            Citadel.getInstance().getLogger().log(Level.INFO, "Sent {0} reply {1}",
+                new Object[]{receiver.getName(), message});
+        }
+    }
+
+    private static @NotNull Component addCoordsHoverComponent(final @NotNull Component component, final @NotNull Location location) {
+        String hoverText = String.format("Location: %s %s %s",
+            location.getBlockX(),
+            location.getBlockY(),
+            location.getBlockZ());
+        return component.hoverEvent(HoverEvent.showText(Component.text(hoverText)));
+    }
+
+    public static boolean consumeReinforcementItems(Player player, ReinforcementType type, boolean consumeExtra) {
+        ItemMap toRemove = new ItemMap(type.getItem());
+        if (consumeExtra) {
+            toRemove.addItemAmount(type.getItem(), 1);
+        }
+        if (!toRemove.removeSafelyFrom(player.getInventory())) {
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                "Failed to remove items needed for " + type.getName() + " reinforcement from your inventory");
+            Citadel.getInstance().getStateManager().setState(player, null);
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean reinforcementRemovalTouchesPlacementStack(final @NotNull PlayerInventory inventory,
+                                                                      final @NotNull ItemStack reinforcementItem,
+                                                                      final @NotNull EquipmentSlot placementHand) {
+        final boolean mainHand = placementHand == EquipmentSlot.HAND;
+        final ItemStack placingStack = inventory.getItem(placementHand);
+        if (!placingStack.isSimilar(reinforcementItem)) {
+            return false;
+        }
+
+        int remaining = reinforcementItem.getAmount();
+        final ItemStack[] storage = inventory.getStorageContents();
+        for (int slot = 0; slot < storage.length; slot++) {
+            if (remaining <= 0) {
+                return false;
+            }
+            if (mainHand && slot == inventory.getHeldItemSlot()) {
+                return true;
+            }
+            final ItemStack stack = storage[slot];
+            if (stack != null && stack.isSimilar(reinforcementItem)) {
+                remaining -= stack.getAmount();
+            }
+        }
+        return !mainHand && remaining > 0;
+    }
+
+    public static boolean attemptReinforcementCreation(Block block, ReinforcementType type, Group group, String groupName,
+                                                       Player player, final @Nullable EquipmentSlot placementHand) {
+        // check if group still exists
+        if (group == null || !group.isValid()) {
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                "The group " + groupName + " seems to have been deleted in the mean time",
+                block.getLocation());
+            Citadel.getInstance().getStateManager().setState(player, null);
+            return true;
+        }
+        // check if player still has permission
+        if (!NameLayerAPI.getGroupManager().hasAccess(group, player.getUniqueId(),
+            CitadelPermissionHandler.getReinforce())) {
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                "You seem to have lost permission to reinforce on " + group.getName(),
+                block.getLocation());
+            Citadel.getInstance().getStateManager().setState(player, null);
+            return true;
+        }
+        block = ReinforcementLogic.getResponsibleBlock(block);
+        // check if reinforcement already exists
+        Reinforcement existingRein = Citadel.getInstance().getReinforcementManager().getReinforcement(block);
+        if (existingRein != null) {
+            // something like a slab, we just ignore this
+            return false;
+        }
+        // check if reinforcement can reinforce that block
+        if (!type.canBeReinforced(block.getType())) {
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                type.getName() + " can not reinforce " + block.getType(),
+                block.getLocation());
+            return false;
+        }
+        // check if reinforcement is allowed in the current world
+        if (!type.isAllowedInWorld(block.getWorld().getName())) {
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                type.getName() + " can not reinforce in this dimension", block.getLocation());
+            return true;
+        }
+        ItemMap playerItems = new ItemMap(player.getInventory());
+        // check inventory
+        int available = playerItems.getAmount(type.getItem());
+        int required = type.getItem().getAmount();
+        // Paper skips its placement deduction if we modify the placing stack during the event.
+        final boolean consumeExtra = placementHand != null
+            && reinforcementRemovalTouchesPlacementStack(player.getInventory(), type.getItem(), placementHand);
+        if (consumeExtra) {
+            required++;
+        }
+        if (available < required) {
+            Citadel.getInstance().getStateManager().setState(player, null);
+            CitadelUtility.sendAndLog(player, ChatColor.RED,
+                "You have no items left to reinforce with " + type.getName(),
+                block.getLocation());
+            return true;
+        }
+        Reinforcement newRein = ReinforcementLogic.callReinforcementCreationEvent(player, block, type, group);
+        if (newRein == null) {
+            return true;
+        }
+        // remove from inventory
+        if (!CitadelUtility.consumeReinforcementItems(player, type, consumeExtra)) {
+            return true;
+        }
+        // create reinforcement
+        if (Citadel.getInstance().getConfigManager().logCreation()) {
+            Citadel.getInstance().getLogger().info(player.getName() + " created reinforcement with " + type.getName()
+                + " for " + block.getType().toString() + " at " + block.getLocation().toString());
+        }
+        // warn if acid cannot complete
+        if (Citadel.getInstance().getAcidManager().isPossibleAcidBlock(block)) {
+            AcidManager acidMan = Citadel.getInstance().getAcidManager();
+            AcidType acidType = acidMan.getAcidTypeFromMaterial(block.getType());
+            for (BlockFace blockFace : acidType.blockFaces()) {
+                Block relativeBlock = block.getRelative(blockFace);
+                Reinforcement relativeReinforcement = ReinforcementLogic.getReinforcementProtecting(relativeBlock);
+                if (
+                    relativeReinforcement == null
+                        || !relativeReinforcement.getType().canBeReinforced(relativeBlock.getType())
+                        || (acidMan.isPossibleAcidBlock(relativeBlock) && acidMan.isAcidOnSameGroup(newRein, relativeReinforcement))
+                ) {
+                    continue;
+                }
+                if (!acidMan.canAcidBlock(type, relativeReinforcement.getType())) {
+                    CitadelUtility.sendAndLog(player, ChatColor.RED,
+                        "The " + blockFace.toString() + " acid will fail as it cannot acid tougher reinforcements!");
+                }
+            }
+        }
+        ReinforcementLogic.createReinforcement(newRein);
+        return false;
+    }
+}

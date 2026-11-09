@@ -1,0 +1,70 @@
+CREATE DATABASE donum;
+CREATE DATABASE banstick;
+CREATE DATABASE bastion;
+CREATE DATABASE citadel;
+CREATE DATABASE civchat2;
+CREATE DATABASE civduties;
+CREATE DATABASE jukealert;
+CREATE DATABASE namelayer;
+CREATE DATABASE civmodcore;
+CREATE DATABASE castlegates;
+CREATE DATABASE essenceglue;
+CREATE DATABASE exilepearl;
+CREATE DATABASE realisticbiomes;
+CREATE DATABASE heliodor;
+CREATE DATABASE nameapi;
+CREATE DATABASE civproxy;
+
+GRANT ALL PRIVILEGES ON `donum`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `banstick`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `bastion`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `citadel`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `civchat2`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `civduties`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `jukealert`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `namelayer`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `civmodcore`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `castlegates`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `essenceglue`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `exilepearl`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `realisticbiomes`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `heliodor`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `nameapi`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `civproxy`.* TO 'mariadb'@'%';
+
+CREATE DATABASE pvp_civduties;
+CREATE DATABASE pvp_civmodcore;
+CREATE DATABASE pvp_kitpvp;
+
+GRANT ALL PRIVILEGES ON `pvp_civduties`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `pvp_civmodcore`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `pvp_kitpvp`.* TO 'mariadb'@'%';
+
+CREATE DATABASE zorweth_bastion;
+CREATE DATABASE zorweth_castlegates;
+CREATE DATABASE zorweth_citadel;
+CREATE DATABASE zorweth_civduties;
+CREATE DATABASE zorweth_civmodcore;
+CREATE DATABASE zorweth_civspy;
+CREATE DATABASE zorweth_donum;
+CREATE DATABASE zorweth_essenceglue;
+CREATE DATABASE zorweth_jukealert;
+CREATE DATABASE zorweth_realisticbiomes;
+CREATE DATABASE zorweth_exilepearl;
+CREATE DATABASE zorweth_heliodor;
+
+GRANT ALL PRIVILEGES ON `zorweth_bastion`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_castlegates`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_citadel`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_civduties`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_civmodcore`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_civspy`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_donum`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_essenceglue`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_jukealert`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_realisticbiomes`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_exilepearl`.* TO 'mariadb'@'%';
+GRANT ALL PRIVILEGES ON `zorweth_heliodor`.* TO 'mariadb'@'%';
+
+CREATE DATABASE zorweth;
+GRANT ALL PRIVILEGES ON `zorweth`.* TO 'mariadb'@'%';

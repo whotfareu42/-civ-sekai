@@ -1,0 +1,26 @@
+package vg.civcraft.mc.namelayer.command;
+
+import co.aikar.commands.BaseCommand;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import vg.civcraft.mc.namelayer.GroupManager;
+import vg.civcraft.mc.namelayer.NameLayerAPI;
+import vg.civcraft.mc.namelayer.group.Group;
+
+public abstract class BaseCommandMiddle extends BaseCommand {
+
+    public BaseCommandMiddle() {
+    }
+
+    protected GroupManager gm = NameLayerAPI.getGroupManager();
+
+    protected boolean groupIsNull(CommandSender sender, String groupname, Group group) {
+        if (group == null) {
+            sender.sendMessage(String.format(
+                "%sThe group \"%s\" does not exist.",
+                ChatColor.RED, groupname));
+            return true;
+        }
+        return false;
+    }
+}

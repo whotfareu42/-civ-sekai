@@ -1,0 +1,312 @@
+# Development stack for Civ. This stack can be used to develop and test the server and plugins locally.
+# Please note that this stack is NOT suitable for production use, as it exposes all service ports, and uses default passwords.
+
+services:
+
+  #################
+  ### Minecraft ###
+  #################
+
+  proxy:
+    image: itzg/mc-proxy:java25
+    restart: no
+    tty: true
+    stdin_open: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      TYPE: 'VELOCITY'
+
+      REMOVE_OLD_MODS: 'TRUE'
+      SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+      REPLACE_ENV_DURING_SYNC: 'TRUE'
+      REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+      CIV_POSTGRES_HOST: postgres
+      CIV_POSTGRES_USERNAME: postgres
+      CIV_POSTGRES_PASSWORD: postgres
+
+      CIV_RABBITMQ_HOST: rabbitmq
+      CIV_RABBITMQ_USERNAME: rabbitmq
+      CIV_RABBITMQ_PASSWORD: rabbitmq
+
+      CIV_TIMEOUT_TIME: 3000000
+      CIV_PVP_HOSTNAME: 'pvp.localhost'
+      CIV_HOSTNAME: 'main.localhost'
+
+      CIV_FORWARDING_SECRET: '1234'
+
+      CIV_MYSQL_HOST: mariadb
+      CIV_MYSQL_USERNAME: mariadb
+      CIV_MYSQL_PASSWORD: mariadb
+
+      JVM_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008
+    ports:
+      - "25565:25577"
+      - "5008:5008"
+    volumes:
+      - ./containers/data/proxy:/server
+      - ./ansible/files/proxy-config:/config
+      - ./ansible/build/proxy-plugins:/plugins
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+
+  paper:
+    image: itzg/minecraft-server:stable-java25
+    restart: on-failure
+    tty: true
+    stdin_open: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      TYPE: 'paper'
+      VERSION: '1.21.11'
+      EULA: 'TRUE'
+      PAPER_DOWNLOAD_URL: 'https://api.leafmc.one/v2/projects/leaf/versions/1.21.11/builds/179/downloads/leaf-1.21.11-179.jar'
+
+      REMOVE_OLD_MODS: 'TRUE'
+      COPY_CONFIG_DEST: '/data'
+      SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+      REPLACE_ENV_DURING_SYNC: 'TRUE'
+      REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+      INIT_MEMORY: 1G
+      MAX_MEMORY: 3G
+
+      CIV_SERVER_NAME: local
+
+      CIV_WORLD_GENERATOR: Terra:DEFAULT
+      CIV_WORDBANK_SEED: wordbank
+
+      CIV_MYSQL_HOST: mariadb
+      CIV_MYSQL_USERNAME: mariadb
+      CIV_MYSQL_PASSWORD: mariadb
+
+      CIV_POSTGRES_HOST: postgres
+      CIV_POSTGRES_USERNAME: postgres
+      CIV_POSTGRES_PASSWORD: postgres
+
+      CIV_DATABASE_PREFIX: ''
+
+      CIV_RABBITMQ_HOST: rabbitmq
+      CIV_RABBITMQ_USERNAME: rabbitmq
+      CIV_RABBITMQ_PASSWORD: rabbitmq
+
+      CIV_SECUREBOOT_ENABLE: 'false'
+
+      JVM_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -XX:ObjectAlignmentInBytes=16
+      CIV_WATCHDOG_TIMEOUT_TIME: 6000
+      CIV_FORWARDING_SECRET: '1234'
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./containers/data/paper:/data
+      - ./ansible/files/paper-config:/config
+      - ./ansible/build/paper-plugins:/plugins
+
+  zorweth:
+    image: itzg/minecraft-server:stable-java25
+    restart: on-failure
+    tty: true
+    stdin_open: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      TYPE: 'paper'
+      VERSION: '1.21.11'
+      EULA: 'TRUE'
+      PAPER_DOWNLOAD_URL: 'https://api.leafmc.one/v2/projects/leaf/versions/1.21.11/builds/179/downloads/leaf-1.21.11-179.jar'
+
+      REMOVE_OLD_MODS: 'TRUE'
+      COPY_CONFIG_DEST: '/data'
+      SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+      REPLACE_ENV_DURING_SYNC: 'TRUE'
+      REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+      INIT_MEMORY: 1G
+      MAX_MEMORY: 3G
+
+      CIV_SECUREBOOT_ENABLE: 'false'
+      CIV_SERVER_NAME: local
+
+      CIV_WORDBANK_SEED: wordbank
+
+      CIV_MYSQL_HOST: mariadb
+      CIV_MYSQL_USERNAME: mariadb
+      CIV_MYSQL_PASSWORD: mariadb
+
+      CIV_POSTGRES_HOST: postgres
+      CIV_POSTGRES_USERNAME: postgres
+      CIV_POSTGRES_PASSWORD: postgres
+
+      CIV_DATABASE_PREFIX: 'zorweth_'
+
+      CIV_RABBITMQ_HOST: rabbitmq
+      CIV_RABBITMQ_USERNAME: rabbitmq
+      CIV_RABBITMQ_PASSWORD: rabbitmq
+
+      JVM_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5009
+      CIV_WATCHDOG_TIMEOUT_TIME: 6000
+      CIV_FORWARDING_SECRET: '1234'
+    ports:
+      - "5009:5009"
+    volumes:
+      - ./containers/data/zorweth:/data
+      - ./ansible/files/zorweth-config:/config
+      - ./ansible/build/zorweth-plugins:/plugins
+
+  pvp:
+    image: itzg/minecraft-server:stable-java25
+    restart: on-failure
+    tty: true
+    stdin_open: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      TYPE: 'paper'
+      VERSION: '1.21.11'
+      EULA: 'TRUE'
+      PAPER_CUSTOM_JAR: 'asp-server.jar'
+
+      REMOVE_OLD_MODS: 'TRUE'
+      COPY_CONFIG_DEST: '/data'
+      SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+      REPLACE_ENV_DURING_SYNC: 'TRUE'
+      REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+      INIT_MEMORY: 1G
+      MAX_MEMORY: 3G
+
+      CIV_SERVER_NAME: local
+
+      CIV_WORDBANK_SEED: wordbank
+
+      CIV_MYSQL_HOST: mariadb
+      CIV_MYSQL_USERNAME: mariadb
+      CIV_MYSQL_PASSWORD: mariadb
+
+      CIV_POSTGRES_HOST: postgres
+      CIV_POSTGRES_USERNAME: postgres
+      CIV_POSTGRES_PASSWORD: postgres
+
+      CIV_DATABASE_PREFIX: 'pvp_'
+
+      CIV_RABBITMQ_HOST: rabbitmq
+      CIV_RABBITMQ_USERNAME: rabbitmq
+      CIV_RABBITMQ_PASSWORD: rabbitmq
+
+      JVM_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006
+      CIV_WATCHDOG_TIMEOUT_TIME: 6000
+      CIV_FORWARDING_SECRET: '1234'
+    ports:
+      - "5006:5006"
+    volumes:
+      - ./containers/data/pvp:/data
+      - ./ansible/files/paper-config:/paper-config
+      - ./ansible/files/pvp-config:/config
+      - ./ansible/build/pvp-plugins:/plugins
+
+  #################
+  ### Databases ###
+  #################
+
+  mariadb:
+    image: mariadb:10.7.1
+    restart: on-failure
+    command: --max-connections 500
+    healthcheck:
+      test: [ "CMD-SHELL", 'mysqladmin ping --user "$$MYSQL_USER" --password="$$MYSQL_PASSWORD"' ]
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+      start_interval: 5s
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mariadb
+      MYSQL_USER: mariadb
+      MYSQL_PASSWORD: mariadb
+      MYSQL_DATABASE: mariadb
+    volumes:
+      - ./containers/provisioning/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ./containers/data/mariadb:/var/lib/mysql
+
+  postgres:
+    image: timescale/timescaledb:latest-pg14
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD-SHELL", 'pg_isready -U "$$POSTGRES_USER"' ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+      start_interval: 5s
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./containers/provisioning/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ./containers/data/postgres:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3.9.16-management
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+      start_interval: 5s
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+
+  ##################
+  ### Monitoring ###
+  ##################
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - monitoring
+    ports:
+      - "3000:3000"
+    environment:
+      CIV_INFLUX_HOST: http://influx:8086
+      CIV_INFLUX_ORG: CivMC
+      CIV_INFLUX_TOKEN: admintoken
+    volumes:
+      - ./containers/provisioning/grafana:/etc/grafana/provisioning:ro

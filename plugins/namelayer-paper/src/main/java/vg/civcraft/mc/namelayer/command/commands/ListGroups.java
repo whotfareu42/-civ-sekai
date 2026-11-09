@@ -1,0 +1,104 @@
+package vg.civcraft.mc.namelayer.command.commands;
+
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Syntax;
+import java.util.List;
+import java.util.UUID;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import vg.civcraft.mc.namelayer.GroupManager;
+import vg.civcraft.mc.namelayer.NameLayerAPI;
+import vg.civcraft.mc.namelayer.command.BaseCommandMiddle;
+import vg.civcraft.mc.namelayer.group.Group;
+
+public class ListGroups extends BaseCommandMiddle {
+
+    @CommandAlias("nllg|listgroups|groups")
+    @Syntax("[player|page]")
+    @Description("List groups.")
+    public void execute(CommandSender sender, @Optional String targetOrPage) {
+        UUID uuid;
+        boolean autopages = false;
+        Integer targetPage = null;
+        final boolean isAdmin = sender instanceof ConsoleCommandSender
+            || sender.isOp() || sender.hasPermission("namelayer.admin");
+
+        if (isAdmin) {
+            uuid = NameLayerAPI.getUUID(sender.getName());
+            if (targetOrPage != null) {
+                try {
+                    targetPage = Integer.parseInt(targetOrPage);
+                } catch (NumberFormatException exception) {
+                    uuid = NameLayerAPI.getUUID(targetOrPage);
+                }
+            }
+
+            if (uuid == null) {
+                sender.sendMessage(Component.text("Unknown player: " + targetOrPage, NamedTextColor.RED));
+                return;
+            }
+            autopages = true;
+        } else {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(Component.text("Player only.", NamedTextColor.RED));
+                return;
+            }
+            uuid = NameLayerAPI.getUUID(player.getName());
+        }
+
+        List<String> groups = gm.getAllGroupNames(uuid);
+
+        int pages = (groups.size() / 10);
+        if (groups.size() % 10 > 0) {
+            pages++;
+        }
+        if (pages == 0) {
+            pages = 1;
+        }
+        int actualPages = pages;
+
+        int target = 1;
+        if (!autopages && targetOrPage != null) {
+            try {
+                target = Integer.parseInt(targetOrPage);
+            } catch (NumberFormatException exception) {
+                sender.sendMessage(ChatColor.RED + targetOrPage + " is not a number");
+                return;
+            }
+        } else if (targetPage != null) {
+            target = targetPage;
+        }
+
+        if (target >= pages) {
+            target = pages;
+        }
+
+        if (!autopages) {
+            pages = target;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(ChatColor.GREEN);
+        for (int page = target; page <= pages; page++) {
+            sb.append("Page ");
+            sb.append(page);
+            sb.append(" of ");
+            sb.append(actualPages);
+            sb.append(".\n");
+
+            int first = (page - 1) * 10;
+            for (int x = first; x < first + 10 && x < groups.size(); x++) {
+                Group g = GroupManager.getGroup(groups.get(x));
+                sb.append(String.format("%s : (%s)\n",
+                    g.getName(), g.isOwner(uuid) ? "PRIMARY_OWNER" : g.getPlayerType(uuid).toString()));
+            }
+        }
+        sender.sendMessage(sb.toString());
+    }
+}

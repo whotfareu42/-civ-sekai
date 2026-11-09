@@ -1,0 +1,140 @@
+package com.github.devotedmc.hiddenore.commands;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import com.github.devotedmc.hiddenore.listeners.WorldGenerationListener;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+
+import com.github.devotedmc.hiddenore.BlockConfig;
+import com.github.devotedmc.hiddenore.Config;
+import com.github.devotedmc.hiddenore.DropConfig;
+import com.github.devotedmc.hiddenore.DropItemConfig;
+import com.github.devotedmc.hiddenore.HiddenOre;
+
+/**
+ * Management and maintenance commands
+ *
+ * @author programmerdan
+ */
+public class CommandHandler implements CommandExecutor {
+
+    private final HiddenOre plugin;
+    private final List<WorldGenerationListener> worldGenerationListeners;
+
+    public CommandHandler(HiddenOre instance, List<WorldGenerationListener> worldGenerationListeners) {
+        this.plugin = instance;
+        this.worldGenerationListeners = worldGenerationListeners;
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("hiddenore")) {
+            if (sender.hasPermission(plugin.getCommand("hiddenore").getPermission())) {
+                if (args.length >= 2) {
+                    if ("debug".equals(args[0])) {
+                        Config.isDebug = Boolean.parseBoolean(args[1]);
+                        sender.sendMessage("HiddenOre debug mode now " + (Config.isDebug ? "on" : "off"));
+                        return true;
+                    }
+                }
+
+                if (args.length >= 1) {
+                    if ("save".equals(args[0])) {
+                        plugin.getTracking().liveSave();
+                        sender.sendMessage("HiddenOre tracking forced live save scheduled");
+                        return true;
+                    } else if ("generate".equals(args[0])) {
+                        if (!(sender instanceof Player)) {
+                            sender.sendMessage("Cannot be run as console");
+                        }
+                        Player player = (Player) sender;
+                        double mult = 1;
+                        try {
+                            mult = Integer.parseInt(args[1]);
+                        } catch (Exception e) {
+                            mult = 1;
+                        }
+                        final double vmult = mult;
+                        final UUID world = player.getWorld().getUID();
+
+                        sender.sendMessage("Generating all drops, this could cause lag");
+
+                        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                            long delay = 0l;
+                            Map<NamespacedKey, List<BlockConfig>> worldBlockConfigs = Config.instance.blockConfigs.getOrDefault(world, Config.instance.blockConfigs.get(null));
+                            if (worldBlockConfigs == null) {
+                                sender.sendMessage("No drops configured for blocks in this world.");
+                                return;
+                            }
+                            for (NamespacedKey blockConf : worldBlockConfigs.keySet()) {
+                                for (BlockConfig block : worldBlockConfigs.get(blockConf)) {
+                                    for (String dropConf : block.getDrops()) {
+                                        DropConfig drop = block.getDropConfig(dropConf);
+                                        for (DropItemConfig item : drop.drops) {
+                                            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                                sender.sendMessage(String.format("Block: %s, drop: %s", blockConf.toString(), dropConf));
+                                                Item dropped = player.getWorld().dropItem(player.getLocation().add(0, 1.0, 0), item.render(vmult));
+                                                dropped.setPickupDelay(20);
+                                            }, delay++);
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        return true;
+                    } else if ("clearores".equals(args[0])) {
+                        if (!(sender instanceof Player player)) {
+                            return false;
+                        }
+                        if (args.length != 2 && args.length != 4) {
+                            sender.sendMessage("Usage: /hiddenore clearores <radius> [centre-x centre-z]");
+                            return true;
+                        }
+                        int radius = Integer.parseInt(args[1]);
+                        int centerX = 0;
+                        int centerZ = 0;
+                        if (args.length == 4) {
+                            centerX = Integer.parseInt(args[2]);
+                            centerZ = Integer.parseInt(args[3]);
+                        }
+                        for (WorldGenerationListener worldGenerationListener : worldGenerationListeners) {
+                            if (worldGenerationListener.getWorldName().equals(player.getWorld().getName())) {
+                                worldGenerationListener.clearManually(sender, radius, centerX, centerZ);
+                                return true;
+                            }
+                        }
+                        sender.sendMessage("No world generation listener found");
+                        return true;
+                    } else if ("isprocessed".equals(args[0])) {
+                        if (!(sender instanceof Player player)) {
+                            return false;
+                        }
+                        for (WorldGenerationListener worldGenerationListener : worldGenerationListeners) {
+                            if (worldGenerationListener.getWorldName().equals(player.getWorld().getName())) {
+                                sender.sendMessage("Chunk processed: " + worldGenerationListener.isProcessed(player.getChunk()));
+                                return true;
+                            }
+                        }
+                        sender.sendMessage("No world generation listener found");
+                        return true;
+                    }
+                } else {
+                    Bukkit.getPluginManager().disablePlugin(plugin);
+                    Bukkit.getPluginManager().enablePlugin(plugin);
+                    sender.sendMessage("HiddenOre reloaded");
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}

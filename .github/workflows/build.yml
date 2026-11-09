@@ -1,0 +1,41 @@
+name: Build Sekai (Paper 26.3)
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Paper 26.3 Dev-Bundle + paperweight setzen
+        run: |
+          DB=$(curl -s https://repo.papermc.io/repository/maven-public/io/papermc/paper/dev-bundle/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | sed 's/<version>//' | tail -1)
+          PW=$(curl -s https://plugins.gradle.org/m2/io/papermc/paperweight/userdev/io.papermc.paperweight.userdev.gradle.plugin/maven-metadata.xml | grep -o '<latest>[^<]*' | sed 's/<latest>//')
+          echo "dev-bundle=$DB paperweight=$PW" | tee versions.txt
+          sed -i "s/^paper = \".*\"/paper = \"$DB\"/" gradle/libs.versions.toml
+          sed -i "s/paper-userdev = { id = \"io.papermc.paperweight.userdev\", version = \"[^\"]*\"/paper-userdev = { id = \"io.papermc.paperweight.userdev\", version = \"$PW\"/" gradle/libs.versions.toml
+          grep -E '^paper =|paper-userdev' gradle/libs.versions.toml
+      - name: Build
+        run: CI=true ./gradlew build -x test --continue 2>&1 | tee build.log || true
+      - name: Fehler zusammenfassen
+        if: always()
+        run: grep -E "^e: |error:|warning: \[removal\]|FAILED|What went wrong|Could not" build.log | grep -v "warning:" | head -600 > errors.txt || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: |
+            build.log
+            errors.txt
+            versions.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plugins
+          path: plugins/*-paper/build/libs/*.jar
+          if-no-files-found: ignore

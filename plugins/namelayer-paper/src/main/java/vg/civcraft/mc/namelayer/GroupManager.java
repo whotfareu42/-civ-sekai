@@ -1,0 +1,450 @@
+package vg.civcraft.mc.namelayer;
+
+import com.google.common.collect.Maps;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import net.civmc.namelayer.sync.NameLayerWriteOperation;
+import net.civmc.namelayer.sync.NameLayerWriteRequest;
+import net.civmc.namelayer.sync.NameLayerWriteResponse;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import vg.civcraft.mc.namelayer.cache.NameLayerGroupCache;
+import vg.civcraft.mc.namelayer.database.NameLayerReadDao;
+import vg.civcraft.mc.namelayer.events.GroupCreateEvent;
+import vg.civcraft.mc.namelayer.events.GroupDeleteEvent;
+import vg.civcraft.mc.namelayer.group.Group;
+import vg.civcraft.mc.namelayer.permission.GroupPermission;
+import vg.civcraft.mc.namelayer.permission.PermissionHandler;
+import vg.civcraft.mc.namelayer.permission.PermissionType;
+import vg.civcraft.mc.namelayer.rabbitmq.NameLayerWriteClient;
+
+public class GroupManager {
+
+    private static NameLayerReadDao nameLayerReadDao;
+    private PermissionHandler permhandle;
+
+    public GroupManager() {
+        nameLayerReadDao = NameLayerPlugin.getNameLayerReadDao();
+        permhandle = new PermissionHandler();
+    }
+
+    private static NameLayerGroupCache getCache() {
+        return NameLayerPlugin.getGroupCache();
+    }
+
+    public static void fullResyncCache() {
+        NameLayerPlugin.fullResyncGroupCache();
+    }
+
+    public static boolean reloadGroupsById(final List<Integer> groupIds) {
+        if (groupIds == null) {
+            NameLayerPlugin.recordTargetedReloadFailure(0);
+            return false;
+        }
+        final long startedAtMillis = System.currentTimeMillis();
+        final Set<Integer> uniqueGroupIds = new LinkedHashSet<>(groupIds);
+        final NameLayerReadDao.GroupReloadSnapshot snapshot = nameLayerReadDao.loadGroupsByIdsSnapshot(uniqueGroupIds);
+        if (snapshot == null) {
+            NameLayerPlugin.recordTargetedReloadFailure(uniqueGroupIds.size());
+            return false;
+        }
+        final Map<Integer, Group> groups = snapshot.groups();
+        final NameLayerGroupCache cache = getCache();
+        if (cache == null) {
+            NameLayerPlugin.recordTargetedReloadFailure(uniqueGroupIds.size());
+            return false;
+        }
+        for (final int groupId : uniqueGroupIds) {
+            cache.replaceGroupById(groupId, groups.get(groupId));
+        }
+        cache.setAppliedVersion(snapshot.cacheVersion());
+        NameLayerPlugin.recordTargetedReload(uniqueGroupIds.size(), System.currentTimeMillis() - startedAtMillis);
+        return true;
+    }
+
+    public int countGroups(final UUID ownerUuid) {
+        final NameLayerGroupCache cache = getCache();
+        if (cache == null) {
+            return 0;
+        }
+        return cache.countGroups(ownerUuid);
+    }
+
+    public void createGroupAsync(
+        final UUID actorUuid,
+        final String groupName,
+        final String password,
+        final int maxGroups,
+        final boolean adminOverride,
+        final Consumer<GroupWriteResult> callback
+    ) {
+        final GroupCreateEvent event = new GroupCreateEvent(groupName, actorUuid, password);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("Group create was cancelled"));
+            return;
+        }
+        final Map<String, String> arguments = new HashMap<>();
+        arguments.put("groupName", event.getGroupName());
+        arguments.put("hasPassword", Boolean.toString(event.getPassword() != null));
+        if (event.getPassword() != null) {
+            arguments.put("password", event.getPassword());
+        }
+        arguments.put("defaultPermissions", encodeDefaultPermissions(PermissionType.getAllPermissions()));
+        arguments.put("maxGroups", Integer.toString(maxGroups));
+        arguments.put("adminOverride", Boolean.toString(adminOverride));
+        sendGroupWrite(actorUuid, NameLayerWriteOperation.CREATE_GROUP, arguments, callback);
+    }
+
+    public void ensureNewfriendGroupAsync(
+        final UUID playerUuid,
+        final String baseName,
+        final Consumer<GroupWriteResult> callback
+    ) {
+        final Map<String, String> arguments = new HashMap<>();
+        arguments.put("baseName", baseName);
+        arguments.put("defaultPermissions", encodeDefaultPermissions(PermissionType.getAllPermissions()));
+        sendGroupWrite(playerUuid, NameLayerWriteOperation.ENSURE_NEWFRIEND_GROUP, arguments, callback);
+    }
+
+    public void deleteGroupAsync(
+        final UUID actorUuid,
+        final Group group,
+        final boolean adminOverride,
+        final Consumer<GroupWriteResult> callback
+    ) {
+        if (group == null) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("Group does not exist"));
+            return;
+        }
+        GroupDeleteEvent event = new GroupDeleteEvent(group, false);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("Group delete was cancelled"));
+            return;
+        }
+        sendGroupWrite(
+            actorUuid,
+            NameLayerWriteOperation.DELETE_GROUP,
+            Map.of(
+                "groupId", Integer.toString(group.getGroupId()),
+                "adminOverride", Boolean.toString(adminOverride)
+            ),
+            result -> {
+                if (result.success()) {
+                    final GroupDeleteEvent finishedEvent = new GroupDeleteEvent(group, true);
+                    Bukkit.getPluginManager().callEvent(finishedEvent);
+                }
+                callback.accept(result);
+            }
+        );
+    }
+
+    private void sendGroupWrite(
+        final UUID actorUuid,
+        final NameLayerWriteOperation operation,
+        final Map<String, String> arguments,
+        final Consumer<GroupWriteResult> callback
+    ) {
+        final NameLayerWriteClient writeClient = NameLayerPlugin.getWriteClient();
+        if (writeClient == null) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("NameLayer proxy write client is unavailable"));
+            return;
+        }
+        final NameLayerPlugin plugin = NameLayerPlugin.getInstance();
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            final NameLayerWriteRequest request = NameLayerWriteRequest.create(
+                plugin.getConfig().getString("rabbitmq.serverId", "paper"),
+                actorUuid,
+                operation,
+                arguments
+            );
+            writeClient.send(request).whenComplete((response, error) -> handleGroupWriteResponse(response, error, callback));
+        });
+    }
+
+    private void handleGroupWriteResponse(
+        final NameLayerWriteResponse response,
+        final Throwable error,
+        final Consumer<GroupWriteResult> callback
+    ) {
+        if (error != null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.WARNING, "NameLayer group proxy write failed", error);
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("NameLayer proxy write failed"));
+            return;
+        }
+        if (!response.success()) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure(response.message()));
+            return;
+        }
+        final boolean reloadSucceeded;
+        if (response.requiresFullResync()) {
+            NameLayerPlugin.fullResyncGroupCache();
+            reloadSucceeded = true;
+        } else {
+            reloadSucceeded = reloadGroupsById(List.copyOf(response.affectedGroupIds()));
+        }
+        if (!reloadSucceeded) {
+            completeGroupWriteOnMain(callback, GroupWriteResult.failure("Group write succeeded, but local cache refresh failed"));
+            return;
+        }
+        final Group group = response.affectedGroupIds().isEmpty() ? null : getGroup(response.affectedGroupIds().iterator().next());
+        completeGroupWriteOnMain(callback, GroupWriteResult.successResult(group));
+    }
+
+    private void completeGroupWriteOnMain(final Consumer<GroupWriteResult> callback, final GroupWriteResult result) {
+        Bukkit.getScheduler().runTask(NameLayerPlugin.getInstance(), () -> callback.accept(result));
+    }
+
+    private String encodeDefaultPermissions(final Collection<PermissionType> permissions) {
+        final StringBuilder builder = new StringBuilder();
+        for (final PermissionType permission : permissions) {
+            for (final PlayerType playerType : permission.getDefaultPermLevels()) {
+                if (!builder.isEmpty()) {
+                    builder.append(';');
+                }
+                builder.append(playerType.name()).append(':').append(permission.getName());
+            }
+        }
+        return builder.toString();
+    }
+
+    public record GroupWriteResult(boolean success, String message, Group group) {
+
+        public static GroupWriteResult successResult(final Group group) {
+            return new GroupWriteResult(true, "", group);
+        }
+
+        public static GroupWriteResult failure(final String message) {
+            return new GroupWriteResult(false, message == null || message.isBlank() ? "Group write failed" : message, null);
+        }
+    }
+
+    /**
+     * This will create a group asynchronously. Always saves to database. Pass in a callback that specifies what to run
+     * <i>synchronously</i> after the insertion of the group. Your callback should handle the case where
+     * id = -1 (failure).
+     * <p>
+     * Note that your run() method should use the passed group's getGroupId() to retrieve the created group ID and react to it.
+     *
+     * @param group             the Group placeholder to use in creating a group. Calls GroupCreateEvent synchronously, then insert the
+     *                          group asynchronously, then calls the callback synchronously.
+     */
+    public void createGroupAsync(final Group group, final int maxGroups, final boolean adminOverride) {
+        createGroupAsync(group.getOwner(), group.getName(), group.getPassword(), maxGroups, adminOverride, result -> {
+            Group createdGroup = result.group();
+            if (createdGroup != null) {
+                NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "Group {0} creation complete resulting in group id: {1}",
+                    new Object[]{createdGroup.getName(), createdGroup.getGroupId()});
+            }
+
+            Player player = Bukkit.getPlayer(group.getOwner());
+            if (player == null) {
+                return;
+            }
+            if (createdGroup == null) {
+                player.sendMessage(ChatColor.RED + result.message());
+            } else {
+                player.sendMessage(ChatColor.GREEN + "The group " + createdGroup.getName() + " was successfully created.");
+            }
+        });
+    }
+
+    /*
+     * Making this static so I can use it in other places without needing the GroupManager Object.
+     * Saves me code so I can always grab a group if it is already loaded while not needing to check db.
+     */
+    public static Group getGroup(String name) {
+        if (name == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getGroup failed, caller passed in null", new Exception());
+            return null;
+        }
+        String lower = name.toLowerCase();
+        NameLayerGroupCache cache = getCache();
+        if (cache != null) {
+            Group group = cache.getByName(lower);
+            if (group != null) {
+                return group;
+            }
+        }
+
+        NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getGroup by Name failed, unable to find the group " + name);
+        return null;
+    }
+
+    public static Group getGroup(int groupId) {
+        NameLayerGroupCache cache = getCache();
+        if (cache != null) {
+            Group group = cache.getById(groupId);
+            if (group != null) {
+                return group;
+            }
+        }
+
+        NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getGroup by ID failed, unable to find the group " + groupId);
+        return null;
+    }
+
+    /**
+     * DO NOT WORK WITH THE PERMISSION OBJECT ITSELF TO DETERMINE ACCESS. Use the methods provided in this class instead, as they
+     * respect all the permission inheritation stuff
+     *
+     * @param group the group to retrieve permissions from
+     * @return the actual permissions for this object or null
+     */
+    public GroupPermission getPermissionforGroup(Group group) {
+        if (group == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getPermissionForGroup failed, caller passed in null", new Exception());
+            return null;
+        }
+        return permhandle.getGroupPermission(group);
+    }
+
+    public boolean hasAccess(String groupname, UUID player, PermissionType perm) {
+        if (groupname == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "hasAccess failed (access denied), could not find group " + groupname);
+            return false;
+        }
+        return hasAccess(getGroup(groupname), player, perm);
+    }
+
+    public boolean hasAccess(Group group, UUID player, PermissionType perm) {
+        Player p = Bukkit.getPlayer(player);
+        if (p != null && (p.isOp() || p.hasPermission("namelayer.admin"))) {
+            return true;
+        }
+        if (group == null || perm == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "hasAccess failed, caller passed in null", new Exception());
+            return false;
+        }
+        if (!group.isValid()) {
+            group = getGroup(group.getName());
+            if (group == null) {
+                //what happened? who knows?
+                return false;
+            }
+        }
+        if (group.isOwner(player) && perm.isOwnerPermission()) {
+            return true;
+        }
+        PlayerType type = group.getPlayerType(player);
+        return type != null && getPermissionforGroup(group).hasPermission(type, perm);
+    }
+
+    // == PERMISSION HANDLING ============================================================= //
+
+    public List<String> getAllGroupNames(UUID uuid) {
+        if (uuid == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getAllGroupNames failed, caller passed in null", new Exception());
+            return new ArrayList<>();
+        }
+        final NameLayerGroupCache cache = getCache();
+        if (cache == null) {
+            return new ArrayList<>();
+        }
+        return cache.getGroupNames(uuid);
+    }
+
+    public String getDefaultGroup(UUID uuid) {
+        if (uuid == null) {
+            NameLayerPlugin.getInstance().getLogger().log(Level.INFO, "getDefaultGroup was cancelled, caller passed in null", new Exception());
+            return null;
+        }
+        return NameLayerPlugin.getDefaultGroupHandler().getDefaultGroup(uuid);
+    }
+
+    /**
+     * In ascending order
+     * Add an enum here if you wish to add more than the four default tiers of
+     * roles.
+     */
+    public enum PlayerType {
+        MEMBERS,
+        MODS,
+        ADMINS,
+        OWNER,
+        NOT_BLACKLISTED;//anyone, who is not blacklisted
+
+        private final static Map<String, PlayerType> BY_NAME = Maps.newHashMap();
+
+        static {
+            for (PlayerType rank : values()) {
+                BY_NAME.put(rank.name(), rank);
+            }
+        }
+
+        public static PlayerType getPlayerType(String type) {
+            return BY_NAME.get(type.toUpperCase());
+        }
+
+        public static String getStringOfTypes() {
+            StringBuilder ranks = new StringBuilder();
+            for (String rank : BY_NAME.keySet()) {
+                ranks.append(rank);
+                ranks.append(" ");
+            }
+            return ranks.toString();
+        }
+
+        public static void displayPlayerTypes(CommandSender p) {
+            p.sendMessage(ChatColor.RED
+                + "That PlayerType does not exist.\n"
+                + "The current types are: " + getStringOfTypes());
+        }
+
+        public static void displayPlayerTypesnllpt(Player p) {
+            p.sendMessage(ChatColor.GREEN
+                + "The current types are: " + getStringOfTypes());
+            //dont yell at player for nllpt
+        }
+
+        public static int getID(PlayerType type) {
+            if (type == null) {
+                return -1;
+            }
+            switch (type) {
+                case NOT_BLACKLISTED:
+                    return 0;
+                case MEMBERS:
+                    return 1;
+                case MODS:
+                    return 2;
+                case ADMINS:
+                    return 3;
+                case OWNER:
+                    return 4;
+                default:
+                    return -1;
+            }
+        }
+
+        public static String getNiceRankName(PlayerType pType) {
+            if (pType == null) {
+                return "RANK_ERROR";
+            }
+            switch (pType) {
+                case MEMBERS:
+                    return "Member";
+                case MODS:
+                    return "Mod";
+                case ADMINS:
+                    return "Admin";
+                case OWNER:
+                    return "Owner";
+                case NOT_BLACKLISTED:
+                    return "Anyone who is not blacklisted";
+            }
+            return "RANK_ERROR";
+        }
+    }
+}

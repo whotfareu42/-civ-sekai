@@ -1,0 +1,399 @@
+version: '3.8'
+
+services:
+
+    waterfall:
+        image: itzg/mc-proxy:java25
+        restart: unless-stopped
+        tty: true
+        stdin_open: true
+        networks:
+            - minecraft_default
+        ports:
+            # Open port in host mode, to bypass swarm ingress
+            - target: 8192
+              published: 8192
+              protocol: tcp
+              mode: host
+            - target: 25577
+              published: 25565
+              protocol: tcp
+              mode: host
+            - target: 25577
+              published: 25577
+              protocol: udp
+              mode: host
+        environment:
+            TYPE: 'VELOCITY'
+
+            REPLACE_ENV_VARIABLES: 'true'
+            REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+            INIT_MEMORY: 3G
+            MAX_MEMORY: 4G
+            CIV_POSTGRES_HOST: minecraft_postgres
+            CIV_POSTGRES_USERNAME: '{{secret.minecraft.postgres.username}}'
+            CIV_POSTGRES_PASSWORD: '{{secret.minecraft.postgres.password}}'
+            CIV_FORWARDING_SECRET: '{{secret.minecraft.forwarding_secret}}'
+            CIV_TIMEOUT_TIME: 30000
+            CIV_PVP_HOSTNAME: '{{setting.minecraft.pvp_hostname}}'
+            CIV_HOSTNAME: '{{setting.minecraft.hostname}}'
+
+            CIV_RABBITMQ_HOST: minecraft_rabbitmq
+            CIV_RABBITMQ_USERNAME: rabbitmq
+            CIV_RABBITMQ_PASSWORD: '{{secret.minecraft.rabbitmq.password}}'
+
+            CIV_MYSQL_HOST: minecraft_mariadb
+            CIV_MYSQL_USERNAME: '{{secret.minecraft.mysql.username}}'
+            CIV_MYSQL_PASSWORD: '{{secret.minecraft.mysql.password}}'
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        volumes:
+            # Config & Plugins
+            - /opt/stacks/minecraft/proxy-config:/config
+            - /opt/stacks/minecraft/proxy-plugins:/plugins
+            - /opt/PrivateConfig/proxy/config/nuvotifier/config.toml:/config/plugins/nuvotifier/config.toml
+            - /opt/PrivateConfig/proxy/config/nuvotifier/rsa/public.key:/config/plugins/nuvotifier/rsa/public.key
+            - /opt/PrivateConfig/proxy/config/nuvotifier/rsa/private.key:/config/plugins/nuvotifier/rsa/private.key
+
+    paper:
+        image: itzg/minecraft-server:stable-java25
+        restart: unless-stopped
+        tty: true
+        stdin_open: true
+        stop_grace_period: 60m
+        networks:
+            - minecraft_default
+        ports:
+            - target: 5004
+              published: 5004
+              protocol: tcp
+              mode: host
+        environment:
+            TYPE: 'paper'
+            VERSION: '1.21.11'
+            EULA: 'TRUE'
+            PAPER_DOWNLOAD_URL: 'https://api.leafmc.one/v2/projects/leaf/versions/1.21.11/builds/179/downloads/leaf-1.21.11-179.jar'
+
+            REMOVE_OLD_MODS: 'TRUE'
+            COPY_CONFIG_DEST: '/data'
+            SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+            REPLACE_ENV_DURING_SYNC: 'TRUE'
+            REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+            INIT_MEMORY: '{{setting.minecraft.resources.memory}}'
+            MAX_MEMORY: '{{setting.minecraft.resources.memory}}'
+            USE_MEOWICE_FLAGS: 'TRUE'
+            STOP_DURATION: 3600
+
+            CIV_SECUREBOOT_ENABLE: 'true'
+            CIV_SERVER_NAME: prod-server
+{% if setting.minecraft.whitelist %}
+            ENABLE_WHITELIST: 'true'
+            CIV_WHITELIST: 'true'
+{% else %}
+            ENABLE_WHITELIST: 'false'
+            CIV_WHITELIST: 'false'
+{% endif %}
+
+            CIV_WORLD_GENERATOR: Terra:CIVMC
+            CIV_WORDBANK_SEED: '{{secret.minecraft.wordbank_seed}}'
+            CIV_HIDDENORE_DENSITY_SEED: '{{ secret.minecraft.zorweth_hiddenore_density_seed }}'
+            CIV_HIDDENORE_HEIGHT_SEED: '{{ secret.minecraft.zorweth_hiddenore_height_seed }}'
+
+            CIV_MYSQL_HOST: minecraft_mariadb
+            CIV_MYSQL_USERNAME: '{{secret.minecraft.mysql.username}}'
+            CIV_MYSQL_PASSWORD: '{{secret.minecraft.mysql.password}}'
+
+            CIV_POSTGRES_HOST: minecraft_postgres
+            CIV_POSTGRES_USERNAME: '{{secret.minecraft.postgres.username}}'
+            CIV_POSTGRES_PASSWORD: '{{secret.minecraft.postgres.password}}'
+
+            CIV_DATABASE_PREFIX: ''
+
+            CIV_RABBITMQ_HOST: minecraft_rabbitmq
+            CIV_RABBITMQ_USERNAME: rabbitmq
+            CIV_RABBITMQ_PASSWORD: '{{secret.minecraft.rabbitmq.password}}'
+
+            CIV_WATCHDOG_TIMEOUT_TIME: 60
+            CIV_FORWARDING_SECRET: '{{secret.minecraft.forwarding_secret}}'
+
+            JVM_OPTS: '-agentpath:./libti.so -XX:ObjectAlignmentInBytes=16'
+        volumes:
+            # Persistence
+            - /opt/stacks/minecraft/paper-data:/data
+            # Config & Plugins
+            - /opt/stacks/minecraft/paper-config:/config
+            - /opt/stacks/minecraft/paper-plugins:/plugins
+            # Private Config & Plugins
+            - /opt/PrivateConfig/paper/plugins/Vulcan.jar:/config/plugins/Vulcan.jar
+            - /opt/PrivateConfig/paper/plugins/NM.jar:/config/plugins/NM.jar
+            - /opt/PrivateConfig/paper/config/NM/config.yml:/config/plugins/NM/config.yml
+            - /opt/PrivateConfig/paper/config/Vulcan/config.yml:/config/plugins/Vulcan/config.yml
+            - /opt/PrivateConfig/paper/config/HiddenOre/config.yml:/config/plugins/HiddenOre/config.yml
+            - /opt/PrivateConfig/paper/config/KiraBukkitGateway/config.yml:/config/plugins/KiraBukkitGateway/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/config.yml:/config/plugins/BreweryX/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/cauldron.yml:/config/plugins/BreweryX/cauldron.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/custom-items.yml:/config/plugins/BreweryX/custom-items.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/recipes.yml:/config/plugins/BreweryX/recipes.yml
+            - /opt/PrivateConfig/paper/config/Terra/packs/CivMC:/config/plugins/Terra/packs/CivMC
+            - /opt/PrivateConfig/paper/config/DiscordSRV/config.yml:/config/plugins/DiscordSRV/config.yml
+            - /opt/PrivateConfig/paper/config/DiscordSRV/alerts.yml:/config/plugins/DiscordSRV/alerts.yml
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/baits:/config/plugins/EvenMoreFish/baits
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/rods:/config/plugins/EvenMoreFish/rods
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/rarities:/config/plugins/EvenMoreFish/rarities
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/competitions:/config/plugins/EvenMoreFish/competitions
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/config.yml:/config/plugins/EvenMoreFish/config.yml
+            - /opt/PrivateConfig/paper/config/RandomSpawn/worlds.yml:/config/plugins/RandomSpawn/worlds.yml
+            - /opt/PrivateConfig/paper/config/Heliodor/config.yml:/config/plugins/Heliodor/config.yml
+            - /opt/PrivateConfig/paper/config/CivChat2/banned-words.txt:/config/plugins/CivChat2/banned-words.txt
+            - /opt/PrivateConfig/paper/config/Zorweth/mechanics.yml:/config/plugins/Zorweth/mechanics.yml
+
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+            resources:
+                limits:
+                    memory: '{{setting.minecraft.resources.memory_limit}}'
+
+    zorweth:
+        image: itzg/minecraft-server:stable-java25
+        restart: unless-stopped
+        tty: true
+        stdin_open: true
+        stop_grace_period: 60m
+        networks:
+            - minecraft_default
+        environment:
+            TYPE: 'paper'
+            VERSION: '1.21.11'
+            EULA: 'TRUE'
+            PAPER_DOWNLOAD_URL: 'https://api.leafmc.one/v2/projects/leaf/versions/1.21.11/builds/179/downloads/leaf-1.21.11-179.jar'
+
+            REMOVE_OLD_MODS: 'TRUE'
+            COPY_CONFIG_DEST: '/data'
+            SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+            REPLACE_ENV_DURING_SYNC: 'TRUE'
+            REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+            INIT_MEMORY: '{{setting.minecraft.resources.zorweth_memory}}'
+            MAX_MEMORY: '{{setting.minecraft.resources.zorweth_memory}}'
+            USE_MEOWICE_FLAGS: 'TRUE'
+            STOP_DURATION: 3600
+
+            CIV_SECUREBOOT_ENABLE: 'true'
+            CIV_SERVER_NAME: prod-server
+{% if setting.minecraft.zorweth_whitelist %}
+            ENABLE_WHITELIST: 'true'
+            CIV_WHITELIST: 'true'
+{% else %}
+            ENABLE_WHITELIST: 'false'
+            CIV_WHITELIST: 'false'
+{% endif %}
+
+            CIV_WORDBANK_SEED: '{{secret.minecraft.wordbank_seed}}'
+
+            CIV_MYSQL_HOST: minecraft_mariadb
+            CIV_MYSQL_USERNAME: '{{secret.minecraft.mysql.username}}'
+            CIV_MYSQL_PASSWORD: '{{secret.minecraft.mysql.password}}'
+
+            CIV_POSTGRES_HOST: minecraft_postgres
+            CIV_POSTGRES_USERNAME: '{{secret.minecraft.postgres.username}}'
+            CIV_POSTGRES_PASSWORD: '{{secret.minecraft.postgres.password}}'
+
+            CIV_DATABASE_PREFIX: 'zorweth_'
+
+            CIV_RABBITMQ_HOST: minecraft_rabbitmq
+            CIV_RABBITMQ_USERNAME: rabbitmq
+            CIV_RABBITMQ_PASSWORD: '{{secret.minecraft.rabbitmq.password}}'
+
+            CIV_WATCHDOG_TIMEOUT_TIME: 60
+            CIV_FORWARDING_SECRET: '{{secret.minecraft.forwarding_secret}}'
+
+            JVM_OPTS: '-agentpath:./libti.so'
+        volumes:
+            # Persistence
+            - /opt/stacks/minecraft/zorweth-data:/data
+            # Config & Plugins
+            - /opt/stacks/minecraft/zorweth-config:/config
+            - /opt/stacks/minecraft/zorweth-plugins:/plugins
+            # Private Config & Plugins
+            - /opt/PrivateConfig/paper/plugins/Vulcan.jar:/config/plugins/Vulcan.jar
+            - /opt/PrivateConfig/paper/config/Vulcan/config.yml:/config/plugins/Vulcan/config.yml
+            - /opt/PrivateConfig/paper/config/CivChat2/banned-words.txt:/config/plugins/CivChat2/banned-words.txt
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/baits:/config/plugins/EvenMoreFish/baits
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/rods:/config/plugins/EvenMoreFish/rods
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/rarities:/config/plugins/EvenMoreFish/rarities
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/competitions:/config/plugins/EvenMoreFish/competitions
+            - /opt/PrivateConfig/paper/config/EvenMoreFish/config.yml:/config/plugins/EvenMoreFish/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/config.yml:/config/plugins/BreweryX/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/cauldron.yml:/config/plugins/BreweryX/cauldron.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/custom-items.yml:/config/plugins/BreweryX/custom-items.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/recipes.yml:/config/plugins/BreweryX/recipes.yml
+            - /opt/PrivateConfig/zorweth/config/HiddenOre/config.yml:/config/plugins/HiddenOre/config.yml
+            - /opt/PrivateConfig/zorweth/config/RandomSpawn/worlds.yml:/config/plugins/RandomSpawn/worlds.yml
+            - /opt/PrivateConfig/zorweth/config/Zorweth/mechanics.yml:/config/plugins/Zorweth/mechanics.yml
+            - /opt/PrivateConfig/zorweth/config/Heliodor/config.yml:/config/plugins/Heliodor/config.yml
+            - /opt/PrivateConfig/zorweth/config/KiraBukkitGateway/config.yml:/config/plugins/KiraBukkitGateway/config.yml
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+            resources:
+                limits:
+                    memory: '{{setting.minecraft.resources.zorweth_memory_limit}}'
+
+    pvp:
+        image: itzg/minecraft-server:stable-java25
+        restart: unless-stopped
+        tty: true
+        stdin_open: true
+        stop_grace_period: 60m
+        networks:
+            - minecraft_default
+        ports:
+            - target: 8193
+              published: 8193
+              protocol: tcp
+              mode: host
+        environment:
+            TYPE: 'paper'
+            VERSION: '1.21.11'
+            EULA: 'TRUE'
+            PAPER_CUSTOM_JAR: 'asp-server.jar'
+
+            REMOVE_OLD_MODS: 'TRUE'
+            COPY_CONFIG_DEST: '/data'
+            SYNC_SKIP_NEWER_IN_DESTINATION: 'false'
+            REPLACE_ENV_DURING_SYNC: 'TRUE'
+            REPLACE_ENV_VARIABLE_PREFIX: 'CIV'
+
+            INIT_MEMORY: '{{setting.minecraft.resources.pvp_memory}}'
+            MAX_MEMORY: '{{setting.minecraft.resources.pvp_memory}}'
+            USE_MEOWICE_FLAGS: 'TRUE'
+            STOP_DURATION: 3600
+
+            CIV_SERVER_NAME: prod-server
+{% if setting.minecraft.pvp_whitelist %}
+            ENABLE_WHITELIST: 'true'
+            CIV_WHITELIST: 'true'
+{% else %}
+            ENABLE_WHITELIST: 'false'
+            CIV_WHITELIST: 'false'
+{% endif %}
+
+            CIV_WORLD_GENERATOR: VoidWorld
+
+            CIV_MYSQL_HOST: minecraft_mariadb
+            CIV_MYSQL_USERNAME: '{{secret.minecraft.mysql.username}}'
+            CIV_MYSQL_PASSWORD: '{{secret.minecraft.mysql.password}}'
+
+            CIV_POSTGRES_HOST: minecraft_postgres
+            CIV_POSTGRES_USERNAME: '{{secret.minecraft.postgres.username}}'
+            CIV_POSTGRES_PASSWORD: '{{secret.minecraft.postgres.password}}'
+
+            CIV_DATABASE_PREFIX: 'pvp_'
+
+            CIV_RABBITMQ_HOST: minecraft_rabbitmq
+            CIV_RABBITMQ_USERNAME: rabbitmq
+            CIV_RABBITMQ_PASSWORD: '{{secret.minecraft.rabbitmq.password}}'
+
+            CIV_WATCHDOG_TIMEOUT_TIME: 60
+            CIV_FORWARDING_SECRET: '{{secret.minecraft.forwarding_secret}}'
+
+        volumes:
+            # Persistence
+            - /opt/stacks/minecraft/pvp-data:/data
+            # Config & Plugins
+            - /opt/stacks/minecraft/pvp-config:/config
+            - /opt/stacks/minecraft/pvp-plugins:/plugins
+            # Private Config & Plugins
+            - /opt/PrivateConfig/paper/plugins/Vulcan.jar:/config/plugins/Vulcan.jar
+            - /opt/PrivateConfig/paper/config/Vulcan/config.yml:/config/plugins/Vulcan/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/config.yml:/config/plugins/BreweryX/config.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/cauldron.yml:/config/plugins/BreweryX/cauldron.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/custom-items.yml:/config/plugins/BreweryX/custom-items.yml
+            - /opt/PrivateConfig/paper/config/BreweryX/recipes.yml:/config/plugins/BreweryX/recipes.yml
+            - /opt/PrivateConfig/paper/config/CivChat2/banned-words.txt:/config/plugins/CivChat2/banned-words.txt
+
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+            resources:
+                limits:
+                    memory: '{{setting.minecraft.resources.pvp_memory_limit}}'
+
+    kira:
+        image: ghcr.io/civmc/kira:latest
+        restart: unless-stopped
+        tty: true
+        stdin_open: true
+        networks:
+            - minecraft_default
+        volumes:
+            - /opt/PrivateConfig/kira/{{setting.environment}}-config.json:/app/config.json
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
+    mariadb:
+        image: mariadb:10.7.1
+        restart: unless-stopped
+        command: --max-connections 1500 --max-allowed-packet 1073741824
+        networks:
+            - monitoring
+            - minecraft_default
+        environment:
+            MYSQL_USER: minecraft
+            MYSQL_PASSWORD: '{{secret.minecraft.mysql.password}}'
+            MYSQL_ROOT_PASSWORD: '{{secret.minecraft.mysql.root_password}}'
+        volumes:
+            - /opt/stacks/minecraft/mariadb-data:/var/lib/mysql
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
+    postgres:
+        image: timescale/timescaledb:2.10.3-pg14
+        restart: unless-stopped
+        command: postgres -c 'max_connections=1500'
+        networks:
+            - monitoring
+            - minecraft_default
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        environment:
+            POSTGRES_USER: minecraft
+            POSTGRES_PASSWORD: '{{secret.minecraft.postgres.password}}'
+        volumes:
+            - /opt/stacks/minecraft/postgres-data:/var/lib/postgresql/data
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
+    rabbitmq:
+        image: rabbitmq:3.9.16-management
+        restart: unless-stopped
+        networks:
+            - minecraft_default
+        healthcheck:
+            test: ["CMD", "rabbitmq-diagnostics", "ping"]
+            interval: 60s
+            timeout: 10s
+            retries: 5
+        environment:
+            RABBITMQ_DEFAULT_USER: rabbitmq
+            RABBITMQ_DEFAULT_PASS: '{{secret.minecraft.rabbitmq.password}}'
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
+networks:
+    minecraft_default:
+    traefik-public:
+        external: true
+    monitoring:
+        external: true

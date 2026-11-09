@@ -1,0 +1,882 @@
+---
+title: Brewery
+description: All info on the brewery plugin.
+---
+
+# Brewery
+Brewery is a plugin that allows players to produce alcoholic drink, foods and even drugs that can have unique effects on the player who drinks them. The recipes to produce these drinks are not given out however, which means that players have to experiment with the ingredients and hints given below to find them, or get the recipes from those who have already. 
+
+## Setting up
+Setting up a brewery is very easy and only requires 3 separate things, all of which play a different part in the brewing process. These are as described below
+
+![Cauldron example](media/Cauldron.png)
+
+### Cauldron
+First up is the start of all brews. A Cauldron placed above fire, lava, a magma block or a campfire will allow you to use it for brewing, simply add some water to the cauldron and right click your ingredients in. You'll know the cooking process has started when the item disappears from your hand, and swirling potion particles come out of the cauldron.
+
+You can right click a clock on the cauldron to see how long it has been cooking for in minutes. Use this to time your recipes. 
+
+### Distilling
+Second is a brewing stand, with the odd addition of placing 1 glowstone dust in the top slot, like so:
+
+![Distilling setup](media/Distilling.png)
+
+Brews taken out of the cauldron and put below the glowstone dust will be distilled. (The glowstone dust does not get used up) Every cycle of the downward arrow counts as 1 distill run. The brew will display how many times it has been distilled while hovering over it with you mouse. (1 distill run takes 40 seconds)
+
+*Note that not all brews require you to distill them, this is an aspect you must experiment with. 
+
+### Aging
+Aging is done in barrels, these are simple multi block structures made out of wood, with a sign on them reading: "Barrel"
+
+There are 2 versions. a small one which can hold and age 9 brews, and a large one which can hold and age a single chest's worth (27) see examples below: 
+
+
+
+| Small Barrel | Large Barrel | Different kind of wood |
+|:------------:|:------------:|:----------------------:|
+|     ![Small Barrel](media/Smallbarrel.png)     |     ![Large Barrel](media/Largebarrel.png)     |          ![Different wood types](media/2largebarrels.png)          |
+
+As seen the small barrel, is 2x2 made from wooden stairs, with the sign placed on the lower right corner.
+
+The large one is 4x4 and consist of a total of: 20 planks and 16 stairs of the same type of wood, 1 fence post for the tap, and 1 sign in exactly the configuration shown. When correctly made a message in chat will notify the player that they have successfully made a barrel. The large barrel has two empty blocks in the center- you can put anything you like here (like snitches!) or leave it completely empty.
+
+Knowing when and how long to age a brew for is found out by experimentation through trail and error. (1 year of aging is equal to 1 Minecraft day or 20 minutes real time)
+
+*Note that barrels can be any type of wood, and that the wood type used can matter to the brew put inside to age. 
+
+### Sealing
+Don't forget this critical step if you're planning to sell your brews! Sealing your brews makes it so their recipe details are no longer displayed in its lore. So you're not giving out recipes for free! You can make a sealing station with 4 planks and 2 glass bottles in a crafting table. 
+
+![Sealing table crafting recipe](media/Sealingtable.png)
+
+Just place it down, and put your finished brews in it;s crafting grid for a second or 2. The brew is sealed when there are [brackets] surrounding the stars in the lore. 
+
+## Starter Brews
+Below are some simple recipes to help you get started in your brewing career. Some may require custom ingredients you'll have to discover first however.
+
+| Brew Name            |                        Cauldron <br> ingredients:Amount                        | Cauldron <br> Time | Distilling <br> Runs | Aging <br> Time | Wood <br> Type |
+| -------------------- |:------------------------------------------------------------------------------:|:------------------:|:--------------------:|:---------------:|:--------------:|
+| Tea                  |                                 Oak Leaves: 4                                  |       3 min        |          0           |        0        |       -        |
+| Lemonade             |                         Citrus Juice: 3 <br> Sugar: 8                          |       2 min        |          0           |        0        |       -        |
+| Cider                |                                    Apple: 6                                    |       4 min        |          0           |     6 years     |      Any       |
+| Red wine             |                                    Vine: 6                                     |       6 min        |          0           |     8 years     |      Any       |
+| Champagne            |                    Glow berries: 12 <br> Carbon Dioxide: 1                     |       10 min       |          0           |     4 years     |     Birch      |
+| Wheatbeer            |                             Wheat: 12 <br> Malt: 1                             |       4 min        |          0           |     2 years     |      Oak       |
+| Vodka                |                            Potato: 13 <br> Yeast: 1                            |       13 min       |        8 runs        |        0        |       -        |
+| Irish Cream          |                  Wheat: 18 <br> Milk Bucket: 1 <br> Yeast: 1                   |       6 min        |        5 runs        |     4 years     |      Any       |
+| Rice Porridge        |                              Rice: 1 <br> Salt: 1                              |       15 min       |          0           |        0        |       -        |
+| Vegetable Soup       |  Potato: 3 <br> Carrot 3 <br> Beetroot: 2 <br> Salt: 1 <br> Chicken Broth: 1   |       25 min       |          0           |        0        |       -        |
+| Valentines Chocolate | Cocoa Beans: 3 <br> Milk Bucket 3 <br> Honey Bottle: 2 <br> Vanilla Extract: 1 |       7 min        |          0           |        0        |       -         |
+
+### Texture pack
+Texture ID's are provided below with the list to be used while making a texture pack, allowing players to create a custom texture for each brew and ingredient. 
+
+## Discovering new brews
+### Vanilla ingredients
+The Vanilla ingredients are items from the base game that can be used in the cauldron and are at least used by 1 recipe. And/or they are used to make a custom ingredient. Meaning that you can find almost all custom ingredients simply by seeing what the outcome is of all the possible vanilla items in the cauldron.
+
+### Custom Ingredients
+Custom ingredients are for the most part "Base brews" meaning that they are a result of putting 1 item in the cauldron, waiting 2 minutes or more and taking it out with a bottle.
+A small amount of custom ingredients require specific amounts of an item, or require a combination of 2 vanilla items to be made.
+
+### Intermediary results
+When trying to discover new brews, something that will help you the most will be the intermediary results you find. These indicate that you've put in the correct collection of items for a brew, and that you should try distilling or aging the brew. Or that you need different amounts of the items you put in, to find the brew they indicate.
+
+### Cauldron Particles
+When trying to find the correct cooking time for a brew, the best way is to look at the color of the intermediary result. And wait until the particles above the cauldron turn that exact color. This requires you to watch carefully though, as the particles gradually change color over time.
+
+### Trial and Error
+Ultimately though, discovering new brewing recipes is a whole bunch of trial and error, trying out different combinations of ingredients, distilling, aging, wood types, and timings. A master brewer is a patient one.
+To help you start out however, we have provided some information below of all brews in the game. Note that "Difficulty" below is a reflection of a config value not an estimation of how hard it might be to make. What it does determine is how close one has to be to the perfect recipe to get a result or higher quality of that brew.
+
+## List of Discoverable Brews
+
+### Basic Brews
+The most simple form of brews, made with either base and/or custom ingredients. 
+
+|          Name           | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:-----------------------:|:-----------------:|:--------------:|:----------:|
+|        Wheatbeer        |         2         |       1        |   300001   |
+|     The Simple Life     |         2         |       2        |   300002   |
+|        Pale Ale         |         2         |       2        |   300003   |
+|       Pale Lager        |         2         |       2        |   300004   |
+|         Pilsner         |         2         |       3        |   300005   |
+|          Cider          |         1         |       5        |   300006   |
+|        Amber Ale        |         3         |       3        |   300007   |
+|        White Ale        |         3         |       4        |   300008   |
+|       Super Bock        |         2         |       2        |   300009   |
+|       White Wine        |         1         |       1        |   300010   |
+|        Red Wine         |         1         |       2        |   300011   |
+|        Albarino         |         2         |       6        |   300012   |
+|   Alvarinho Portugues   |         2         |       3        |   300013   |
+|          Pinot          |         1         |       6        |   300014   |
+|    Sauvignnon Blanc     |         1         |       6        |   300015   |
+|         Chianti         |         2         |       4        |   300016   |
+|        Cabernet         |         1         |       6        |   300017   |
+|         Merlot          |         2         |       6        |   300018   |
+|        Grenache         |         3         |       6        |   300019   |
+|        Champagne        |         2         |       5        |   300020   |
+|        Riesling         |         2         |       6        |   300021   |
+|          Rose           |         2         |       4        |   300022   |
+|         Whiskey         |         2         |       3        |   300023   |
+|         Scotch          |         2         |       4        |   300024   |
+|      White Whiskey      |         3         |       6        |   300025   |
+|      Corn Whiskey       |         2         |       6        |   300026   |
+|    Japanese Whiskey     |         3         |       6        |   300027   |
+|          Sake           |         3         |       5        |   300028   |
+|          Soju           |         3         |       6        |   300029   |
+|          Vodka          |         2         |       4        |   300030   |
+|       Wheat Vodka       |         3         |       4        |   300031   |
+|     Melon Schnapps      |         3         |       5        |   300032   |
+|       Irish Cream       |         3         |       6        |   300033   |
+|          Kefir          |         2         |       3        |   300034   |
+|        Kombucha         |         4         |       4        |   300035   |
+|        Absinthe         |         3         |       5        |   300036   |
+|        Applejack        |         2         |       8        |   300037   |
+|          Basi           |         3         |       6        |   300038   |
+|        Borovicka        |         1         |       6        |   300039   |
+|         Brandy          |         1         |       6        |   300040   |
+|         Cachaca         |         2         |       5        |   300041   |
+|         Chicha          |         5         |       3        |   300042   |
+|           Tea           |         1         |       6        |   300043   |
+|        Black Tea        |         1         |       8        |   300044   |
+|      Chamomile Tea      |         1         |       6        |   300045   |
+|        Earl Grey        |         2         |       7        |   300046   |
+|        Green Tea        |         1         |       6        |   300047   |
+| A Matcha Made in Heaven |         2         |       7        |   300048   |
+|        Mate Tea         |         1         |       8        |   300049   |
+|       Redbush Tea       |         1         |       8        |   300050   |
+|  English Breakfast Tea  |         4         |       4        |   300051   |
+|          Milo           |         3         |       2        |   300052   |
+|           Gin           |         3         |       4        |   300053   |
+|       Pigeon Gin        |         4         |       6        |   300054   |
+|          Mead           |         2         |       3        |   300055   |
+|         Metaxa          |         1         |       6        |   300056   |
+|           Rum           |         1         |       6        |   300057   |
+|         Tequila         |         1         |       5        |   300058   |
+|     Tomboy Tequila      |         2         |       7        |   300059   |
+|        Amaretto         |         1         |       6        |   300060   |
+|        Vermouth         |         5         |       3        |   300061   |
+|    Dandelion Liquor     |         4         |       4        |   300062   |
+| Sam Amogus Pale Pilsen  |         3         |       5        |   300063   |
+|         Marzen          |         3         |       5        |   300064   |
+|        Brown Ale        |         4         |       6        |   300065   |
+|          Stout          |         5         |       5        |   300066   |
+|       Dark Lager        |         4         |       5        |   300067   |
+|       Chardonnay        |         3         |       7        |   300068   |
+|       Celebration       |         2         |       7        |   300069   |
+|     Bourbon Whiskey     |         3         |       7        |   300070   |
+|      Bifrost Vodka      |         5         |       7        |   300071   |
+|     Cherry Liqueur      |         1         |       3        |   300072   |
+|        Ginjinha         |         3         |       4        |   300073   |
+|     Orange Liqueur      |         1         |       3        |   300074   |
+|      Sarsaparilla       |         3         |       5        |   300075   |
+|       Ginger Beer       |         5         |       4        |   300076   |
+|        Lemonade         |         2         |       5        |   300077   |
+|        Coca Soda        |         4         |       4        |   300078   |
+|        Leninade         |         3         |       4        |   300079   |
+|       Limoncello        |         3         |       5        |   300080   |
+|     Creme de menthe     |         3         |       3        |   300081   |
+|     Chocolate Milk      |         3         |       3        |   300082   |
+|      Energy Drink       |         2         |       4        |   300083   |
+|        Espresso         |         1         |       3        |   300084   |
+|        Americano        |         1         |       3        |   300085   |
+|          Latte          |         2         |       4        |   300086   |
+|          Mocha          |         4         |       5        |   300087   |
+|        Iced Tea         |         2         |       2        |   300088   |
+|       Iced Coffee       |         4         |       4        |   300089   |
+|        Hot Coco         |         5         |       4        |   300090   |
+|        Olive Oil        |         1         |       3        |   300091   |
+|     Beetroot Vodka      |         2         |       4        |   300092   |
+|     Melon Iced Tea      |         3         |       3        |   300093   |
+|     Mango Schnapps      |         4         |       6        |   300094   |
+|     Papaya Schnapps     |         4         |       7        |   300095   |
+|   Vegetable Smoothie    |         3         |       3        |   300096   |
+|   Pumpkin Spice Latte   |         8         |       5        |   300097   |
+|  Chocolate Apple Cider  |         3         |       5        |   300098   |
+|     Cannonball Rum      |         3         |       6        |   300099   |
+|        Frog Grog        |         4         |       4        |   300100   |
+|        Dr PVPer         |         4         |       7        |   300101   |
+|       Cough Syrup       |         2         |       8        |   300102   |
+|     The Gay Agenda      |         6         |       8        |   300103   |
+|          Tonic          |         2         |       6        |   300104   |
+|     Witch's Tongue      |         4         |       6        |   300105   |
+|        Tombstone        |         4         |       6        |   300106   |
+|       BloodWeiser       |         4         |       6        |   300107   |
+|  De-Coffin-Ated Curse   |         3         |       6        |   300108   |
+|         Phantom         |         4         |       6        |   300109   |
+|         Eggnog          |         8         |       6        |   300110   |
+|        Advocaat         |         5         |       6        |   300111   |
+|       Love Potion       |         3         |       6        |   300112   |
+|       Cigarette         |         4         |       8        |   300113   |
+|       Four Loko         |         5         |       6        |   300114   |
+|       Dirty Soda        |         5         |       6        |   300115   |
+|        Tea Wine         |         2         |       6        |   300116   |
+|        Nuka-Cola        |         5         |       6        |   300117   |
+|     Nuka-Cola Quantum   |         6         |       7        |   300118   |
+|     Pine Needle Soda    |         4         |       6        |   300119   |
+
+### Food Brews
+Brews that restore saturation
+
+|         Name         | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:--------------------:|:-----------------:|:--------------:| ----------:|
+|    Vegetable Soup    |         5         |       6        |     400001 |
+|     Ratatouille      |         4         |       6        |     400002 |
+|        Laksa         |         7         |       6        |     400003 |
+|      Minestrone      |         7         |       6        |     400004 |
+|         Pho          |        12         |       6        |     400005 |
+| Chicken Noodle Soup  |        10         |       6        |     400006 |
+|    Dumpling Soup     |         9         |       6        |     400007 |
+|     Corn Chowder     |        11         |       6        |     400008 |
+|       Goulash        |         7         |       6        |     400009 |
+|    Tonkatsu Ramen    |         5         |       6        |     400010 |
+|       Borscht        |         8         |       6        |     400011 |
+|     Balti Gosht      |        12         |       6        |     400012 |
+|    Rice Porridge     |         2         |       6        |     400013 |
+|    Cranberry Pie     |         8         |       6        |     400014 |
+|      Fish Soup       |         9         |       6        |     400015 |
+|    Poached Salmon    |         6         |       6        |     400016 |
+|       Marmite        |         3         |       6        |     400017 |
+|    Mais con Hielo    |         4         |       6        |     400018 |
+| Mediterranean Medly  |        11         |       6        |     400019 |
+|   Halloween Candy    |         3         |       6        |     400020 |
+|        Cheese        |         3         |       6        |     400021 |
+|     Easter Bread     |         6         |       6        |     400022 |
+|   Candied Carrots    |         5         |       6        |     400023 |
+|      Dyed Eggs       |         2         |       6        |     400024 |
+|     Deviled Eggs     |         6         |       6        |     400025 |
+|     Carrot Cake      |         6         |       6        |     400026 |
+| Valentines Chocolate |         4         |       6        |     400027 |
+|    Dark Chocolate    |         2         |       6        |     400028 |
+|     Mac N' Cheese    |         9         |       6        |     400029 |
+| Abnormal Rabbit Feed |         6         |       7        |     400030 |
+|     Cheeseburger     |         7         |       4        |     400031 |       
+|       Solyanka       |         8         |       5        |     400032 |
+|       Burrito        |         8         |       6        |     400033 |
+|       Pizza          |         6         |       6        |     400034 |
+|      Spaghetti       |         9         |       6        |     400035 |
+|     Fried Chicken    |         7         |       6        |     400036 |
+|     Banana Split     |         7         |       6        |     400037 |
+|      Miso Soup       |         8         |       6        |     400038 |
+|     Stargazy Pie     |         9         |       6        |     400039 |
+  
+### Cocktail Brews
+Brews made from other brews, sometimes with extra ingredients
+|             Name              | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:-----------------------------:|:-----------------:|:--------------:|:----------:|
+|            Martini            |         3         |       8        |   500001   |
+|       Hunters Digestif        |         2         |       8        |   500002   |
+|       Tropical Cocktail       |         3         |       8        |   500003   |
+|          Raider Fuel          |         2         |       6        |   500004   |
+|          Redcoat Rum          |         5         |       7        |   500005   |
+|          Spicy Juice          |         2         |       8        |   500006   |
+|            Zombie             |         2         |       8        |   500007   |
+|     5 o' Block Somewhere      |         2         |       7        |   500008   |
+|             Lean              |         2         |       7        |   500009   |
+|          Bubble Tea           |         4         |       7        |   500010   |
+|        Genderfluid Gin        |         3         |       8        |   500011   |
+| Trans Rights Are Human Rights |         3         |       8        |   500012   |
+|          Bees Knees           |         3         |       8        |   500013   |
+|         Cherry Spritz         |         2         |       8        |   500014   |
+|       Luck of the Irish       |         2         |       8        |   500015   |
+|  Pan Galactic Gargle Blaster  |         5         |       8        |   500016   |
+
+### Drug Brews
+Brews that provide unique/useful effects
+
+|     Name       | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:--------------:|:-----------------:|:--------------:|:----------:|
+|    Cyanide     |         3         |       8        |   600001   |
+|   Cannabis     |         1         |       8        |   600002   |
+|     Meth       |         3         |       8        |   600003   |
+|   Blue Meth    |         3         |       8        |   600004   |
+|    Heroin      |         5         |       8        |   600005   |
+|   Oestrogen    |         4         |       8        |   600006   |
+|   Caffeine     |         5         |       8        |   600007   |
+|  Ivermectin    |         3         |       8        |   600008   |
+|      DMT       |         4         |       8        |   600009   |
+|     Xanax      |         5         |       8        |   600010   |
+|   Steroids     |         1         |       8        |   600011   |
+| Testosterone   |         4         |       8        |   600012   |
+|    Vicodin     |         5         |       8        |   600013   |
+|    Yakult      |         6         |       8        |   600014   |
+|    Cocaine     |         5         |       8        |   600015   |
+|     Speed      |         4         |       8        |   600016   |
+|     NAD+       |         6         |       8        |   600017   |
+|  Epinephrine   |         5         |       8        |   600018   |
+|   Firefoam     |         4         |       8        |   600019   |
+| Nitroglycerin  |         5         |       8        |   600020   |
+|    Ritalin     |         5         |       8        |   600021   |
+| Battery Acid   |         4         |       8        |   600022   |
+| Nitrocellulose |         5         |       9        |   600023   |
+|GLP-1 Antagonist|         5         |       8        |   600024   |
+|      RSO       |         1         |       8        |   600025   |
+|      PCP       |         6         |       8        |   600026   |
+|    Salvia      |         2         |       8        |   600027   |
+| Magic Mushrooms|         5         |       8        |   600028   |
+
+### Nation Brews
+Brews that are part of a nation or group's PR/culture and were submitted by them.
+
+|    Nation/Group     |             Name              | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:-------------------:|:-----------------------------:|:-----------------:|:--------------:|:----------:|
+|       Icenia        |       Icenian Pale Ale        |         4         |       7        |   700001   |
+|       Dalgon        |          Dalgon Pale          |         3         |       7        |   700002   |
+|        Pacem        |         Pacem Pilsner         |         3         |       7        |   700003   |
+|         MTA         |        Augustan Cider         |         2         |       6        |   700004   |
+|       Wolken        |       Wolken White Ale        |         5         |       7        |   700005   |
+|     Southshire      |       Southshire Stout        |         6         |       8        |   700006   |
+|         MTS         |   Septembrian Summer Breeze   |         2         |       6        |   700007   |
+|    Commonwealth     |    Commonwealth Chardonnay    |         4         |       6        |   700008   |
+|         CDM         |       Cortesian Chianti       |         3         |       7        |   700009   |
+|        Sovia        |        Cabernet Sovian        |         2         |       8        |   700010   |
+|      Lusitania      |         Lusitan Wine          |         3         |       7        |   700011   |
+|       Fempire       |    Fempire Sparkling Rose     |         4         |       6        |   700012   |
+|        Nara         |     Nara Pufferfish Wine      |         4         |       5        |   700013   |
+|        CCTT         |       CCTT Pumpkin Wine       |         3         |       6        |   700014   |
+|        Dirt         |           Dirt Wine           |         3         |       7        |   700015   |
+|        Pavia        |         Pavian Wiskey         |         4         |       6        |   700016   |
+|       Fempire       |          Fembourbon           |         4         |       6        |   700017   |
+|       Griffin       |     Griffin Gold Whiskey      |         4         |       6        |   700018   |
+|        Nara         |        Nara no Uisuki         |         4         |       6        |   700019   |
+|      Gensokyo       |    Gensokyo no Ginjo Sake     |         3         |       6        |   700020   |
+|        Venne        |          Venne Vodka          |         4         |       8        |   700021   |
+|    Winterbourne     |   Winterbourne Wheat Vodka    |         4         |       7        |   700022   |
+|       Estalia       |       Estalian Schnapps       |         5         |       7        |   700023   |
+|     Southshire      |    Southshire Cream Liquer    |         5         |       6        |   700024   |
+|         Ku          |            Kubucha            |         5         |       6        |   700025   |
+|       Yoathl        |           Yoahpple            |         3         |       7        |   700026   |
+|       Lambat        |           Lambasiat           |         4         |       8        |   700027   |
+|       Yoathl        |       Chicha Alchuahtl        |         6         |       6        |   700028   |
+|   Banana Republic   |     Banana Republic Mead      |         4         |       6        |   700029   |
+|        Venne        |           Vennessy            |         3         |       5        |   700030   |
+|        Mery         |       Smiles of T'shola       |         3         |       7        |   700031   |
+|     Danzelonia      |        Dandedanzilonia        |         5         |       7        |   700032   |
+|      Maseters       |         JaegerMaester         |         8         |       8        |   700033   |
+|     Southshire      |    Shaken Southsire Sunset    |         4         |       6        |   700034   |
+|        Pacem        |         Pacem Proper          |         4         |       7        |   700035   |
+|        Venne        |       Venne Cream Soda        |         4         |       5        |   700036   |
+|       Valyria       |      Valyrian Dragonwine      |         4         |       4        |   700037   |
+|     Wheatistan      | Wheatistan Whimsical Whiskey  |         3         |       5        |   700038   |
+|     Danzilonia      |       Danzilonian Wine        |         4         |       5        |   700039   |
+|      Butternut      |   Butternut Pumpkin Bourbon   |         7         |       6        |   700040   |
+|     New Phoenix     |   New Phoenix Fire Whiskey    |         3         |       4        |   700041   |
+|     Pridelands      |        Pridelands Mead        |         3         |       5        |   700042   |
+|       Acadia        |       Acadian Absinthe        |         4         |       5        |   700043   |
+|       Icenia        |      Icenian Icebreaker       |         4         |       7        |   700044   |
+|      Civmarket      |       CivMarket Chowder       |         6         |       5        |   700045   |
+|   Margaritaville    |   Margaritaville Margarita    |         6         |       7        |   700046   |
+|       Estalia       |         Vault Breaker         |         2         |       7        |   700047   |
+|       Icarus        |         Nuclear Milk          |         4         |       7        |   700048   |
+|       Amboise       |       Amboise Red Wine        |         3         |       5        |   700049   |
+|        Atlas        |       Atlas Corp Cuban        |         4         |       5        |   700050   |
+|        Eire         |         Irish whiskey         |         3         |       5        |   700051   |
+|   Grand Imperium    |       Imperian Whiskey        |         3         |       6        |   700052   |
+|       Warmia        |         Warmian Nitro         |         3         |       6        |   700053   |
+|        Nara         |        Shiroyama Sake         |         4         |       6        |   700054   |
+|   Grand Imperium    |              Ixi              |         2         |       7        |   700055   |
+|   Grand Imperium    |     Imperian Carrot Juice     |         2         |       7        |   700056   |
+|       Warmia        |         Angmar Vodka          |         3         |       5        |   700057   |
+|        SPQR         |    Mint Chocolate Martini     |         4         |       5        |   700058   |
+|       Reggio        |          Reggio Rum           |         5         |       5        |   700059   |
+|      Gang Shi       |    The Shitter's Brown Ale    |         3         |       6        |   700060   |
+|   Temporal Empire   |    Temporal Sweet Red Wine    |         4         |       5        |   700061   |
+|      Attoprak       |         Secret Sprite         |         4         |       5        |   700062   |
+|       Icarus        |         Boar Bourbon          |         3         |       5        |   700063   |
+|        Joja         |           Joja Cola           |         4         |       5        |   700064   |
+|      Brunsvilk      |       Brunsvilk Jenever       |         5         |       5        |   700065   |
+|       Zanaris       | Zanarian Razzleberry Delight  |         5         |       5        |   700066   |
+|       Zanaris       |         Faerie's Kiss         |         4         |       5        |   700067   |
+|       XXXCIOS       |       Fruity Tooty Mix        |         4         |       5        |   700068   |
+|     Bazariškės      |          Naminė Gira          |         4         |       6        |   700069   |
+|       Griffin       |       Griffin Rose Wine       |         3         |       6        |   700070   |
+|   Temporal Isles    |    Temporal Tropical Punch    |         4         |       6        |   700071   |
+|    Transylvania     |         Cluj pálinka          |         3         |       6        |   700072   |
+|       Griffin       |       Sealeo Rum Punch        |         3         |       6        |   700073   |
+|        Spqr         |     Spicy Vodka Espresso      |         4         |       6        |   700074   |
+|       Griffin       |      Griffin Melon Cider      |         2         |       6        |   700075   |
+|       Reggio        |        Reggio Surprise        |         4         |       6        |   700076   |
+|      Tortugain      |           Rosy Rum            |         3         |       6        |   700077   |
+|      Bergburg       |         Bergburgbier          |         4         |       6        |   700078   |
+|      Brunsvilk      |    Brunsvilk Sewage Water     |         5         |       6        |   700079   |
+|        Iria         |      Irian Jungle Coffee      |         4         |       6        |   700080   |
+|       Thoria        |         Thorian Cider         |         4         |       6        |   700081   |
+|      Nro'meagh      |        Jevoghnya Brew         |         4         |       6        |   700082   |
+|     Ila'Kyavul      |          Greek Fire           |         3         |       6        |   700083   |
+|       Larauve       |     Larauve Medicinal Tea     |         4         |       6        |   700084   |
+|        Bloom        |            Slushy             |         4         |       6        |   700085   |
+|      Volterra       |         Tendie Tonic          |         4         |       6        |   700086   |
+|      Volterra       |          Volt Vodka           |         3         |       6        |   700087   |
+|        Aeros        |           Aeros Ale           |         3         |       6        |   700088   |
+|       Cordoba       |          VB Longneck          |         3         |       6        |   700089   |
+|       Yoathl        |         Gin of Rails          |         3         |       6        |   700090   |
+|       Yoathl        |         Kobeerlinski          |         3         |       6        |   700091   |
+|      Freeport       |      Frihavn Juniper Ale      |         4         |       6        |   700092   |
+|      Freeport       |           Fen Fyool           |         5         |       6        |   700093   |
+|       Midgar        |       Burning Blizzard        |         4         |       6        |   700094   |
+|       Larauve       |      Larauve Bubble Tea       |         4         |       6        |   700095   |
+|    Winterbourne     |   Winterbourne Lamb Knuckle   |         3         |       6        |   700096   |
+|    Winterbourne     |           Winterale           |         3         |       6        |   700097   |
+|    Winterbourne     |     Winterbourne Blue Ice     |         3         |       6        |   700098   |
+|   Banana Republic   |  Banana Republic Pickleback   |         2         |       6        |   700099   |
+|      Meracydia      |    Meracydian Mulled Cider    |         7         |       6        |   700100   |
+|      Meracydia      |    Valar Winter Cheesecake    |         7         |       6        |   700101   |
+|      Meracydia      |        Meracydian Mule        |         5         |       6        |   700102   |
+|      Meracydia      |     Valar Steamfired Soda     |         6         |       6        |   700103   |
+|       Larauve       |       Larauve Shortcut        |         5         |       6        |   700104   |
+|        Vald         |           Vald Mead           |         4         |       6        |   700105   |
+|       Estalia       |             Donut             |         5         |       6        |   700106   |
+|        Gmall        |          Gmall Grog           |         4         |       6        |   700107   |
+|      Doom City      |         Doom Delight          |         5         |       6        |   700108   |
+|    Grebada State    |    Grenada Club White Rum     |         3         |       6        |   700109   |
+|     New Jersey      |   Cranberry Juice Cocktail    |         4         |       6        |   700110   |
+|      Hispania       |     Walloon Guard Whiskey     |         3         |       6        |   700111   |
+|      Hispania       |      Line Infantry Lager      |         3         |       6        |   700112   |
+|   Catholic Church   |       Sacramental Wine        |         2         |       6        |   700113   |
+|         SEC         |  Security Enhancement Cider   |         3         |       6        |   700114   |
+|     Greenfaith      |      Greenfaith Goulash       |         4         |       6        |   700115   |
+|     Greenfaith      |      Trailblazer's Toddy      |         4         |       6        |   700116   |
+|       Icaraki       |            Icaraki            |         2         |       6        |   700117   |
+|     Truidencia      |        Nidaros Akevitt        |         2         |       6        |   700118   |
+|     Truidencia      |           Warm Milk           |         2         |       6        |   700119   |
+|      Amicitia       |        Amicitian Lager        |         4         |       6        |   700120   |
+|       Kaowta        |      Kaowtanese Melonale      |         3         |       6        |   700121   |
+|      ICE Labs       |         Cocaine Cola          |         6         |       6        |   700122   |
+|        Bloom        |        Bloomin' Onion         |         1         |       6        |   700123   |
+|        Baile        |         Azarath Mead          |         4         |       6        |   700124   |
+|    CityOfEngland    |      Long Live The King!      |         4         |       6        |   700125   |
+|     Khalkedonia     | Khalkedonian Crimson Cabernet |         4         |       6        |   700126   |
+|      Snowpeak       |    Drunken Boxer’s Delight    |         2         |       6        |   700127   |
+|       Artonia       |    Artonia Cherry slurpee     |         3         |       6        |   700128   |
+|         CFA         |           Motor Oil           |         3         |       6        |   700129   |
+|       Madeira       |   Madeirense Oceanic Rakija   |         4         |       6        |   700130   |
+|        SPQR         |       Pine Grove Elixer       |         3         |       6        |   700131   |
+|       Exyria        |             fent              |         3         |       6        |   700132   |
+|     Khalkedonia     |             Ayran             |         4         |       6        |   700133   |
+|       Eldoria       |      Eldorian Grand Wine      |         6         |       6        |   700134   |
+|       Q'Barra       |       Q'Barran Hist Sap       |         5         |       6        |   700135   |
+|       Q'Barra       |      Q'Barran Phlegmwine      |         4         |       6        |   700136   |
+|      BEBO INC       |         Rust And Rot          |         2         |       6        |   700137   |
+|      Alcantara      |          Spruce Raki          |         3         |       6        |   700138   |
+|       Nalora        |       Minty Blue Juice        |         3         |       8        |   700139   |
+|        Baile        |          Baile Deep           |         4         |       6        |   700140   |
+|       Nalora        |           Blue Star           |         7         |       6        |   700141   |
+|       Exyria        |        Piwo Tesc-mole         |         3         |       6        |   700142   |
+|         IF          |    New Callisto Coppertop     |         4         |       6        |   700143   |
+|       Mayguow       |      Erynorian Root Beer      |         3         |       6        |   700144   |
+|        Soria        |      Sorian Hjemmebrent       |         4         |       6        |   700145   |
+|         GWB         |    Groveheart Potato Wine     |         3         |       6        |   700146   |
+|       Griffin       | Griffin Steak Co Liquid Lunch |         2         |       6        |   700147   |
+|       Grenada       |     Grenada Club Dark Rum     |         3         |       6        |   700148   |
+|       Salerno       |        Salerno Shandy         |         2         |       6        |   700149   |
+|       Salerno       |      Brunsvik Bread Soup      |         7         |       6        |   700150   |
+|     Khalkedonia     |           Shawarma            |        10         |       6        |   700151   |
+|     Wellington      |   Wellington Cherry Liquor    |         4         |       6        |   700152   |
+|         IF          |        Imperial Stout         |         5         |       6        |   700153   |
+| Hello Kitty Islands |     Hello Kitty Hurricane     |         3         |       6        |   700154   |
+|       Exyria        |        The White Raven        |         3         |       6        |   700155   |
+|       Estalia       |     Suramirian Star Gazer     |         4         |       6        |   700156   |
+|       Exyria        |             Melen             |         3         |       6        |   700157   |
+|        Pavia        |        Bedfordian Mead        |         4         |       6        |   700158   |
+|        Rivia        |      Syndicate's spirit       |         4         |       6        |   700159   |
+|        Rivia        |        Worker's Stout         |         4         |       6        |   700160   |
+|        Pavia        |         Banker's Dust         |         5         |       6        |   700161   |
+|        Pavia        |      Wyepoint Moonshine       |         5         |       6        |   700162   |
+|      Northfort      |      Northfortian vodka       |         2         |       6        |   700163   |
+|      Northfort      |     Proletarian Strength      |         5         |       6        |   700164   |
+|      BEBO Inc       |          Starch Cola          |         2         |       6        |   700165   |
+|      Micronook      |        Mulled Melonade        |         3         |       6        |   700166   |
+| Dr.Urzork Pharmancy |           Snake Oil           |         5         |       6        |   700167   |
+|      Taconia        |    Spicy Taconia Tequila      |         4         |       7        |   700168   |
+|        MTA          |   Marvelous Augustan Vodka    |         3         |       7        |   700169   |
+|                     |          Icy Depths           |         4         |       7        |   700170   |
+|      Melonwood      |      Melon Lychee Chuhai      |         5         |       7        |   700171   |
+|      Melonwood      |       Yuzu Melon Yakult       |         5         |       7        |   700173   |
+|                     |          The Abyss            |         5         |       6        |   700174   |
+|         IF          |       The Imperial Brew       |         4         |       7        |   700175   |
+|                     |       Polychromatic Love      |         9         |       7        |   700176   |
+|                     |       Hyperborean Palmer      |         4         |       7        |   700177   |
+|      SpleefCorp     |      SpleefCorp Nutcracker    |         4         |       7        |   700178   |
+|     Brickstone      |          Brickstoners         |         3         |       6        |   700180   |
+|       TuffCO        |        Strawberry Matcha      |         4         |       7        |   700181   |
+|       Melvera       |          Nectar Tide          |         6         |       7        |   700182   |
+|         IF          |     Secessionist Schnapps     |         4         |       7        |   700183   |
+|         TE          |      Fermented Ice Cream      |         6         |       5        |   700184   |
+|       Melvera       |     Melveran White Whisper    |         5         |       7        |   700185   |
+|      Yumeshima      |   Yumeshima Future, Together  |         4         |       7        |   700186   |
+|   Pink Lotus Co.    |     Pink Lotus Pina Colada    |         7         |       7        |   700187   |
+|   Pink Lotus Co.    |     Pink Lotus Painkiller     |         4         |       8        |   700188   |
+|   Setra Marinese    |    Setra Marinese Root-Beer   |         3         |       7        |   700189   |
+|     Mercutio        |     Spirit of the Mercutie    |         5         |       7        |   700190   |
+|                     |     Thinkertonistic Tequila   |         3         |       7        |   700191   |
+|    Bargain Bin      |         Bargain Bin           |         2         |       5        |   700192   |
+|                     |       Miner’s Margarita       |         4         |       7        |   700193   |
+|      Belgium        |     Belgian Trappist Beer     |         4         |       7        |   700194   |
+|       Selene        |      Selene’s Starlight       |         4         |       7        |   700195   |
+|      Valtoria       |       Valtorian Dunkel        |         4         |       7        |   700196   |
+|      Valtoria       |           Edler Met           |         4         |       7        |   700197   |
+|      Valtoria       |          Kriegergeist         |         2         |       7        |   700198   |
+|     Danzilona       |     Newfriend's Best Friend   |         4         |       8        |   700199   |
+|      Anisso         |        Anisso Amaretto        |         4         |       7        |   700200   |
+|     Kaltsburg       |         Kalts Burger          |         6         |       6        |   700201   |
+|     Ambrosia        |       Ambrose Ambrosia        |         4         |       7        |   700202   |
+|     Mercutio        |         Tomo Tequila          |         4         |       6        |   700203   |
+|     Cascadia        |    Cascadian Mountain Ichor   |         4         |       6        |   700204   |
+|     Potato Bay      |     Potato Bay Potato Brew    |         2         |       6        |   700205   |
+|     Carnage         |          Carni-Cola           |         7         |       6        |   700206   |
+|      Silqui         |       Silqui Pale Tea         |         5         |       6        |   700207   |
+|     Ila'Kyavul      |        Gronrul's Gin          |         4         |       6        |   700208   |
+|      Zirakdum       |     Zirakdum Mythril Mead     |         4         |       6        |   700209   |
+|      Zirakdum       |     Zirakdum Deeprock Grog    |         4         |       6        |   700210   |  
+|                     |  Thieves’ Haven Pirate Grog   |         8         |       6        |   700211   |
+|                     |       Cobblestone Soup        |         4         |       6        |   700212   |
+|                     |     King Barry's Blessing     |         4         |       6        |   700213   |
+|                     |       Stone Confetti          |         5         |       6        |   700214   |
+|                     |      Oriental Naswar Pack     |         4         |       6        |   700215   |
+|      Pavia          |           BOSH.               |         5         |       6        |   700216   |
+|     Toontown        |    Toontown Toon-Up Tonic     |         6         |       6        |   700217`  |
+|     Skandic         |   Skandic Raw n' Cold Beer    |         5         |       6        |   700218   |
+|                     |         Fiji Water            |         2         |       6        |   700219   |
+|     TuffCO          |  TuffCOLand’s Nyquil Chicken  |         3         |       6        |   700220   |
+|                     |         Coca-Tshola           |         5         |       6        |   700221   |
+|    Commonwealth     |    Commonwealth Cool-Aid      |         4         |       6        |   700222   |
+|                     |          Ignatia              |         4         |       6        |   700223   |
+|      SnomCO         |         Snomelonade           |         4         |       6        |   700224   |
+|        ALX          |        ALX Firewater          |         2         |       6        |   700225   |
+|      Volterra       |     Shockton Sweet Pinot      |         4         |       6        |   700226   |
+|      Volterra       |   Lake Mickale Rapid Beaver   |         8         |       6        |   700227   |
+|     Cane Corp       |       Cane Corp Cachaça       |         2         |       6        |   700228   |
+|                     |        Maletian Vodka         |         4         |       6        |   700229   |
+|      Salerno        |        Potato Bay Soup        |         5         |       6        |   700230   |
+|      Salerno        |     Savannah Melon Martini    |         3         |       6        |   700231   |
+|      SnomCO         |           Snomcone            |         5         |       6        |   700232   |
+|      Salerno        |        Regalo Mud Pie         |         6         |       6        |   700233   |
+|                     |   Frozen Deluvian Daiquiri    |         3         |       6        |   700234   |
+|       Tanuki        |   Tanuki Taproom Melon Drop   |         3         |       6        |   700235   |
+|                     |         Tipsy Turtle          |         3         |       6        |   700236   |
+|       Aspasia       |     Aspasian Sculk Punch      |         5         |       6        |   700237   |
+|       AgoraCO       |     New Agora Select Rum      |         2         |       6        |   700238   |
+|       Icarus        |        Boarlight Brew         |         2         |       6        |   700239   |
+|     LaliBoozeCO     |     Fentanyl-Laced Joint      |         3         |       8        |   700240   |
+|       Hanami        |     Hanami Hibiki Whisky      |         4         |       6        |   700241   |
+|                     |       Deepslate Draught       |         4         |       6        |   700242   |
+|                     |      Crown of the Slate       |         6         |       6        |   700243   |
+|         CW          |          Eon Waster           |         3         |       6        |   700244   |
+|      Lyrean CW      |   Lyrean Rail Steamed Coffee  |         4         |       6        |   700245   |
+|                     |       Starboard Powder        |         3         |       6        |   700246   |
+
+### Player Brews
+Brews specific to individuals either for their contribution to the genre/server
+or by way of donating a high amount to the server via patreon.
+
+|                     Name                      | Ingredient Amount | Difficulty 1-9 | Texture ID |
+|:---------------------------------------------:|:-----------------:|:--------------:|:----------:|
+|                Lord Marzenpan                 |         2         |       8        |   800001   |
+|            SoundTech's Soundcheck             |         3         |       8        |   800002   |
+|              WingZero's Wingman               |         3         |       8        |   800003   |
+|             Ahri's Touhou Twister             |         3         |       8        |   800004   |
+|            Maxoplopy's Beer Garden            |         3         |       8        |   800005   |
+|           Diet_Cola's Rum and Cola            |         3         |       8        |   800006   |
+|              Icekeeper's Icepick              |         3         |       8        |   800007   |
+|         ProgrammerDan's Power Coffee          |         1         |       8        |   800008   |
+|             TTK2's Closing Speech             |         3         |       8        |   800009   |
+|            Infra's Code Injection             |         3         |       8        |   800010   |
+|         Rourke750's Vermouth Reviver          |         3         |       8        |   800011   |
+|          TealNerd's Sneaker Schnapps          |         3         |       8        |   800012   |
+|            Eroc's Top of the Rock             |         4         |       8        |   800013   |
+|           RedDevel's Devilish Wine            |         3         |       8        |   800014   |
+|               Xfier's Firesnap                |         4         |       8        |   800015   |
+|              Orinnari's Amaretto              |         3         |       8        |   800016   |
+|          Awoo's Git reset Hard Head           |         3         |       8        |   800017   |
+|           Gjum's Grape Juice on Ice           |         4         |       8        |   800018   |
+|           NoTruePunkin Spiced Mead            |         4         |       8        |   800019   |
+|           Kingtell's Royal Absinthe           |         5         |       8        |   800020   |
+|             Gamer Gwua Bathwater              |         3         |       8        |   800021   |
+|              Okx's Oxeye Oxkick               |         3         |       8        |   800022   |
+|            Leo's Orange Creamsicle            |         6         |       8        |   800023   |
+|             Colton's Love Martini             |         3         |       8        |   800024   |
+|               Golden Pick Stout               |         4         |       7        |   800025   |
+|              Katz Catnip Kaffe                |         8         |       8        |   800026   |
+|                 Astro's Pill                  |         6         |       7        |   800027   |
+|      Jeremy's Slippy-Sloppy Screwdriver       |         3         |       8        |   800028   |
+|        Trizzzx's Worcestershire sauce         |         4         |       8        |   800029   |
+|               StrawBeary Dreams               |         6         |       8        |   800030   |
+|            adeadhead's Pisco Sour             |         3         |       6        |   800031   |
+|              OmaKnight's Melomel              |         4         |       7        |   800032   |
+|                 Turtle Tea                    |         4         |       8        |   800033   |
+|            Doktah's Lucky Brew                |         2         |       8        |   800034   |
+|        Lalibo's Volcanic Margarita            |         4         |       7        |   800035   |
+|               Hallucinnefo                    |         5         |       7        |   800036   |
+|             OreSprayer Stubby                 |         4         |       7        |   800037   |
+|        Ceceliarabbit's Puppuccino             |         5         |       7        |   800038   |
+|        Zenron's Zingin' Zinfandel             |         6         |       7        |   800039   | 
+ 
+## List of Custom Ingredients
+
+|  #  |        Name        |      Texture ID      |
+|:---:|:------------------:|:--------------------:|
+|  1  |        Salt        |        100001        |
+|  2  |    Black Pepper    |        100002        |
+|  3  |        Malt        |        100003        |
+|  4  |     Coriander      |        100004        |
+|  5  |      Caramel       |        100005        |
+|  6  |  Molten Chocolate  |        100006        |
+|  7  |    Coffee Beans    |        100007        |
+|  8  |  Vanilla Extract   |        100008        |
+|  9  |    Chili Powder    |        100009        |
+| 10  |    Citrus Juice    |        100010        |
+| 11  |    Cherry Juice    |        100011        |
+| 12  |      Walnuts       |        100012        |
+| 13  |   Carbon Dioxide   |        100013        |
+| 14  |       Yeast        |        100014        |
+| 15  |        Koji        |        100015        |
+| 16  |        Rice        |        100016        |
+| 17  |     Hazelnuts      |        100017        |
+| 18  |   Whipped Cream    |        100018        |
+| 19  |      Wormwood      |        100019        |
+| 20  |       Anise        |        100020        |
+| 21  |       Fennel       |        100021        |
+| 22  |  Sugarcane Juice   |        100022        |
+| 23  |      Fish Oil      | 100023/100043/100044 |
+| 24  |  Blueberry Juice   |        100024        |
+| 25  |      Cinnamon      |        100025        |
+| 26  |       Banana       |        100026        |
+| 27  |       Thyme        |        100027        |
+| 28  |      Almonds       |        100028        |
+| 29  |    Green Olives    |        100029        |
+| 30  |       Ginger       |        100030        |
+| 31  |      Saffron       |        100031        |
+| 32  |      Ginseng       |        100032        |
+| 33  |    Mint Extract    |        100033        |
+| 34  |    Mango Juice     |        100034        |
+| 35  |     Plum Juice     |        100035        |
+| 36  |    Papaya Juice    |        100036        |
+| 37  |   Beetroot Juice   |        100037        |
+| 38  |       Nutmeg       |        100038        |
+| 39  |       Cloves       |        100039        |
+| 40  |   Tapioca Balls    |        100040        |
+| 41  |       Flour        |        100041        |
+| 42  |       Onion        |        100042        |
+| 43  |    Electricity     |        100045        |
+| 44  |       Tomato       |        100046        |
+| 45  |     Courgette      |        100047        |
+| 46  |       Garlic       |        100048        |
+| 47  |       Celery       |        100049        |
+| 48  |      Noodles       |        100050        |
+| 49  |   Chicken Broth    |        100051        |
+| 50  |     Beef Broth     |        100052        |
+| 51  |     Pork Broth     |        100053        |
+| 52  |      Paprika       |        100054        |
+| 53  |      Oregano       |        100055        |
+| 54  |      Hydrogen      |        100056        |
+| 55  |        Corn        |        100057        |
+| 56  |     Pine Cone      |        100058        |
+| 57  | Exotic Fruit Syrup |        100059        |
+| 58  |       Acorn        |        100060        |
+| 59  |      Quinine       |        100061        |
+| 60  |     Mayonnaise     |        100062        |
+| 61  |      Mustard       |        100063        |
+| 62  |       Sulfur       |        100064        |
+| 63  |     Strawberry     |        100065        |
+| 64  |       Dough        |        100066        |
+| 65  |       Butter       |        100067        |
+| 66  |       Pomace       |        100068        |
+| 67  |       Pasta        |        100069        |
+| 68  |      Soybeans      |        100070        |
+| 69  |      Tortilla      |        100071        |
+| 70  |       Helium       |        200001        |
+| 71  |       Carbon       |        200002        |
+| 72  |       Oxygen       |        200003        |
+| 73  |      Nitrogen      |        200004        |
+| 74  |     Phosphorus     |        200006        |
+| 75  |      Chlorine      |        200007        |
+| 76  |      Strontium     |        200008        |
+    
+## List of Vanilla Ingredients.
+
+|  #  |                 Name                  |
+|:---:|:-------------------------------------:|
+|  1  |                 Sand                  |
+|  2  |                 Coal                  |
+|  3  |                 Wheat                 |
+|  4  |            Beetroot Seeds             |
+|  5  |                 Apple                 |
+|  6  |                 Fern                  |
+|  7  |              Oak Leaves               |
+|  8  |                 Sugar                 |
+|  9  |              Cocoa Beans              |
+| 10  |              Melon Seeds              |
+| 11  |              Blue Orchid              |
+| 12  |               Redstone                |
+| 13  |             Glow Berries              |
+| 14  |                 Vine                  |
+| 15  |               Raw Gold                |
+| 16  |             Sweet Berries             |
+| 17  |                 Bone                  |
+| 18  |              Oak Button               |
+| 19  |               Charcoal                |
+| 20  |                Pumpkin                |
+| 21  |                 Dirt                  |
+| 22  |               Blue Ice                |
+| 23  |               Snowball                |
+| 24  |            Brown Mushroom             |
+| 25  |              Cornflower               |
+| 26  |             Red Mushroom              |
+| 27  |               Seagrass                |
+| 28  |                  Ice                  |
+| 29  |                Potato                 |
+| 30  |            Dark Oak Button            |
+| 31  |              Milk Bucket              |
+| 32  |            Dark Oak Leaves            |
+| 33  |             Birch Leaves              |
+| 34  |              Iron Nugget              |
+| 35  |            Spruce Sapling             |
+| 36  |              Azure Bluet              |
+| 37  |              Tall Grass               |
+| 38  |               Sugarcane               |
+| 39  |                Oak Log                |
+| 40  |                Salmon                 |
+| 41  |                 Peony                 |
+| 42  |               Dead Bush               |
+| 43  |              Oxeye Daisy              |
+| 44  |             Acacia Leaves             |
+| 45  |             Azalea Leaves             |
+| 46  |             Honey Bottle              |
+| 47  |             Jungle Leaves             |
+| 48  |                Cactus                 |
+| 49  |             Spruce Leaves             |
+| 50  |             Acacia Button             |
+| 51  |             Brich Sapling             |
+| 52  |             Weeping Vines             |
+| 53  |             Hanging Roots             |
+| 54  |                Carrot                 |
+| 55  |                 Poppy                 |
+| 56  |                 Book                  |
+| 57  |                 Grass                 |
+| 58  |             Golden Apple              |
+| 59  | Chorus Fruit (Currently Unobtainable) |
+| 60  |              Melon Block              |
+| 61  |               Beetroot                |
+| 62  |             Pumpkin Seeds             |
+| 63  |                 Stick                 |
+| 64  |             Diamond Sword             |
+| 65  |            Diamond Pickaxe            |
+| 66  |               Slimeball               |
+| 67  |               Gunpowder               |
+| 68  |             Blaze Powder              |
+| 69  |              Wheat Seeds              |
+| 70  |                Allium                 |
+| 71  |                  Cod                  |
+| 72  |             Tropical Fish             |
+| 73  |            Redstone Torch             |
+| 74  |               Rose Bush               |
+| 75  |             Big Dropleaf              |
+| 76  |                 Lilac                 |
+| 77  |                 Kelp                  |
+| 78  |            Cooked Chicken             |
+| 79  |              Cooked Beef              |
+| 80  |            Cooked Porkchop            |
+| 81  |              Raw Copper               |
+| 82  |            Small Dripleaf             |
+| 83  |             Leather Boots             |
+| 84  |              Wither Rose              |
+| 85  |               Black Dye               |
+| 86  |               Pink Dye                |
+| 87  |              Acacia Log               |
+| 88  |             Warped Fungus             |
+| 89  |            Crimson Fungus             |
+| 90  |             Water Bucket              |
+| 91  |              Spider Eye               |
+| 92  |           Poisonous Potato            |
+| 93  |            Horse Spawn Egg            |
+| 94  |               White Dye               |
+| 95  |            Light Blue Dye             |
+| 96  |               Sunflower               |
+| 97  |              Fire Charge              |
+| 98  |               Andesite                |
+| 99  |               Deepslate               |
+| 100 |                Red Dye                |
+| 101 |                  Egg                  |
+| 102 |              Milk Bucket              |
+| 103 |                 Bread                 |
+| 104 |            Glowstone Dust             |
+| 105 |              Magma Cream              |
+| 106 |               Blue Dye                |
+| 107 |               Green Dye               |
+| 108 |              Pufferfish               |
+| 109 |        Glistering Melon Slice         |
+| 110 |              Melon Slice              |
+| 111 |               Dandelion               |
+| 112 |            Carved Pumpkin             |
+| 113 |               Amethyst                |
+| 114 |             Spruce Button             |
+| 115 |              Orange Dye               |
+| 116 |              Yellow Dye               |
+| 117 |              Purple Dye               |
+| 118 |                  Tnt                  |
+| 119 |                 Brick                 |
+| 120 |                 Paper                 |
+| 121 |             Jungle Button             |
+| 122 |                Bamboo                 |
+| 123 |             Baked Potato              |
+| 124 |              Nether Wart              |
+| 125 |               Obsidian                |
+| 126 |             Birch Button              |
+| 127 |             Pig Spawn Egg             |
+| 128 |        Flowering Azalea Leaves        |
+| 129 |              Spruce Log               |
+| 130 |           Dark Oak Sapling            |
+| 131 |              Gold Nugget              |
+| 132 |             Chicken (raw)             |
+| 133 |              Jungle Log               |
+| 134 |             Lightning Rod             |
+| 135 |             Rotten Flesh              |
+| 136 |                 Stone                 |
+| 137 |                 Rail                  |
+| 138 |                Mutton                 |
+| 139 |              Sea Pickle               |
+| 140 |                Cookie                 |
+| 141 |             Crimson Roots             |
+| 142 |             Gold Pickaxe              |
+| 143 |             Golden Ingot              |
+| 144 |                  Mud                  |
+| 145 |            Mangrove Roots             |
+| 146 |            Jungle Sapling             |
+| 147 |              Moss Block               |
+| 148 |             Copper Ingot              |
+| 149 |            Crying Obsidian            |
+| 150 |          Lily Of The Valley           |
+| 151 |             Cherry Planks             |
+| 152 |             Spore Blossom             |
+| 153 |           Prismarine Shard            |
+| 154 |             Cherry Leaves             |
+| 155 |            Cherry Sapling             |
+| 156 |              Iron Bars                |
+| 157 |             Grass Block               |
+| 158 |             Turtle Scute              |
+| 159 |             Pitcher Plant             |
+| 160 |             End Stone                 |
+| 161 |             Warped Root               |
+| 162 |             Oak Boat                  |
+| 163 |             Pink Petals               |
+| 164 |             Powered Rail              |
+| 165 |             Campfire                  |
+| 166 |             Lectern                   |
+| 167 |             Calcite                   |
+| 168 |             Sandstone                 |
+| 169 |             Cake                      |
+| 170 |             Oak Trapdoor              |
+| 171 |             Ladder                    |
+| 172 |             Granite                   |
+| 173 |             Diorite                   |
+| 174 |             Cobblestone               |
+| 175 |             Bush                      |
+| 176 |             Glow Ink Sac              |
+| 177 |             Golden Hoe                |
+| 178 |             Cobbled Deepslate         |
+| 179 |         Magenta Stained Glass         |
+| 180 |             Sculk                     |
+| 181 |             Packed Mud                |
+| 182 |             Gravel                    |
+| 183 |             Clay                      |

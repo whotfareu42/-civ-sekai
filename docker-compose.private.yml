@@ -1,0 +1,77 @@
+# Private Config Extension for Docker Compose.
+# Requires PrivateConfig submodule to be cloned.
+
+services:
+
+  #################
+  ### Minecraft ###
+  #################
+
+  proxy:
+    environment:
+      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+
+  paper:
+    environment:
+      # Any Jars need to be here, comma separated so that they are not removed during sync
+      REMOVE_OLD_MODS_EXCLUDE: "Vulcan.jar,packetevents-spigot-2.10.1.jar"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+
+      COPY_CONFIG_SRC: /config,/privateconfig
+    # Note that config and plugins are mounted into the DATA directory, to avoid propagating to the config bind mount
+    volumes:
+      - ./PrivateConfig/paper/plugins/Vulcan.jar:/privateconfig/plugins/Vulcan.jar
+      - ./PrivateConfig/paper/plugins/NM.jar:/privateconfig/plugins/NM.jar
+      - ./PrivateConfig/paper/config/NM/config.yml:/privateconfig/plugins/NM/config.yml
+      - ./PrivateConfig/paper/plugins/packetevents-spigot-2.10.1.jar:/privateconfig/plugins/packetevents-spigot-2.10.1.jar
+      - ./PrivateConfig/paper/config/Vulcan/config.yml:/privateconfig/plugins/Vulcan/config.yml
+      - ./PrivateConfig/paper/config/HiddenOre/config.yml:/privateconfig/plugins/HiddenOre/config.yml
+      - ./PrivateConfig/paper/config/KiraBukkitGateway/config.yml:/privateconfig/plugins/KiraBukkitGateway/config.yml
+      - ./PrivateConfig/paper/config/BreweryX/config.yml:/privateconfig/plugins/BreweryX/config.yml
+      - ./PrivateConfig/paper/config/BreweryX/cauldron.yml:/privateconfig/plugins/BreweryX/cauldron.yml
+      - ./PrivateConfig/paper/config/BreweryX/custom-items.yml:/privateconfig/plugins/BreweryX/custom-items.yml
+      - ./PrivateConfig/paper/config/BreweryX/recipes.yml:/privateconfig/plugins/BreweryX/recipes.yml
+      - ./PrivateConfig/paper/config/Terra/packs/CivMC:/privateconfig/plugins/Terra/packs/CivMC
+      - ./PrivateConfig/paper/config/DiscordSRV/config.yml:/privateconfig/plugins/DiscordSRV/config.yml
+      - ./PrivateConfig/paper/config/DiscordSRV/alerts.yml:/privateconfig/plugins/DiscordSRV/alerts.yml
+      - ./PrivateConfig/paper/config/MythicMobs:/privateconfig/plugins/MythicMobs
+      - ./PrivateConfig/paper/config/EvenMoreFish/baits:/privateconfig/plugins/EvenMoreFish/baits
+      - ./PrivateConfig/paper/config/EvenMoreFish/competitions:/privateconfig/plugins/EvenMoreFish/competitions
+      - ./PrivateConfig/paper/config/EvenMoreFish/rarities:/privateconfig/plugins/EvenMoreFish/rarities
+      - ./PrivateConfig/paper/config/EvenMoreFish/rods:/privateconfig/plugins/EvenMoreFish/rods
+      - ./PrivateConfig/paper/config/EvenMoreFish/config.yml:/privateconfig/plugins/EvenMoreFish/config.yml
+      - ./PrivateConfig/paper/config/RandomSpawn/worlds.yml:/privateconfig/plugins/RandomSpawn/worlds.yml
+      - ./PrivateConfig/paper/config/Heliodor/config.yml:/privateconfig/plugins/Heliodor/config.yml
+      - ./PrivateConfig/paper/config/Zorweth/mechanics.yml:/privateconfig/plugins/Zorweth/mechanics.yml
+
+  zorweth:
+    environment:
+      COPY_CONFIG_SRC: /config,/privateconfig
+    volumes:
+      - ./PrivateConfig/paper/plugins/Vulcan.jar:/privateconfig/plugins/Vulcan.jar
+      - ./PrivateConfig/paper/config/Vulcan/config.yml:/privateconfig/plugins/Vulcan/config.yml
+      - ./PrivateConfig/paper/config/CivChat2/banned-words.txt:/privateconfig/plugins/CivChat2/banned-words.txt
+      - ./PrivateConfig/paper/config/EvenMoreFish/baits:/privateconfig/plugins/EvenMoreFish/baits
+      - ./PrivateConfig/paper/config/EvenMoreFish/rods:/privateconfig/plugins/EvenMoreFish/rods
+      - ./PrivateConfig/paper/config/EvenMoreFish/rarities:/privateconfig/plugins/EvenMoreFish/rarities
+      - ./PrivateConfig/paper/config/EvenMoreFish/competitions:/privateconfig/plugins/EvenMoreFish/competitions
+      - ./PrivateConfig/paper/config/EvenMoreFish/config.yml:/privateconfig/plugins/EvenMoreFish/config.yml
+      - ./PrivateConfig/paper/config/BreweryX/config.yml:/privateconfig/plugins/BreweryX/config.yml
+      - ./PrivateConfig/paper/config/BreweryX/cauldron.yml:/privateconfig/plugins/BreweryX/cauldron.yml
+      - ./PrivateConfig/paper/config/BreweryX/custom-items.yml:/privateconfig/plugins/BreweryX/custom-items.yml
+      - ./PrivateConfig/paper/config/BreweryX/recipes.yml:/privateconfig/plugins/BreweryX/recipes.yml
+      - ./PrivateConfig/zorweth/config/HiddenOre/config.yml:/privateconfig/plugins/HiddenOre/config.yml
+      - ./PrivateConfig/zorweth/config/RandomSpawn/worlds.yml:/privateconfig/plugins/RandomSpawn/worlds.yml
+      - ./PrivateConfig/zorweth/config/Heliodor/config.yml:/privateconfig/plugins/Heliodor/config.yml
+
+  pvp:
+    environment:
+      # Any Jars need to be here, comma separated so that they are not removed during sync
+      REMOVE_OLD_MODS_EXCLUDE: "Vulcan.jar,packetevents-spigot-2.10.1.jar"
+      SYNC_SKIP_NEWER_IN_DESTINATION: "true"
+      COPY_CONFIG_SRC: /config,/privateconfig
+    # Note that config and plugins are mounted into the DATA directory, to avoid propagating to the config bind mount
+    volumes:
+      - ./PrivateConfig/paper/plugins/Vulcan.jar:/privateconfig/plugins/Vulcan.jar
+      - ./PrivateConfig/paper/plugins/packetevents-spigot-2.10.1.jar:/privateconfig/plugins/packetevents-spigot-2.10.1.jar
+      - ./PrivateConfig/paper/config/Vulcan/config.yml:/privateconfig/plugins/Vulcan/config.yml

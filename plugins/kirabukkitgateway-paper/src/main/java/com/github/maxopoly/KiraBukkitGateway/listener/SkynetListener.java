@@ -1,0 +1,31 @@
+package com.github.maxopoly.KiraBukkitGateway.listener;
+
+import com.github.maxopoly.KiraBukkitGateway.KiraBukkitGatewayPlugin;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+public class SkynetListener implements Listener {
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void join(PlayerJoinEvent e) {
+        if (e.getPlayer().hasPermission("sv.joinvanished")) {
+            return;
+        }
+        if (!e.getPlayer().hasPlayedBefore()) {
+            KiraBukkitGatewayPlugin.getInstance().getRabbit().playerLoginFirstTime(e.getPlayer());
+        }
+        KiraBukkitGatewayPlugin.getInstance().getRabbit().playerLoginOut(e.getPlayer(), "LOGIN");
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void leave(PlayerQuitEvent e) {
+        if (e.getPlayer().hasPermission("sv.joinvanished")) {
+            return;
+        }
+        KiraBukkitGatewayPlugin.getInstance().getRabbit().playerLoginOut(e.getPlayer(), "LOGOUT");
+    }
+
+}
