@@ -146,7 +146,7 @@ public class AsyncPacketHandler implements Listener, PacketListener {
                     return;
                 }
 
-                float strength = ((CraftWorld) block.getWorld()).getHandle().getBlockState((new BlockPos(position.getX(), position.getY(), position.getZ()))).destroySpeed;
+                float strength = ((CraftWorld) block.getWorld()).getHandle().getBlockState((new BlockPos(position.getX(), position.getY(), position.getZ()))).getDestroySpeed(((CraftWorld) block.getWorld()).getHandle(), new BlockPos(position.getX(), position.getY(), position.getZ()));
 
                 long lastStartBreak = lastStartBreaks.getOrDefault(attacker.getUniqueId(), 0L);
                 long timeSinceBreak = (System.currentTimeMillis() - lastStartBreak);

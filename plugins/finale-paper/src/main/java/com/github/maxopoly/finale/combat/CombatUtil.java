@@ -108,7 +108,7 @@ public class CombatUtil {
 
                 if (shouldDamage && !shouldCrit && !dealtExtraKnockback && attacker.onGround() && d0 < Mth.square(d1)) {
                     ItemStack itemstack = attacker.getItemInHand(InteractionHand.MAIN_HAND);
-                    if (Tag.ITEMS_SWORDS.isTagged(org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack).getType())) {
+                    if (itemstack.is(net.minecraft.tags.ItemTags.SWORDS)) {
                         shouldSweep = true;
                     }
                 }
@@ -118,7 +118,7 @@ public class CombatUtil {
                 Vec3 victimMot = victim.getDeltaMovement();
                 if (shouldDamage) {
                     boolean damagedVictim;
-                    boolean wasInvulnerable = victim instanceof LivingEntity living && living.invulnerableTime > (float) living.invulnerableDuration / 2.0F && !damagesource.is(DamageTypeTags.BYPASSES_COOLDOWN);
+                    boolean wasInvulnerable = victim instanceof LivingEntity living && living.getInvulnerableTime() > (float) living.invulnerableDuration / 2.0F && !damagesource.is(DamageTypeTags.BYPASSES_COOLDOWN);
                     try {
                         DAMAGED = false;
                         DAMAGING_ITEM = attacker.getBukkitEntity().getInventory().getItemInMainHand();
@@ -147,7 +147,7 @@ public class CombatUtil {
                                 if (entityliving != attacker && entityliving != victim && !attacker.skipAttackInteraction(entityliving) && (!(entityliving instanceof ArmorStand) || !((ArmorStand) entityliving).isMarker()) && attacker.distanceToSqr(entityliving) < 9.0D) {
                                     // CraftBukkit start - Only apply knockback if the damage hits
                                     if (entityliving.hurtServer(entityliving.level().getMinecraftWorld(), world.damageSources().playerAttack(attacker), f4)) {
-                                        entityliving.knockback(0.4F, (double) Mth.sin(attacker.getBukkitYaw() * 0.017453292F), (double) (-Mth.cos(attacker.getBukkitYaw() * 0.017453292F)));
+                                        entityliving.knockback(0.4F, (double) Mth.sin(attacker.getBukkitYaw() * 0.017453292F), (double) (-Mth.cos(attacker.getBukkitYaw() * 0.017453292F)), damagesource, 0.0F, attacker, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.SWEEP_ATTACK);
                                     }
                                     // CraftBukkit end
 
@@ -161,7 +161,7 @@ public class CombatUtil {
                             attacker.level().sendParticles(ParticleTypes.SWEEP_ATTACK, attacker.getX() + d, attacker.getY(0.5), attacker.getZ() + d11, 0, d, 0.0, d11, 0.0);
                         }
 
-                        if (victim instanceof ServerPlayer && victim.hurtMarked) {
+                        if (victim instanceof ServerPlayer && victim.needsSync) {
                             boolean cancelled = false;
                             Player player = (Player) victim.getBukkitEntity();
                             Vector velocity = CraftVector.toBukkit(victimMot);
@@ -177,7 +177,7 @@ public class CombatUtil {
 
                             if (!cancelled) {
                                 ((ServerPlayer) victim).connection.send(new ClientboundSetEntityMotionPacket(victim));
-                                victim.hurtMarked = false;
+                                victim.needsSync = false;
                                 victim.setDeltaMovement(victimMot);
                             }
                             // CraftBukkit end
@@ -203,7 +203,7 @@ public class CombatUtil {
                             attacker.magicCrit(victim);
                         }
 
-                        InteractionHand hand = attacker.swingingArm != null ? attacker.swingingArm : InteractionHand.MAIN_HAND;
+                        InteractionHand hand = InteractionHand.MAIN_HAND;
                         ItemStack itemstack1 = attacker.getItemInHand(hand);
                         Object object = victim;
 
