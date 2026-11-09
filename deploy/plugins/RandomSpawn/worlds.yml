@@ -1,0 +1,25 @@
+# Sekai: zufälliger Spawn über die ganze Landmasse
+sekai:
+  randomspawnon:
+    - respawn
+    - firstjoin
+  keeprandomspawns: false
+  spawnbyplayer: false
+  spawnarea:
+    type: "square"
+    x-min: -7000
+    x-max: 7000
+    z-min: -7000
+    z-max: 13000
+  spawnblacklistbiomes:
+    - "minecraft:ocean"
+    - "minecraft:deep_ocean"
+    - "minecraft:cold_ocean"
+    - "minecraft:deep_cold_ocean"
+    - "minecraft:lukewarm_ocean"
+    - "minecraft:deep_lukewarm_ocean"
+    - "minecraft:warm_ocean"
+    - "minecraft:frozen_ocean"
+    - "minecraft:deep_frozen_ocean"
+    - "minecraft:river"
+    - "minecraft:frozen_river"
