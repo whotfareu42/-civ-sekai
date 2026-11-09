@@ -1,7 +1,10 @@
 name: Build Sekai (Paper 26.3)
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -11,7 +14,7 @@ jobs:
         with:
           java-version: '25'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v5
+          cache: 'gradle'
       - name: Paper 26.3 Dev-Bundle + paperweight setzen
         run: |
           DB=$(curl -s https://repo.papermc.io/repository/maven-public/io/papermc/paper/dev-bundle/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | sed 's/<version>//' | tail -1)
@@ -23,21 +26,18 @@ jobs:
       - name: Build
         run: |
           CI=true ./gradlew build -x test --continue 2>&1 | tee build.log || true
-      - name: Fehler zusammenfassen
+      - name: Ergebnis in Branch build-output speichern
         if: always()
         run: |
-          grep -E "error:|FAILED|What went wrong|Could not" build.log | head -600 > errors.txt || true
-      - uses: actions/upload-artifact@v6
-        if: always()
-        with:
-          name: build-log
-          path: |
-            build.log
-            errors.txt
-            versions.txt
-      - uses: actions/upload-artifact@v6
-        if: always()
-        with:
-          name: plugins
-          path: plugins/*-paper/build/libs/*.jar
-          if-no-files-found: ignore
+          mkdir -p /tmp/out/jars
+          cp build.log versions.txt /tmp/out/ 2>/dev/null || true
+          grep -E "error:|FAILED|What went wrong|Could not" build.log | head -800 > /tmp/out/errors.txt || true
+          cp plugins/*-paper/build/libs/*.jar /tmp/out/jars/ 2>/dev/null || true
+          cd /tmp/out
+          git init -q -b build-output
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > commit.txt
+          git add -A
+          git commit -qm "Build ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" build-output
