@@ -160,24 +160,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 80
-    chance: 0.02
-    minAmount: 1
-    maxAmount: 4
+    chance: 0.06
+    minAmount: 2
+    maxAmount: 6
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 16
-      areaSpan: 40
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 439563
-      densitySeed: 258176
-      forceVisibleTransform: true
   deepslate_iron_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -192,24 +181,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 80
-    chance: 0.02
-    minAmount: 1
-    maxAmount: 4
+    chance: 0.06
+    minAmount: 2
+    maxAmount: 6
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 16
-      areaSpan: 40
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 514002
-      densitySeed: 782554
-      forceVisibleTransform: true
   copper_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -224,24 +202,13 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 112
-    chance: 0.02
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.08
+    minAmount: 3
+    maxAmount: 9
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 48
-      areaSpan: 40
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 150631
-      densitySeed: 175954
-      forceVisibleTransform: true
   deepslate_copper_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -256,24 +223,13 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 112
-    chance: 0.02
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.08
+    minAmount: 3
+    maxAmount: 9
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 48
-      areaSpan: 40
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 961168
-      densitySeed: 661913
-      forceVisibleTransform: true
   gold_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -287,24 +243,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 32
-    chance: 0.006
-    minAmount: 1
-    maxAmount: 3
+    chance: 0.025
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -16
-      areaSpan: 30
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 198702
-      densitySeed: 483452
-      forceVisibleTransform: true
   deepslate_gold_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -318,24 +263,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 32
-    chance: 0.006
-    minAmount: 1
-    maxAmount: 3
+    chance: 0.025
+    minAmount: 2
+    maxAmount: 5
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -16
-      areaSpan: 30
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 711097
-      densitySeed: 160816
-      forceVisibleTransform: true
   redstone_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -349,24 +283,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.01
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.03
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -40
-      areaSpan: 20
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 632084
-      densitySeed: 325127
-      forceVisibleTransform: true
   deepslate_redstone_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -380,24 +303,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.01
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.03
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -40
-      areaSpan: 20
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 139317
-      densitySeed: 190122
-      forceVisibleTransform: true
   lapis_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -412,24 +324,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 64
-    chance: 0.006
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.02
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 0
-      areaSpan: 30
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 554710
-      densitySeed: 538485
-      forceVisibleTransform: true
   deepslate_lapis_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -444,24 +345,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 64
-    chance: 0.006
-    minAmount: 2
-    maxAmount: 6
+    chance: 0.02
+    minAmount: 3
+    maxAmount: 7
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 0
-      areaSpan: 30
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 173248
-      densitySeed: 352353
-      forceVisibleTransform: true
   diamond_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -475,24 +365,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.0015
+    chance: 0.006
     minAmount: 1
-    maxAmount: 2
+    maxAmount: 3
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -50
-      areaSpan: 12
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 195119
-      densitySeed: 677814
-      forceVisibleTransform: true
   deepslate_diamond_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -506,24 +385,13 @@ drops:
       - netherite_pickaxe
     minY: -64
     maxY: 16
-    chance: 0.0015
+    chance: 0.006
     minAmount: 1
-    maxAmount: 2
+    maxAmount: 3
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: -50
-      areaSpan: 12
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 545140
-      densitySeed: 161981
-      forceVisibleTransform: true
   emerald_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -537,24 +405,13 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 320
-    chance: 0.0008
+    chance: 0.003
     minAmount: 1
     maxAmount: 2
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 100
-      areaSpan: 80
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 967017
-      densitySeed: 692921
-      forceVisibleTransform: true
   deepslate_emerald_ore:
     package:
       - ==: org.bukkit.inventory.ItemStack
@@ -568,24 +425,13 @@ drops:
       - netherite_pickaxe
     minY: -16
     maxY: 320
-    chance: 0.0008
+    chance: 0.003
     minAmount: 1
     maxAmount: 2
     transformIfAble: true
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
-    veinNature:
-      density: .5
-      maxSpan: 10
-      densityBonus: 0.1
-      areaHeight: 100
-      areaSpan: 80
-      heightLength: 0.5
-      densityLength: 2
-      heightSeed: 229815
-      densitySeed: 334083
-      forceVisibleTransform: true
 blocks:
   stone:
     material: STONE
