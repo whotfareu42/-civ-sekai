@@ -144,7 +144,7 @@ public class Trowel extends BasicHack {
         ItemStack hand = event.getPlayer().getInventory().getItemInMainHand();
         event.getPlayer().getInventory().setItemInMainHand(selected);
         nmsPlayer.gameMode.useItemOn(nmsPlayer, nmsPlayer.level(), nmsItem, InteractionHand.MAIN_HAND,
-            new BlockHitResult(new Vec3(interaction.x(), interaction.y(), interaction.z()), CraftBlockData.toNMS(event.getBlockFace(), Direction.class), new BlockPos(placed.getX(), placed.getY(), placed.getZ()), false, false));
+            new BlockHitResult(new Vec3(interaction.x(), interaction.y(), interaction.z()), org.bukkit.craftbukkit.block.CraftBlock.blockFaceToNotch(event.getBlockFace()), new BlockPos(placed.getX(), placed.getY(), placed.getZ()), false, false));
         inventory.setItem(slot, inventory.getItemInMainHand());
         inventory.setItemInMainHand(hand);
     }

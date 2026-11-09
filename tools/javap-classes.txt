@@ -1,4 +1,7 @@
-net.minecraft.server.level.ServerPlayer
-net.minecraft.world.entity.Entity
-net.minecraft.server.MinecraftServer
 org.bukkit.craftbukkit.block.CraftBlock
+org.bukkit.craftbukkit.block.data.CraftBlockData
+net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase
+net.minecraft.world.item.ItemStack
+net.minecraft.world.entity.LivingEntity
+net.minecraft.world.entity.Entity
+net.minecraft.server.level.ServerPlayer

@@ -108,7 +108,7 @@ public class CombatUtil {
 
                 if (shouldDamage && !shouldCrit && !dealtExtraKnockback && attacker.onGround() && d0 < Mth.square(d1)) {
                     ItemStack itemstack = attacker.getItemInHand(InteractionHand.MAIN_HAND);
-                    if (Tag.ITEMS_SWORDS.isTagged(itemstack.asBukkitMirror().getType())) {
+                    if (Tag.ITEMS_SWORDS.isTagged(org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack).getType())) {
                         shouldSweep = true;
                     }
                 }
