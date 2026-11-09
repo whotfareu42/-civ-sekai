@@ -292,6 +292,11 @@ public final class ZorwethPlugin extends JavaPlugin {
 
     private Clipboard loadRocketClipboard() {
         final File file = new File(getDataFolder(), "rocket.schem");
+        if (!file.isFile()) {
+            // Sekai: CivMC's rocket schematic is not public; rockets are unavailable without it
+            getLogger().warning("rocket.schem not found, rocket launches are disabled");
+            return null;
+        }
         final ClipboardFormat format = ClipboardFormats.findByFile(file);
         if (format == null) {
             throw new IllegalStateException("Could not find clipboard format for " + file.getPath());

@@ -4,7 +4,7 @@ sql:
   dbname: __DB_NAME__
   username: __DB_USER__
   password: __DB_PASS__
-  poolsize: 10
+  poolsize: 3
   connection_timeout: 10000
   idle_timeout: 600000
   max_lifetime: 7200000
@@ -59,7 +59,7 @@ nameapi:
     host: __DB_HOST__
     port: 3306
     database: __DB_NAME__
-    poolsize: 6
+    poolsize: 3
     connection_timeout: 10000
     idle_timeout: 600000
     max_lifetime: 7200000

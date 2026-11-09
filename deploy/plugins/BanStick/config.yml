@@ -56,7 +56,7 @@ database:
   database: __DB_NAME__
   user: __DB_USER__
   password: __DB_PASS__
-  poolsize: 15
+  poolsize: 1
   connectionTimeout: 3000
   idleTimeout: 600000
   maxLifetime: 7200000

@@ -4,7 +4,7 @@ mysql:
   host: __DB_HOST__
   database: __DB_NAME__
   port: 3306
-  poolsize: 10
+  poolsize: 1
   connectionTimeout: 10000
   idleTimout: 600000
   maxLifetime: 7200000

@@ -15,7 +15,7 @@ database:
   dbname: __DB_NAME__
   username: __DB_USER__
   password: __DB_PASS__
-  poolsize: 10
+  poolsize: 1
   port: 3306
   connection_timeout: 10000
   idle_timeout: 600000
