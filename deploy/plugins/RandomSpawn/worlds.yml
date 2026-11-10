@@ -26,17 +26,17 @@ sekai:
     - "minecraft:river"
     - "minecraft:frozen_river"
 
-# Sekai: Spawnbereich im Nether (z. B. für ExilePearl-Gefangene). Kein automatisches Respawnen hier.
+# Spawnbereich im Nether (ExilePearl-Gefangene). Nether ist 1:1 zur Oberwelt (CivMC-Stil).
 sekai_nether:
   randomspawnon: []
   keeprandomspawns: false
   spawnbyplayer: false
   spawnarea:
     type: "square"
-    x-min: -800
-    x-max: 800
-    z-min: -800
-    z-max: 1500
+    x-min: -7000
+    x-max: 7000
+    z-min: -7000
+    z-max: 13000
   spawnblacklist:
     - "WATER"
     - "LAVA"
