@@ -38,6 +38,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -76,6 +77,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     private final Map<UUID, String> lastCreative = new HashMap<>();
     private final Set<UUID> internalAction = new HashSet<>();
     private NamespacedKey toolKey;
+    private NamespacedKey smiteKey;
+    private final Map<UUID, String> pendingBan = new ConcurrentHashMap<>();
     private File sessionDir;
     private Tracker tracker;
 
@@ -97,6 +100,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         int giveCommands;
         int blocksBroken;
         int blocksPlaced;
+        final List<String> kills = new ArrayList<>();
+        final List<String> bans = new ArrayList<>();
 
         boolean needsReason() {
             return !teleports.isEmpty() || gamemodeChanges > 0 || creativeItems > 0 || giveCommands > 0;
@@ -128,6 +133,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         saveDefaultConfig();
         toolKey = new NamespacedKey(this, "support_tool");
+        smiteKey = new NamespacedKey(this, "smite");
         sessionDir = new File(getDataFolder(), "sessions");
         sessionDir.mkdirs();
         tracker = new Tracker(this);
@@ -312,6 +318,12 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         if (s.creativeItems > 0 || s.giveCommands > 0) {
             parts.add("created items");
         }
+        if (!s.kills.isEmpty()) {
+            parts.add("killed " + s.kills.size() + " player(s)");
+        }
+        if (!s.bans.isEmpty()) {
+            parts.add("banned " + s.bans.size() + " player(s)");
+        }
         return String.join(", ", parts);
     }
 
@@ -320,7 +332,9 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             + " | gamemode changes: " + s.gamemodeChanges
             + " | creative items: " + s.creativeItems
             + " | give cmds: " + s.giveCommands
-            + " | blocks broken/placed: " + s.blocksBroken + "/" + s.blocksPlaced;
+            + " | blocks broken/placed: " + s.blocksBroken + "/" + s.blocksPlaced
+            + " | kills: " + (s.kills.isEmpty() ? "0" : String.join(", ", s.kills))
+            + " | bans: " + (s.bans.isEmpty() ? "0" : String.join(", ", s.bans));
     }
 
     private void apply(Player p, Session s) {
@@ -516,19 +530,29 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             "Teleport to players or look into", "their inventory / ender chest"));
         inv.setItem(16, button(Material.ENDER_PEARL, "Back to start", NamedTextColor.LIGHT_PURPLE,
             "Teleport to where you went on duty"));
+        if (canModerate(s)) {
+            inv.setItem(18, button(Material.ANVIL, "Ban a player", NamedTextColor.DARK_RED,
+                "Pick a player, then type the reason in chat"));
+            inv.setItem(26, button(Material.BLAZE_ROD, "Smite", NamedTextColor.DARK_RED,
+                "DOUBLE-CLICK to take the smite rod.", "Hitting a player with it kills instantly.", "Every kill is logged."));
+        }
         inv.setItem(22, button(Material.BARRIER, "Leave " + s.label(), NamedTextColor.RED,
             "Restores your inventory and", "teleports you back to your start point"));
         p.openInventory(inv);
     }
 
     private void openPlayers(Player p, int page) {
+        openPlayers(p, page, false);
+    }
+
+    private void openPlayers(Player p, int page, boolean ban) {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         list.remove(p);
         list.sort(Comparator.comparing(Player::getName, String.CASE_INSENSITIVE_ORDER));
         int pages = Math.max(1, (list.size() + 44) / 45);
         page = Math.max(0, Math.min(page, pages - 1));
-        Gui gui = new Gui("players", page);
-        Inventory inv = Bukkit.createInventory(gui, 54, Component.text("Players (" + (page + 1) + "/" + pages + ")"));
+        Gui gui = new Gui(ban ? "ban" : "players", page);
+        Inventory inv = Bukkit.createInventory(gui, 54, Component.text((ban ? "Ban a player (" : "Players (") + (page + 1) + "/" + pages + ")"));
         gui.inventory = inv;
         for (int i = 0; i < 45 && page * 45 + i < list.size(); i++) {
             Player t = list.get(page * 45 + i);
@@ -537,7 +561,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             meta.setOwningPlayer(t);
             meta.displayName(Component.text(t.getName(), NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
             Location l = t.getLocation();
-            meta.lore(List.of(
+            meta.lore(ban ? List.of(Component.text("Click to ban " + t.getName(), NamedTextColor.RED).decoration(TextDecoration.ITALIC, false)) : List.of(
                 Component.text(l.getWorld().getName() + " " + l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ(), NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false),
                 Component.text("Left-click: teleport", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
                 Component.text("Right-click: inventory", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
@@ -729,6 +753,26 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 }
                 p.setGameMode(p.getGameMode() == GameMode.CREATIVE ? GameMode.SURVIVAL : GameMode.CREATIVE);
             }
+            case 18 -> {
+                if (canModerate(s)) {
+                    openPlayers(p, 0, true);
+                }
+                return;
+            }
+            case 26 -> {
+                if (!canModerate(s)) {
+                    return;
+                }
+                if (e.getClick() == ClickType.DOUBLE_CLICK) {
+                    p.getInventory().addItem(smiteItem());
+                    tracker.log(p.getName(), "TOOK SMITE ROD @ " + fmt(p.getLocation()));
+                    p.closeInventory();
+                    msg(p, "You took the smite rod. Hitting a player with it kills them.", NamedTextColor.DARK_RED);
+                } else {
+                    msg(p, "Double-click to take the smite rod.", NamedTextColor.GRAY);
+                }
+                return;
+            }
             case 20 -> {
                 if (s.mode != Mode.ADMIN) {
                     return;
@@ -771,12 +815,13 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
 
     private void handlePlayers(Player p, Session s, Gui gui, InventoryClickEvent e) {
         int slot = e.getRawSlot();
+        boolean ban = gui.type.equals("ban");
         if (slot == 45) {
-            openPlayers(p, gui.page - 1);
+            openPlayers(p, gui.page - 1, ban);
             return;
         }
         if (slot == 53) {
-            openPlayers(p, gui.page + 1);
+            openPlayers(p, gui.page + 1, ban);
             return;
         }
         if (slot == 49) {
@@ -794,6 +839,14 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             return;
         }
         p.closeInventory();
+        if (ban) {
+            if (!canModerate(s)) {
+                return;
+            }
+            pendingBan.put(p.getUniqueId(), target.getName());
+            msg(p, "Type the ban reason for " + target.getName() + " in chat (or 'cancel').", NamedTextColor.GOLD);
+            return;
+        }
         if (e.isShiftClick()) {
             p.performCommand("endersee " + target.getName());
         } else if (e.isRightClick()) {
@@ -827,6 +880,13 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChat(AsyncChatEvent event) {
         UUID id = event.getPlayer().getUniqueId();
+        String banTarget = pendingBan.remove(id);
+        if (banTarget != null) {
+            event.setCancelled(true);
+            String banReason = PlainTextComponentSerializer.plainText().serialize(event.message()).trim();
+            Bukkit.getScheduler().runTask(this, () -> doBan(id, banTarget, banReason));
+            return;
+        }
         if (!awaitingReason.remove(id)) {
             return;
         }
@@ -843,6 +903,43 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 exit(p, reason, true);
             }
         });
+    }
+
+    private void doBan(UUID id, String target, String reason) {
+        Player p = Bukkit.getPlayer(id);
+        Session s = sessions.get(id);
+        if (p == null || s == null || !canModerate(s)) {
+            return;
+        }
+        if (reason.isEmpty() || reason.equalsIgnoreCase("cancel")) {
+            msg(p, "Ban cancelled.", NamedTextColor.GRAY);
+            return;
+        }
+        p.performCommand("ban " + target + " " + reason);
+        s.bans.add(target);
+        tracker.log(p.getName(), "BAN " + target + " | reason: " + reason);
+        msg(p, target + " was banned.", NamedTextColor.YELLOW);
+    }
+
+    private boolean canModerate(Session s) {
+        return s.mode == Mode.ADMIN || !s.dutyGroup.equals(getConfig().getString("duty-groups.helper", "helper-duty"));
+    }
+
+    private ItemStack smiteItem() {
+        ItemStack item = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text("Smite", NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false));
+        meta.lore(List.of(Component.text("Hit a player to kill them instantly", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
+            Component.text("Logged in /tracker", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)));
+        meta.setEnchantmentGlintOverride(true);
+        meta.getPersistentDataContainer().set(smiteKey, PersistentDataType.BYTE, (byte) 1);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private boolean isSmite(ItemStack item) {
+        return item != null && item.hasItemMeta()
+            && item.getItemMeta().getPersistentDataContainer().has(smiteKey, PersistentDataType.BYTE);
     }
 
     // ------------------------------------------------------------------ duty mode rules
@@ -904,7 +1001,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         if (s == null) {
             return;
         }
-        if (s.mode == Mode.SUPPORT || isTool(event.getItemDrop().getItemStack())) {
+        if (s.mode == Mode.SUPPORT || isTool(event.getItemDrop().getItemStack()) || isSmite(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
         } else {
             tracker.log(event.getPlayer().getName(), "DROP " + describe(event.getItemDrop().getItemStack()) + " at " + fmt(event.getPlayer().getLocation()));
@@ -938,6 +1035,18 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             return;
         }
         Session s = sessions.get(attacker.getUniqueId());
+        if (s != null && event.getDamager() == attacker && isSmite(attacker.getInventory().getItemInMainHand())
+            && canModerate(s) && event.getEntity() instanceof Player victim) {
+            event.setCancelled(true);
+            if (sessions.containsKey(victim.getUniqueId())) {
+                msg(attacker, "You cannot smite staff on duty.", NamedTextColor.RED);
+                return;
+            }
+            victim.setHealth(0);
+            s.kills.add(victim.getName());
+            tracker.log(attacker.getName(), "KILL " + victim.getName() + " with smite @ " + fmt(victim.getLocation()));
+            return;
+        }
         if (s != null) {
             if (s.mode == Mode.SUPPORT || event.getEntity() instanceof Player) {
                 event.setCancelled(true); // staff on duty never hurt players
@@ -990,6 +1099,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
         lastPvp.remove(p.getUniqueId());
         lastCreative.remove(p.getUniqueId());
+        pendingBan.remove(p.getUniqueId());
         if (sessions.containsKey(p.getUniqueId())) {
             exit(p, "(logged out, no reason given)", true);
         }
