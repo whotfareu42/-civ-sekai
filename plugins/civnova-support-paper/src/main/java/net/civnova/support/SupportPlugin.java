@@ -89,6 +89,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         boolean fly = true;
         boolean god = true;
         boolean nightVision = false;
+        boolean build = false;
         int speed = 1;
         final List<String> teleports = new ArrayList<>();
         int gamemodeChanges;
@@ -250,10 +251,11 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         if (s == null) {
             return;
         }
-        if ((reason == null || reason.isBlank()) && s.needsReason() && getConfig().getBoolean("require-reason", true)) {
+        if ((reason == null || reason.isBlank()) && getConfig().getBoolean("require-reason", true)) {
             awaitingReason.add(p.getUniqueId());
             p.closeInventory();
-            msg(p, "You " + summaryShort(s) + ". Please type the reason in chat now (only staff log sees it), or use /"
+            String did = summaryShort(s);
+            msg(p, (did.isEmpty() ? "" : "You " + did + ". ") + "Why were you on duty? Type the reason in chat now (only the staff log sees it), or use /"
                 + (s.mode == Mode.ADMIN ? "admin" : "support") + " off <reason>.", NamedTextColor.GOLD);
             return;
         }
@@ -494,7 +496,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         inv.setItem(12, toggle(Material.ENDER_EYE, "Night vision", s.nightVision, "Click to toggle"));
         if (s.mode == Mode.ADMIN) {
             boolean creative = p.getGameMode() == GameMode.CREATIVE;
-            inv.setItem(13, toggle(Material.GRASS_BLOCK, "Creative", creative, "Click to switch creative/survival", "(logged, needs a reason when leaving)"));
+            inv.setItem(13, toggle(Material.GRASS_BLOCK, "Creative", creative, "Click to switch creative/survival", "(logged)"));
+            inv.setItem(20, toggle(Material.DIAMOND_PICKAXE, "Build (break/place blocks)", s.build, "Off: you cannot break or place blocks", "Every change is logged"));
         }
         ItemStack speed = button(Material.SUGAR, "Speed: " + s.speed + " / " + MAX_SPEED, NamedTextColor.AQUA,
             "Left-click: +1   Right-click: -1", "Shift-click: +/-5", "Affects flying and running");
@@ -577,6 +580,13 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                     return;
                 }
                 p.setGameMode(p.getGameMode() == GameMode.CREATIVE ? GameMode.SURVIVAL : GameMode.CREATIVE);
+            }
+            case 20 -> {
+                if (s.mode != Mode.ADMIN) {
+                    return;
+                }
+                s.build = !s.build;
+                tracker.log(p.getName(), "BUILD " + (s.build ? "ON" : "OFF") + " @ " + fmt(p.getLocation()));
             }
             case 14 -> {
                 int step = e.isShiftClick() ? 5 : 1;
@@ -712,10 +722,14 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         if (s == null) {
             return;
         }
-        if (s.mode == Mode.SUPPORT) {
+        if (s.mode == Mode.SUPPORT || !s.build) {
             event.setCancelled(true);
+            if (s.mode == Mode.ADMIN) {
+                event.getPlayer().sendActionBar(Component.text("Build is OFF - turn it on in the admin tools", NamedTextColor.RED));
+            }
         } else {
             s.blocksBroken++;
+            tracker.log(event.getPlayer().getName(), "BREAK " + event.getBlock().getType().name().toLowerCase(Locale.ROOT) + " @ " + fmt(event.getBlock().getLocation()));
         }
     }
 
@@ -725,10 +739,14 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         if (s == null) {
             return;
         }
-        if (s.mode == Mode.SUPPORT) {
+        if (s.mode == Mode.SUPPORT || !s.build) {
             event.setCancelled(true);
+            if (s.mode == Mode.ADMIN) {
+                event.getPlayer().sendActionBar(Component.text("Build is OFF - turn it on in the admin tools", NamedTextColor.RED));
+            }
         } else {
             s.blocksPlaced++;
+            tracker.log(event.getPlayer().getName(), "PLACE " + event.getBlock().getType().name().toLowerCase(Locale.ROOT) + " @ " + fmt(event.getBlock().getLocation()));
         }
     }
 

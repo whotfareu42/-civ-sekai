@@ -4,8 +4,7 @@ duty-groups:
   moderator: moderator-duty
   admin: admin-duty
 
-# Beim Verlassen muss ein Grund angegeben werden, wenn man sich teleportiert,
-# den Gamemode gewechselt oder Items erzeugt (Creative/give) hat.
+# Beim Verlassen muss immer ein Grund angegeben werden.
 require-reason: true
 
 tracker:
