@@ -107,6 +107,10 @@ final class ProtectedBlocks implements Listener {
         }
     }
 
+    private boolean ignored(Block b) {
+        return plugin.getConfig().getStringList("protected-blocks.ignored-worlds").contains(b.getWorld().getName());
+    }
+
     private boolean isNaturalProtected(Block b) {
         return enabled() && materials.contains(b.getType())
             && !plugin.getConfig().getStringList("protected-blocks.ignored-worlds").contains(b.getWorld().getName())
@@ -168,7 +172,7 @@ final class ProtectedBlocks implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPistonExtend(BlockPistonExtendEvent e) {
         for (Block b : e.getBlocks()) {
-            if (materials.contains(b.getType())) {
+            if (materials.contains(b.getType()) && !ignored(b)) {
                 e.setCancelled(true); // keep it simple: protected materials never move
                 return;
             }
@@ -178,7 +182,7 @@ final class ProtectedBlocks implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPistonRetract(BlockPistonRetractEvent e) {
         for (Block b : e.getBlocks()) {
-            if (materials.contains(b.getType())) {
+            if (materials.contains(b.getType()) && !ignored(b)) {
                 e.setCancelled(true);
                 return;
             }
