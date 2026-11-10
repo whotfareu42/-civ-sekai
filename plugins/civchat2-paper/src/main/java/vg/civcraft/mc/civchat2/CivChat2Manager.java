@@ -526,7 +526,7 @@ public class CivChat2Manager {
                 .append(Component.text(group.getName(), color))
                 .append(Component.text("] ", NamedTextColor.GRAY))
                 .append(senderName)
-                .append(Component.text(": ", NamedTextColor.GRAY))
+                .append(Component.text(" \u00BB ", NamedTextColor.DARK_GRAY))
                 .append(Component.empty().color(NamedTextColor.WHITE).append(message));
 
             receiver.sendMessage(compMessage);
@@ -628,9 +628,8 @@ public class CivChat2Manager {
         }
         Component line = Component.empty()
             .append(Component.text("[Global] ", NamedTextColor.GOLD))
-            .append(Component.text("<", NamedTextColor.WHITE))
             .append(getCustomName(sender))
-            .append(Component.text("> ", NamedTextColor.WHITE))
+            .append(Component.text(" \u00BB ", NamedTextColor.DARK_GRAY))
             .append(Component.empty().color(NamedTextColor.WHITE).append(chatMessage));
         for (Player receiver : Bukkit.getOnlinePlayers()) {
             if (!DBM.isIgnoringPlayer(receiver.getUniqueId(), sender.getUniqueId())) {

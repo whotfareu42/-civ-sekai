@@ -8,9 +8,8 @@ import org.bukkit.ChatColor;
 public class ChatStrings {
 
     public final static ChatRenderer localChatFormat = (source, sourceDisplayName, message, viewer) -> Component.empty()
-        .append(Component.text("<"))
         .append(sourceDisplayName)
-        .append(Component.text("> "))
+        .append(Component.text(" \u00BB ", NamedTextColor.DARK_GRAY))
         .append(message);
 
     public final static String chatPlayerIsOffline = ChatColor.YELLOW + "That player is offline.";

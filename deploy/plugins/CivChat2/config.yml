@@ -16,10 +16,10 @@ chat:
   colors:
     near:
       range: 0
-      color: WHITE
+      color: GRAY
     far:
       range: 800
-      color: GRAY
+      color: DARK_GRAY
   globalGroup: '!'
   joinGlobalGroupByDefault: true
   playtimeStars: true
