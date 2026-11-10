@@ -142,6 +142,10 @@ public class CivChat2Listener implements Listener {
                         return;
                     }
                 }
+                if (groupChat == null && chatman.isServerWide(sender)) {
+                    chatman.sendServerWideMsg(sender, chatMessage);
+                    return;
+                }
                 if (groupChat != null) {
                     // Player is group chatting
                     if (NameLayerAPI.getGroupManager().hasAccess(groupChat, sender.getUniqueId(),

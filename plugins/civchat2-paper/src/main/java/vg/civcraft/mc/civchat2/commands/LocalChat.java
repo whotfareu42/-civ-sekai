@@ -26,6 +26,7 @@ public class LocalChat extends BaseCommand {
         if (chatMessage == null) {
             chatMan.removeChannel(player);
             chatMan.removeGroupChat(player);
+            chatMan.setServerWide(player, false);
             player.sendMessage(ChatStrings.chatMovedToGlobal);
             return;
         }

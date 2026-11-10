@@ -146,6 +146,7 @@ public class CivChat2Manager {
         } else {
             chatChannels.put(player1.getUniqueId(), player2.getUniqueId());
         }
+        serverWideChat.remove(player1.getUniqueId());
         scoreboardHUD.updateScoreboardHUD(player1);
     }
 
@@ -409,6 +410,7 @@ public class CivChat2Manager {
         Preconditions.checkNotNull(group, "group");
 
         groupChatChannels.put(player.getUniqueId(), group.getName());
+        serverWideChat.remove(player.getUniqueId());
         scoreboardHUD.updateScoreboardHUD(player);
     }
 
@@ -593,5 +595,48 @@ public class CivChat2Manager {
 
     public ScoreboardHUD getScoreboardHUD() {
         return scoreboardHUD;
+    }
+
+    // ---- Sekai: server-wide global chat (independent of NameLayer groups) ----
+
+    private final Set<UUID> serverWideChat = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    public boolean isServerWide(Player player) {
+        return serverWideChat.contains(player.getUniqueId());
+    }
+
+    public void setServerWide(Player player, boolean enabled) {
+        if (enabled) {
+            serverWideChat.add(player.getUniqueId());
+        } else {
+            serverWideChat.remove(player.getUniqueId());
+        }
+    }
+
+    public void sendServerWideMsg(Player sender, Component chatMessage) {
+        Preconditions.checkNotNull(sender, "sender");
+        Preconditions.checkNotNull(chatMessage, "chatMessage");
+        long mutedUntil = instance.getCivChat2SettingsManager().getGlobalChatMuteSetting().getValue(sender);
+        if (mutedUntil > System.currentTimeMillis()) {
+            sender.sendMessage(String.format(ChatStrings.globalMuted, TextUtil.formatDuration(mutedUntil - System.currentTimeMillis())));
+            return;
+        }
+        String plain = PlainTextComponentSerializer.plainText().serialize(chatMessage);
+        if (containsBannedWord(plain) && !sender.hasPermission("civchat2.globalmute")) {
+            flagMessage(sender, chatMessage);
+            return;
+        }
+        Component line = Component.empty()
+            .append(Component.text("[Global] ", NamedTextColor.GOLD))
+            .append(Component.text("<", NamedTextColor.WHITE))
+            .append(getCustomName(sender))
+            .append(Component.text("> ", NamedTextColor.WHITE))
+            .append(Component.empty().color(NamedTextColor.WHITE).append(chatMessage));
+        for (Player receiver : Bukkit.getOnlinePlayers()) {
+            if (!DBM.isIgnoringPlayer(receiver.getUniqueId(), sender.getUniqueId())) {
+                receiver.sendMessage(line);
+            }
+        }
+        Bukkit.getConsoleSender().sendMessage(Component.text("[Global] <" + sender.getName() + "> " + plain));
     }
 }
