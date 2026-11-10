@@ -129,6 +129,17 @@ public class AsyncSpawnSelector implements SpawnSelector, Listener {
 
     @Override
     public Location getRandomSpawnLocation(World world) {
+        // Sekai: every spawn point is one slot, the random wilderness spawn is "randomslots" slots.
+        int points = blocking.countSpawnPoints(world);
+        if (points > 0) {
+            int total = points + blocking.randomSlots(world);
+            if (java.util.concurrent.ThreadLocalRandom.current().nextInt(total) < points) {
+                Location point = blocking.getSpawnPointLocation(world);
+                if (point != null) {
+                    return point;
+                }
+            }
+        }
         return getLocation(world, this::queueRandomSpawn, blocking::getRandomSpawnLocation, randomSpawnLocations);
     }
 }

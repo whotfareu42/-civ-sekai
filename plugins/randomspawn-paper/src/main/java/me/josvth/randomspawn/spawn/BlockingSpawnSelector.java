@@ -126,6 +126,9 @@ public class BlockingSpawnSelector implements SpawnSelector {
 
         List<String> keys = new ArrayList<>(spawnpoints.getKeys(false));
         Collections.shuffle(keys, random);
+        if (keys.isEmpty()) {
+            return CompletableFuture.completedFuture(null);
+        }
 
         return getSpawnPoint(new AtomicInteger(0), keys, spawnpoints, world, blacklist, biomeBlacklist, block);
     }
@@ -166,6 +169,10 @@ public class BlockingSpawnSelector implements SpawnSelector {
             }
         } else { // doesn't require nearby player
             skip = false;
+        }
+        if (!skip && spawnpoint.getDouble("radius") <= 0) {
+            // Sekai: radius 0 = spawn exactly at the saved point (e.g. inside a town)
+            return CompletableFuture.completedFuture(location.clone());
         }
         if (!skip) {
             // Now pick a location to spawn the player.
@@ -322,8 +329,14 @@ public class BlockingSpawnSelector implements SpawnSelector {
                 feetBlock = headBlock.getRelative(0, -1, 0);
                 floorBlock = headBlock.getRelative(0, -2, 0);
                 while (floorBlock.getY() >= otherMinHeight) {
-                    if (isValidSpawnLocation(headBlock, feetBlock, floorBlock, blacklist, biomeBlacklist)) {
-                        return (double) feetBlock.getY();
+                    // Sekai: only ever consider the first non-passable block from the top (the surface).
+                    // Previously the search continued downwards, e.g. through lakes into caves.
+                    if (!floorBlock.isPassable() || floorBlock.isLiquid()) {
+                        if (org.bukkit.Tag.LEAVES.isTagged(floorBlock.getType())) {
+                            return null;
+                        }
+                        return isValidSpawnLocation(headBlock, feetBlock, floorBlock, blacklist, biomeBlacklist)
+                            ? (double) feetBlock.getY() : null;
                     }
                     final Block nextBlock = floorBlock.getRelative(0, -1, 0);
                     headBlock = feetBlock;
@@ -377,4 +390,15 @@ public class BlockingSpawnSelector implements SpawnSelector {
         return DEFAULT_BLACKLIST;
     }
 
+
+    /** Sekai: number of configured spawn points in this world. */
+    public int countSpawnPoints(World world) {
+        ConfigurationSection sp = yamlHandler.worlds.getConfigurationSection(world.getName() + ".spawnpoints");
+        return sp == null ? 0 : sp.getKeys(false).size();
+    }
+
+    /** Sekai: how many "slots" the random wilderness spawn counts as, compared to one spawn point each. */
+    public int randomSlots(World world) {
+        return Math.max(0, yamlHandler.worlds.getInt(world.getName() + ".randomslots", 9));
+    }
 }

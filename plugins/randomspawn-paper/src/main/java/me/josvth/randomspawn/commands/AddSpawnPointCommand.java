@@ -76,7 +76,9 @@ public class AddSpawnPointCommand extends AbstractCommand {
         if (current == null) {
             current = plugin.yamlHandler.worlds.createSection(worldname + ".spawnpoints");
         } else {
-            nextKey = current.getKeys(false).size();
+            while (current.contains(String.valueOf(nextKey))) {
+                nextKey++;
+            }
         }
 
         ConfigurationSection spawnpoint = current.createSection(String.valueOf(nextKey));
