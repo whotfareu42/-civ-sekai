@@ -298,8 +298,9 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEndPortal(PlayerPortalEvent event) {
-        if (event.getCause() != org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.END_PORTAL) {
-            return;
+        if (event.getCause() != org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.END_PORTAL
+            || !getConfig().getBoolean("portal-link.enabled", false)) {
+            return; // disabled: SimpleAdminHacks PortalModifyHack handles end portals (CivMC style, 1:1 nether)
         }
         Player p = event.getPlayer();
         World from = event.getFrom().getWorld();
