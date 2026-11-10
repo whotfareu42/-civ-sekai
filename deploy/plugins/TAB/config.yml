@@ -4,10 +4,11 @@ header-footer:
   disable-in-worlds:
     - disabledworld
   header:
-    - '&6&l Sekai '
+    - '&6&l Civitas Nova '
     - "&7Spieler online: &a%online%&7/&a%maxplayers%"
   footer:
     - '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'
+    - '&9discord.gg/3VvxepfbvA'
   per-world:
     world1:
       header:

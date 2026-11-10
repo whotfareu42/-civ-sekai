@@ -1,0 +1,39 @@
+discord: "https://discord.gg/3VvxepfbvA"
+
+# Normale Spieler sehen beim Tabben nur Befehle dieser Plugins
+# (und nur, wenn sie die Rechte dafuer haben) plus die Befehle aus extra-commands.
+# Wer civnova.tab.all hat (Helper/Mod/Admin), sieht alles.
+tab-filter:
+  enabled: true
+  allowed-plugins:
+    - NameLayer
+    - Citadel
+    - JukeAlert
+    - Bastion
+    - CivChat2
+    - ExilePearl
+    - FactoryMod
+    - ItemExchange
+    - RealisticBiomes
+    - CastleGates
+    - RailSwitch
+    - EssenceGlue
+    - CombatTagPlus
+    - CivModCore
+    - SimpleAdminHacks
+    - BreweryX
+    - EvenMoreFish
+    - GSit
+    - voicechat
+    - CivNova
+  extra-commands:
+    - list
+    - me
+  blocked-commands:
+    - civnova
+
+# Enderaugen zeigen zum naechsten bekannten Netherportal
+portal-eyes:
+  enabled: true
+  # Portale werden automatisch gespeichert, wenn sie entzuendet oder benutzt werden.
+  # Admins: /civnova portal add|remove|list

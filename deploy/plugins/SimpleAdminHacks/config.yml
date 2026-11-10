@@ -121,17 +121,17 @@ hacks:
     enabled: true
     intervalTime: 15m
     announcements:
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Type /global to talk in global chat","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Ores are hidden: they appear as you mine. Copper is the most common ore.","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"The command /config will let you adjust various settings","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Type /rb to see the crop information for the biome you are in","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Type /chunklimits to see the restrictions on how many blocks can be placed in a chunk","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Type /emf toggle to turn off/on fishing of decorative heads and custom loot","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"If you type /fm you can see all the types of factories you can make","color":"green"}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Make sure to reinforce your buildings/chests to protect them from others. Click for more info","color":"green","clickEvent":{"action":"open_url","value":"https://civmc.net/wiki/plugins/essential/citadel"}}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Jukeboxes and Noteblocks act as CCTV, when reinforced they record player actions. Click for more info","color":"green","clickEvent":{"action":"open_url","value":"https://civmc.net/wiki/plugins/unique/jukealert"}}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Killing someone with an ender pearl in your hotbar will lock them in the nether! Player essence is used to keep the players trapped. Click for more info","color":"green","clickEvent":{"action":"open_url","value":"https://civmc.net/wiki/plugins/essential/exilepearl"}}]'
-      - '["",{"text":"[Sekai] ","color":"gold"},{"text":"Install Simple Voice Chat to use proximity voice chat!","color":"green","clickEvent":{"action":"open_url","value":"https://civmc.net/wiki/plugins/fun/simplevoicechat"}}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Type /global to talk in global chat","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Ores are hidden: they appear as you mine. Copper is the most common ore.","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"The command /config will let you adjust various settings","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Type /rb to see the crop information for the biome you are in","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Type /chunklimits to see the restrictions on how many blocks can be placed in a chunk","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Type /emf toggle to turn off/on fishing of decorative heads and custom loot","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"If you type /fm you can see all the types of factories you can make","color":"green"}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Make sure to reinforce your buildings/chests to protect them from others. Click to join our Discord","color":"green","clickEvent":{"action":"open_url","value":"https://discord.gg/3VvxepfbvA"}}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Jukeboxes and Noteblocks act as CCTV, when reinforced they record player actions. Click to join our Discord","color":"green","clickEvent":{"action":"open_url","value":"https://discord.gg/3VvxepfbvA"}}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Killing someone with an ender pearl in your hotbar will lock them in the nether! Player essence is used to keep the players trapped. Click to join our Discord","color":"green","clickEvent":{"action":"open_url","value":"https://discord.gg/3VvxepfbvA"}}]'
+      - '["",{"text":"[CivNova] ","color":"gold"},{"text":"Install Simple Voice Chat to use proximity voice chat!","color":"green","clickEvent":{"action":"open_url","value":"https://discord.gg/3VvxepfbvA"}}]'
 
   ElytraFeatures:
     enabled: false
@@ -473,20 +473,20 @@ hacks:
       title: Welcome ${player}!
       author: RedDevel
       pages:
-        - "&5    Welcome &2${player}!\n         &5to Sekai!&r\n\nThis book will guide your first steps!\nIf you die or lose it you can open it via the /introbook command\n\nLet's begin your journey!"
+        - "&5    Welcome &2${player}!\n         &5to Civitas Nova!&r\n\nThis book will guide your first steps!\nIf you die or lose it you can open it via the /introbook command\n\nLet's begin your journey!"
         - "You've just spawned near another player or town, say something in chat!\n\nIf nobody responds try out global chat instead by using the /global command!\n\nMany nations will want a potential new productive member.\nTake your pick!"
-        - "Maybe you've joined at a time of lower activity, and nobody is responding.\n\nThen you can join the official discord and take your pick of the nation ads there!\n\n      &9discord.gg/\n      HkD79GfmQQ&r"
+        - "Maybe you've joined at a time of lower activity, and nobody is responding.\n\nThen you can join the official discord and take your pick of the nation ads there!\n\n      &9discord.gg/\n      3VvxepfbvA&r"
         - "Is the nation you want to join far away?\nWell you're in luck!\n\nEvery new player in their first 24 hours on the server gets a singular free tp!\n\nSimply use the command below:\n\n    &c/ott to <player>&r"
-        - "Want to start your own settlement?\nVery possible! but incredibly difficult.\n\nNot just because of a lack of resources!\n\nKnowledge and connections are power in CivMC. You'd be better off building those up first."
+        - "Want to start your own settlement?\nVery possible! but incredibly difficult.\n\nNot just because of a lack of resources!\n\nKnowledge and connections are power in Civitas Nova. You'd be better off building those up first."
         - "Joining a nation never ties you down. You can even join multiple at once! That's why it's important to remember that you can always start your own nation at a later time.\nThere's not rush!\nTake your time to learn the game first\n\nOn that note:"
-        - "          &5Plugins!&r\n\nCivMC has many many different features and mechanics that make it unique.\nYou can learn about all of them on our handy Wiki!\n\n      &9civmc.net\n\n&4IT IS VITAL YOU LOOK\n     AT THIS WIKI&r"
+        - "          &5Plugins!&r\n\nCivitas Nova has many different features and mechanics that make it unique.\nAsk on our Discord if you need help!\n\n&9discord.gg/3VvxepfbvA&r"
         - "When you join a nation the players there will likely explain some of the basic important plugins to you\n\nThese are:\nCitadel (protect your stuff)\nJukeAlert (know who's breaking your stuff)\nExilepearl (Jail people who broke your stuff)"
         - "       &5AVOID DOING\n     THE FOLLOWING\n     IF YOU WANT TO\n         SURVIVE\n\n&r1. Breaking people's stuff\n2. Jumping into obsidian pits\n3. Crossing into excluded areas\n4. Anything people would kill you for."
         - "  &5THEY WILL KILL YOU&r\nLeave the raiding until you understand how to get away with it.\nCameras are watching!\n\nLoot stolen without care is easily taken away, and damages your reputation with others!\nOr will find you killed and banished to the nether"
-        - "It is always important to remember this:\n\nOn CivMC your actions have consequences.\n\nYou have 1 account. 1 name. Don't dirty it the first chance you get.\n\nThat is if you want to make something of yourself.\nWhatever that may be."
-        - "            &5TOS&r\nCivMC is not complete anarchy. You can and will be banned if you break the server rules.\n (Find on the discord)\n\nRefrain from using hacks or spouting slurs.\nAct like a decent human being and all will be well."
-        - "      &5Bugs/Issues&r\n\nIf you've found a bug or have any other issues that require an admin.\nThen you can either raise a ticket on the discord or send a modmail via our reddit.\n\n         &9R/CivMC&r"
-        - "        &5Goodluck!&r\nThere are many things to do on CivMC. Let your ambitions run wild!\n\nLeave something behind people will remember for years to come.\n\nBe it your actions, your creations or your destruction..."
+        - "It is always important to remember this:\n\nOn Civitas Nova your actions have consequences.\n\nYou have 1 account. 1 name. Don't dirty it the first chance you get.\n\nThat is if you want to make something of yourself.\nWhatever that may be."
+        - "            &5TOS&r\nCivitas Nova is not complete anarchy. You can and will be banned if you break the server rules.\n (Find on the discord)\n\nRefrain from using hacks or spouting slurs.\nAct like a decent human being and all will be well."
+        - "      &5Bugs/Issues&r\n\nIf you've found a bug or have any other issues that require an admin.\nThen raise a ticket on our Discord.\n\n&9discord.gg/3VvxepfbvA&r"
+        - "        &5Goodluck!&r\nThere are many things to do on Civitas Nova. Let your ambitions run wild!\n\nLeave something behind people will remember for years to come.\n\nBe it your actions, your creations or your destruction..."
   NewfriendAssist:
     enabled: true
     announce: '&f%Player% is brand new!'
@@ -506,7 +506,7 @@ hacks:
            meta-type: UNSPECIFIC
            lore:
             - "Gift from the Admins as you"
-            - "begin your journey on CivMC"
+            - "begin your journey on Civitas Nova"
        - ==: org.bukkit.inventory.ItemStack
          type: RED_BED
          amount: 1
@@ -678,5 +678,4 @@ hacks:
     enabled: true
   ServerLinksHack:
     enabled: true
-    discordUrl: https://discord.gg/civmc
-    patreonUrl: https://patreon.com/Civ_MC
+    discordUrl: https://discord.gg/3VvxepfbvA

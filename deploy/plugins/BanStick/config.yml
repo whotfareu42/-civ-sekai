@@ -119,10 +119,10 @@ log:
 events:
   proxy:
     threshold: 2.8
-    banMessage: 'VPS / VPN Proxy use is generally prohibited. Contact the Sekai admins to discuss.'
+    banMessage: 'VPS / VPN Proxy use is generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss.'
   share:
     threshold: 0
-    banMessage: 'Multiaccounting is not generally allowed. Contact the Sekai admins to discuss.'
+    banMessage: 'Multiaccounting is not generally allowed. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss.'
   enable:
     ipBans: true
     subnetBans: true
@@ -145,7 +145,7 @@ proxy:
     defaultScore: 3.0
     ban:
       length: 163800000
-      message: 'VPS / VPN Proxy use is generally prohibited. Contact the Sekai admins to discuss.'
+      message: 'VPS / VPN Proxy use is generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss.'
     url: https://raw.githubusercontent.com/growlfm/ipcat/refs/heads/main/datacenters.csv
     period: 576000
     delay: 4200
@@ -154,7 +154,7 @@ proxy:
     defaultScore: 3.0
     ban:
       length: 86400000
-      message: VPS / VPN Proxy use is generally prohibited. Contact the Sekai admins to discuss
+      message: VPS / VPN Proxy use is generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss
     urls:
       - https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt
       - https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt
@@ -171,7 +171,7 @@ tor:
     danxxx:
       ban:
         length: 86400000
-        message: TOR node use is generally prohibited. Contact the Sekai admins to discuss
+        message: TOR node use is generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss
       address: https://www.dan.me.uk/torlist/?exit
       period: 72000
       delay: 3000
@@ -179,7 +179,7 @@ tor:
     torproject:
       ban:
         length: 86400000
-        message: TOR node use is generally prohibited. Contact the Sekai admins to discuss
+        message: TOR node use is generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss
       address: https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=8.26.94.198&port=25565
       period: 72000
       delay: 3600
@@ -225,4 +225,4 @@ scrapers:
     errorCooldown: 144000
     ban:
       length: 86400000
-      message: Anonymous Proxy connections are generally prohibited. Contact the Sekai admins to discuss
+      message: Anonymous Proxy connections are generally prohibited. Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss

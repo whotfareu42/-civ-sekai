@@ -28,23 +28,7 @@ rewards:
 login_reward: 4
 voting_reward: 1
 
-voting_sites:
-  minecraftmp:
-    voting_cooldown: 23 hours
-    voting_url: 'https://minecraft-mp.com/server/305231/vote/?username=%PLAYER%'
-    internal_key: 'Minecraft-MP.com'
-    name: 'minecraft-mp.com'
-  minecraftserverlist:
-    voting_cooldown: 20 hours
-    voting_url: 'https://minecraft-server-list.com/server/488241/vote/'
-    internal_key: 'MCSL'
-    name: 'minecraft-server-list.com'
-  minecraftservers:
-    voting_cooldown: 23 hours
-    voting_url: 'https://minecraftservers.org/vote/636677'
-    internal_key: 'MinecraftServers.org'
-    name: 'minecraftservers.org'
-
+voting_sites: {}
 database:
   ==: vg.civcraft.mc.civmodcore.dao.DatabaseCredentials
   plugin: EssenceGlue

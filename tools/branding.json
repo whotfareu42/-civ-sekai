@@ -1,0 +1,100 @@
+{
+ "plugins/SimpleAdminHacks/config.yml": [
+  [
+   "{\"text\":\"[Sekai] \",\"color\":\"gold\"}",
+   "{\"text\":\"[CivNova] \",\"color\":\"gold\"}"
+  ],
+  [
+   "https://civmc.net/wiki/plugins/essential/citadel",
+   "https://discord.gg/3VvxepfbvA"
+  ],
+  [
+   "https://civmc.net/wiki/plugins/unique/jukealert",
+   "https://discord.gg/3VvxepfbvA"
+  ],
+  [
+   "https://civmc.net/wiki/plugins/essential/exilepearl",
+   "https://discord.gg/3VvxepfbvA"
+  ],
+  [
+   "https://civmc.net/wiki/plugins/fun/simplevoicechat",
+   "https://discord.gg/3VvxepfbvA"
+  ],
+  [
+   "Click for more info",
+   "Click to join our Discord"
+  ],
+  [
+   "&5to Sekai!&r",
+   "&5to Civitas Nova!&r"
+  ],
+  [
+   "&9discord.gg/\\n      HkD79GfmQQ&r",
+   "&9discord.gg/\\n      3VvxepfbvA&r"
+  ],
+  [
+   "Knowledge and connections are power in CivMC.",
+   "Knowledge and connections are power in Civitas Nova."
+  ],
+  [
+   "CivMC has many many different features and mechanics that make it unique.\\nYou can learn about all of them on our handy Wiki!\\n\\n      &9civmc.net\\n\\n&4IT IS VITAL YOU LOOK\\n     AT THIS WIKI&r",
+   "Civitas Nova has many different features and mechanics that make it unique.\\nAsk on our Discord if you need help!\\n\\n&9discord.gg/3VvxepfbvA&r"
+  ],
+  [
+   "On CivMC your actions have consequences.",
+   "On Civitas Nova your actions have consequences."
+  ],
+  [
+   "CivMC is not complete anarchy.",
+   "Civitas Nova is not complete anarchy."
+  ],
+  [
+   "Then you can either raise a ticket on the discord or send a modmail via our reddit.\\n\\n         &9R/CivMC&r",
+   "Then raise a ticket on our Discord.\\n\\n&9discord.gg/3VvxepfbvA&r"
+  ],
+  [
+   "There are many things to do on CivMC.",
+   "There are many things to do on Civitas Nova."
+  ],
+  [
+   "begin your journey on CivMC",
+   "begin your journey on Civitas Nova"
+  ],
+  [
+   "discordUrl: https://discord.gg/civmc",
+   "discordUrl: https://discord.gg/3VvxepfbvA"
+  ],
+  [
+   "    patreonUrl: https://patreon.com/Civ_MC\n",
+   ""
+  ]
+ ],
+ "plugins/TAB/config.yml": [
+  [
+   "- '&6&l Sekai '",
+   "- '&6&l Civitas Nova '"
+  ],
+  [
+   "- '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'",
+   "- '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'\n    - '&9discord.gg/3VvxepfbvA'"
+  ]
+ ],
+ "plugins/BanStick/config.yml": [
+  [
+   "Contact the Sekai admins to discuss",
+   "Contact the Civitas Nova admins on Discord (https://discord.gg/3VvxepfbvA) to discuss"
+  ]
+ ],
+ "plugins/Donum/config.yml": [
+  [
+   "complaintURL: https://www.reddit.com/message/compose?to=%2Fr%2FCivMC",
+   "complaintURL: https://discord.gg/3VvxepfbvA"
+  ]
+ ],
+ "plugins/EssenceGlue/config.yml": [
+  [
+   "voting_sites:\n  minecraftmp:\n    voting_cooldown: 23 hours\n    voting_url: 'https://minecraft-mp.com/server/305231/vote/?username=%PLAYER%'\n    internal_key: 'Minecraft-MP.com'\n    name: 'minecraft-mp.com'\n  minecraftserverlist:\n    voting_cooldown: 20 hours\n    voting_url: 'https://minecraft-server-list.com/server/488241/vote/'\n    internal_key: 'MCSL'\n    name: 'minecraft-server-list.com'\n  minecraftservers:\n    voting_cooldown: 23 hours\n    voting_url: 'https://minecraftservers.org/vote/636677'\n    internal_key: 'MinecraftServers.org'\n    name: 'minecraftservers.org'\n",
+   "voting_sites: {}"
+  ]
+ ]
+}
