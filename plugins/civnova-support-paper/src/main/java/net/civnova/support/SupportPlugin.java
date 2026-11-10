@@ -607,7 +607,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             ItemMeta meta = item.getItemMeta();
             meta.displayName(Component.text(e.actor() + " - " + type, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
             List<Component> lore = new ArrayList<>();
-            lore.add(Component.text(e.time(), NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.text(e.timeText(), NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false));
             for (String line : wrap(text, 40)) {
                 lore.add(Component.text(line, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
             }

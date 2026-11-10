@@ -30,7 +30,7 @@ public final class Tracker {
             return TIME.format(time) + " " + actor + ": " + action;
         }
 
-        String time() {
+        String timeText() {
             return TIME.format(time);
         }
 
