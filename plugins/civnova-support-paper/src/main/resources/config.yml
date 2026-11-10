@@ -1,0 +1,15 @@
+# LuckPerms-Gruppen, die nur im jeweiligen Modus aktiv sind
+duty-groups:
+  helper: helper-duty
+  moderator: moderator-duty
+  admin: admin-duty
+
+# Beim Verlassen muss ein Grund angegeben werden, wenn man sich teleportiert,
+# den Gamemode gewechselt oder Items erzeugt (Creative/give) hat.
+require-reason: true
+
+tracker:
+  # Optional: Discord-Webhook-URL, dann landen alle Eintraege auch in einem Discord-Kanal
+  discord-webhook: ""
+  # Diese Befehle werden NICHT geloggt (private Nachrichten / Chat)
+  ignored-commands: [msg, tell, m, pm, w, whisper, r, reply, g, gc, groupc, groupchat, gchat, global, globalchat, local, localchat, exit, afk, me]

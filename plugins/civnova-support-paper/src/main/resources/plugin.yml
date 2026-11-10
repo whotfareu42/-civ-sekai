@@ -3,14 +3,30 @@ version: ${version}
 main: net.civnova.support.SupportPlugin
 api-version: 1.21.3
 authors: [ CivNova ]
-description: Support mode for Civitas Nova staff
-softdepend: [ SuperVanish, PremiumVanish, InvSeePlusPlus ]
+description: Support/admin duty modes and staff action tracker for Civitas Nova
+softdepend: [ SuperVanish, PremiumVanish, InvSeePlusPlus, LuckPerms ]
 commands:
   support:
     description: Toggle support mode or open the support tools
     aliases: [ sm ]
     permission: civnova.support
+  admin:
+    description: Toggle admin mode or open the admin tools
+    aliases: [ am, adminmode ]
+    permission: civnova.duty.admin
+  tracker:
+    description: Show logged staff actions
+    permission: civnova.tracker.view
 permissions:
   civnova.support:
     description: Use support mode
+    default: op
+  civnova.duty.admin:
+    description: Use admin mode
+    default: false
+  civnova.tracked:
+    description: Everything this player does as staff is logged
+    default: false
+  civnova.tracker.view:
+    description: Read the staff tracker
     default: op
