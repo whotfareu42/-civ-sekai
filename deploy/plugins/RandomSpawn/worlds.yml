@@ -5,6 +5,8 @@ sekai:
     - firstjoin
   keeprandomspawns: false
   spawnbyplayer: false
+  # Jeder Spawnpunkt (/rs addspawn) zaehlt als 1 Platz, die Wildnis als randomslots Plaetze
+  randomslots: 9
   spawnarea:
     type: "square"
     x-min: -7000
