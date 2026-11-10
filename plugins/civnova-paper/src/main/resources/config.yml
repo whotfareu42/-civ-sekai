@@ -3,6 +3,14 @@ discord: "https://discord.gg/3VvxepfbvA"
 # Wird beim Start gesetzt (PebbleHost ueberschreibt server.properties)
 max-players: 1000
 
+# Natuerlich generierte Bloecke dieser Sorte koennen nicht abgebaut werden (auch nicht durch
+# Explosionen, Kolben oder Endermen). Von Spielern gesetzte Bloecke sind normal abbaubar.
+# Bypass-Recht: civnova.protected.bypass (Admin-Modus)
+protected-blocks:
+  enabled: true
+  materials:
+    - SOUL_SAND
+
 # Track fuer /promote und /demote
 rank-track: staff
 

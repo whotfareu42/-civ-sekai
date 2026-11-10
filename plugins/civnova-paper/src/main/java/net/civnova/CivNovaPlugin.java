@@ -44,6 +44,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class CivNovaPlugin extends JavaPlugin implements Listener {
 
     private final List<Location> portals = new ArrayList<>();
+    private ProtectedBlocks protectedBlocks;
     private File portalFile;
     private Set<String> allowedPlugins;
     private Set<String> extraCommands;
@@ -56,6 +57,8 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         portalFile = new File(getDataFolder(), "portals.yml");
         loadPortals();
         getServer().getPluginManager().registerEvents(this, this);
+        protectedBlocks = new ProtectedBlocks(this);
+        getServer().getPluginManager().registerEvents(protectedBlocks, this);
         applyMaxPlayers();
         getLogger().info("Loaded " + portals.size() + " known nether portals.");
     }
@@ -453,6 +456,7 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
             loadSettings();
             loadPortals();
             applyMaxPlayers();
+            protectedBlocks.reload();
             sender.sendMessage("CivNova reloaded.");
             return true;
         }

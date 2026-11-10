@@ -17,6 +17,9 @@ commands:
 permissions:
   civnova.promote:
     default: op
+  civnova.protected.bypass:
+    description: Break natural protected blocks (soul sand)
+    default: false
   civnova.admin:
     default: op
   civnova.tab.all:
