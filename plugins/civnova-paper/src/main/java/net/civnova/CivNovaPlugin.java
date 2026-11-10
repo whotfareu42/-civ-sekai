@@ -244,7 +244,7 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
             if (d >= bestDist) {
                 continue;
             }
-            if (p.isChunkLoaded() && p.getBlock().getType() != Material.NETHER_PORTAL) {
+            if (p.isChunkLoaded() && !isPortal(p.getBlock().getType())) {
                 it.remove(); // portal was destroyed
                 changed = true;
                 continue;
@@ -277,13 +277,113 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
             for (int dy = -1; dy <= 1; dy++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     Block r = b.getRelative(dx, dy, dz);
-                    if (r.getType() == Material.NETHER_PORTAL) {
+                    if (isPortal(r.getType())) {
                         addPortal(r.getLocation());
                         return;
                     }
                 }
             }
         }
+    }
+
+    private static boolean isPortal(Material m) {
+        return m == Material.NETHER_PORTAL || m == Material.END_PORTAL;
+    }
+
+    // ------------------------------------------------------------------ end portal pads as nether links
+    // End portal blocks in the overworld lead to the nether (coords / 8) and back (coords * 8).
+    // The other side must also be an end portal pad (within 'portal-link.search' blocks).
+
+    private final java.util.Map<java.util.UUID, Long> portalCooldown = new java.util.HashMap<>();
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEndPortal(PlayerPortalEvent event) {
+        if (event.getCause() != org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.END_PORTAL) {
+            return;
+        }
+        Player p = event.getPlayer();
+        World from = event.getFrom().getWorld();
+        String over = getConfig().getString("portal-link.overworld", "sekai");
+        String nether = getConfig().getString("portal-link.nether", "sekai_nether");
+        boolean toNether;
+        if (from.getName().equals(over)) {
+            toNether = true;
+        } else if (from.getName().equals(nether)) {
+            toNether = false;
+        } else {
+            return;
+        }
+        event.setCancelled(true);
+        Long until = portalCooldown.get(p.getUniqueId());
+        if (until != null && until > System.currentTimeMillis()) {
+            return;
+        }
+        portalCooldown.put(p.getUniqueId(), System.currentTimeMillis() + 3000);
+        World target = Bukkit.getWorld(toNether ? nether : over);
+        if (target == null) {
+            return;
+        }
+        Location here = event.getFrom();
+        addPortal(here);
+        double f = toNether ? 0.125 : 8.0;
+        Location wanted = new Location(target, here.getX() * f, here.getY(), here.getZ() * f);
+        int search = getConfig().getInt("portal-link.search", toNether ? 32 : 256);
+        Location pad = null;
+        double best = (double) search * search;
+        for (Location l : portals) {
+            if (l.getWorld() == null || !l.getWorld().equals(target)) {
+                continue;
+            }
+            double dx = l.getX() - wanted.getX();
+            double dz = l.getZ() - wanted.getZ();
+            double d = dx * dx + dz * dz;
+            if (d <= best && (!l.isChunkLoaded() || l.getBlock().getType() == Material.END_PORTAL)) {
+                best = d;
+                pad = l;
+            }
+        }
+        if (pad == null) {
+            p.sendActionBar(Component.text("This portal is not linked yet.", NamedTextColor.RED));
+            return;
+        }
+        Location arrive = arrivalSpot(pad);
+        p.teleport(arrive, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.PLUGIN);
+        p.getWorld().playSound(arrive, Sound.BLOCK_PORTAL_TRAVEL, 0.25f, 1.2f);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityEndPortal(org.bukkit.event.entity.EntityPortalEvent event) {
+        String w = event.getFrom().getWorld().getName();
+        if ((w.equals(getConfig().getString("portal-link.overworld", "sekai")) || w.equals(getConfig().getString("portal-link.nether", "sekai_nether")))
+            && event.getFrom().getBlock().getType() == Material.END_PORTAL) {
+            event.setCancelled(true); // no items/mobs into the End
+        }
+    }
+
+    /** A safe standing spot next to the pad (never on the portal itself, so you don't bounce back). */
+    private static Location arrivalSpot(Location pad) {
+        Block center = pad.getBlock();
+        // find the whole pad, then look around its edge
+        for (int r = 1; r <= 4; r++) {
+            for (int dx = -r; dx <= r; dx++) {
+                for (int dz = -r; dz <= r; dz++) {
+                    if (Math.abs(dx) != r && Math.abs(dz) != r) {
+                        continue;
+                    }
+                    for (int dy = -1; dy <= 3; dy++) {
+                        Block feet = center.getRelative(dx, dy, dz);
+                        Block floor = feet.getRelative(0, -1, 0);
+                        Block head = feet.getRelative(0, 1, 0);
+                        if (floor.getType().isSolid() && !isPortal(floor.getType())
+                            && feet.isPassable() && !isPortal(feet.getType()) && !feet.isLiquid()
+                            && head.isPassable() && !head.isLiquid()) {
+                            return feet.getLocation().add(0.5, 0, 0.5);
+                        }
+                    }
+                }
+            }
+        }
+        return center.getLocation().add(0.5, 2, 0.5);
     }
 
     private boolean addPortal(Location loc) {
