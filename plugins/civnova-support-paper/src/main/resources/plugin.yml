@@ -1,0 +1,16 @@
+name: CivNovaSupport
+version: ${version}
+main: net.civnova.support.SupportPlugin
+api-version: 1.21.3
+authors: [ CivNova ]
+description: Support mode for Civitas Nova staff
+softdepend: [ SuperVanish, PremiumVanish, InvSeePlusPlus ]
+commands:
+  support:
+    description: Toggle support mode or open the support tools
+    aliases: [ sm ]
+    permission: civnova.support
+permissions:
+  civnova.support:
+    description: Use support mode
+    default: op
