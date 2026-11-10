@@ -4,12 +4,10 @@ header-footer:
   disable-in-worlds:
     - disabledworld
   header:
-    - '&6&kAAAA&r&6&l Welcome to Sekai! &r&6&kAAAA'
-    - "&2&lMain: &6%online% &4&lPvP: &6%playercount_pvp% &d&lZorweth: &6%playercount_zorweth%"
+    - '&6&l Sekai '
+    - "&7Spieler online: &a%online%&7/&a%maxplayers%"
   footer:
-    - '&a%playercap_tps% TPS &r&6discord.gg/nDnsU6vJqg'
-    - '&cPatreon: &6patreon.com/Civ_MC'
-    - '&6Admins: Wingzero54, RedDevel, Okx, zenron_, snw'
+    - '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'
   per-world:
     world1:
       header:
