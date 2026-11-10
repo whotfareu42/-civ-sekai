@@ -10,6 +10,9 @@ protected-blocks:
   enabled: true
   materials:
     - SOUL_SAND
+  # In diesen Welten bleibt alles normal abbaubar
+  ignored-worlds:
+    - sekai_nether
 
 # Track fuer /promote und /demote
 rank-track: staff

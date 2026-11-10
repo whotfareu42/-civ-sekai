@@ -108,7 +108,9 @@ final class ProtectedBlocks implements Listener {
     }
 
     private boolean isNaturalProtected(Block b) {
-        return enabled() && materials.contains(b.getType()) && !isPlaced(b);
+        return enabled() && materials.contains(b.getType())
+            && !plugin.getConfig().getStringList("protected-blocks.ignored-worlds").contains(b.getWorld().getName())
+            && !isPlaced(b);
     }
 
     // ---------------------------------------------------------------- events
