@@ -11,11 +11,8 @@ commands:
   civnova:
     description: Civitas Nova admin command
     permission: civnova.admin
-  promote:
-    description: Promote a player on a LuckPerms track (default staff)
-    permission: civnova.promote
   demote:
-    description: Demote a player on a LuckPerms track (default staff)
+    description: Demote a player on the staff track
     permission: civnova.promote
 permissions:
   civnova.promote:

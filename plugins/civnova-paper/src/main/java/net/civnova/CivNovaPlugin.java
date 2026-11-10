@@ -30,6 +30,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -106,6 +107,41 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         String url = getConfig().getString("discord", "");
         sender.sendMessage(Component.text("All guides and help are on our Discord: ", NamedTextColor.GOLD)
             .append(Component.text(url, NamedTextColor.AQUA).clickEvent(ClickEvent.openUrl(url))));
+    }
+
+    // ------------------------------------------------------------------ /promote /demote
+    // NameLayer also owns /promote (/promote <group> <player> <rank>). With 1-2 arguments we
+    // handle it as a staff rank change, with 3 arguments it stays NameLayer's command.
+
+    private boolean handleRank(CommandSender sender, String line) {
+        String[] parts = line.trim().split("\\s+");
+        String label = parts[0].toLowerCase(Locale.ROOT);
+        if (label.startsWith("/")) {
+            label = label.substring(1);
+        }
+        boolean promote = label.equals("promote");
+        if (!promote && !label.equals("demote")) {
+            return false;
+        }
+        if (parts.length < 2 || parts.length > 3 || !sender.hasPermission("civnova.promote")) {
+            return false;
+        }
+        RankCommand.run(this, sender, java.util.Arrays.copyOfRange(parts, 1, parts.length), promote);
+        return true;
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onRankCommand(PlayerCommandPreprocessEvent event) {
+        if (handleRank(event.getPlayer(), event.getMessage())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onRankConsole(ServerCommandEvent event) {
+        if (handleRank(event.getSender(), event.getCommand())) {
+            event.setCancelled(true);
+        }
     }
 
     // ------------------------------------------------------------------ tab filter
