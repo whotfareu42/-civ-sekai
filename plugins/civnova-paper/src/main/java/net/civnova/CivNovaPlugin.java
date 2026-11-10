@@ -29,7 +29,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
+import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.world.PortalCreateEvent;
@@ -53,6 +55,7 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         portalFile = new File(getDataFolder(), "portals.yml");
         loadPortals();
         getServer().getPluginManager().registerEvents(this, this);
+        applyMaxPlayers();
         getLogger().info("Loaded " + portals.size() + " known nether portals.");
     }
 
@@ -69,6 +72,40 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
             out.add(s.toLowerCase(Locale.ROOT));
         }
         return out;
+    }
+
+    // ------------------------------------------------------------------ max players / help
+
+    private void applyMaxPlayers() {
+        int max = getConfig().getInt("max-players", 0);
+        if (max > 0) {
+            // the host resets server.properties on every start, so set it at runtime
+            Bukkit.setMaxPlayers(max);
+        }
+    }
+
+    @EventHandler
+    public void onPing(PaperServerListPingEvent event) {
+        int max = getConfig().getInt("max-players", 0);
+        if (max > 0) {
+            event.setMaxPlayers(max);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onHelp(PlayerCommandPreprocessEvent event) {
+        String msg = event.getMessage().toLowerCase(Locale.ROOT);
+        String label = msg.split(" ", 2)[0];
+        if (label.equals("/help") || label.equals("/?")) {
+            event.setCancelled(true);
+            sendDiscord(event.getPlayer());
+        }
+    }
+
+    private void sendDiscord(CommandSender sender) {
+        String url = getConfig().getString("discord", "");
+        sender.sendMessage(Component.text("All guides and help are on our Discord: ", NamedTextColor.GOLD)
+            .append(Component.text(url, NamedTextColor.AQUA).clickEvent(ClickEvent.openUrl(url))));
     }
 
     // ------------------------------------------------------------------ tab filter
@@ -267,14 +304,13 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("discord")) {
-            String url = getConfig().getString("discord", "");
-            sender.sendMessage(Component.text("Join our Discord: ", NamedTextColor.GOLD)
-                .append(Component.text(url, NamedTextColor.AQUA).clickEvent(ClickEvent.openUrl(url))));
+            sendDiscord(sender);
             return true;
         }
         if (args.length >= 1 && args[0].equalsIgnoreCase("reload")) {
             loadSettings();
             loadPortals();
+            applyMaxPlayers();
             sender.sendMessage("CivNova reloaded.");
             return true;
         }
