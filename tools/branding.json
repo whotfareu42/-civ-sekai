@@ -76,7 +76,7 @@
   ],
   [
    "- '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'",
-   "- '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'\n    - '&9discord.gg/3VvxepfbvA'"
+   "- '&7TPS: &a%tps% &8| &7Ping: &a%ping%ms'\n      - '&9discord.gg/3VvxepfbvA'"
   ]
  ],
  "plugins/BanStick/config.yml": [

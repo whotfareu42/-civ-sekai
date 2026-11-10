@@ -635,7 +635,7 @@ hacks:
   TooHappyGhasts:
     enabled: true
   PlayerCap:
-    enabled: true
+    enabled: false
     auto:
       enabled: true
       # Baseline capacity; growth above this is one slot at a time.
