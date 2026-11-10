@@ -36,6 +36,7 @@ tab-filter:
     - list
     - me
     - help
+    - tracker
   blocked-commands:
     - civnova
 

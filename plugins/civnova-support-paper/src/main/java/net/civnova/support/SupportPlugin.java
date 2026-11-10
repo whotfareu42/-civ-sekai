@@ -110,6 +110,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     private static final class Gui implements InventoryHolder {
         final String type;
         final int page;
+        String actor;
         Inventory inventory;
 
         Gui(String type, int page) {
@@ -177,6 +178,14 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     }
 
     private boolean trackerCommand(CommandSender sender, String[] args) {
+        if (sender instanceof Player p) {
+            if (args.length > 0) {
+                openTrackerEntries(p, args[0], 0);
+            } else {
+                openTrackerOverview(p, 0);
+            }
+            return true;
+        }
         String who = null;
         int page = 1;
         for (String a : args) {
@@ -546,12 +555,151 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         p.openInventory(inv);
     }
 
+    // ------------------------------------------------------------------ tracker GUI (for everyone)
+
+    private void openTrackerOverview(Player p, int page) {
+        List<String> actors = tracker.actors();
+        int pages = Math.max(1, (actors.size() + 44) / 45);
+        page = Math.max(0, Math.min(page, pages - 1));
+        Gui gui = new Gui("tracker", page);
+        Inventory inv = Bukkit.createInventory(gui, 54, Component.text("Staff actions - who"));
+        gui.inventory = inv;
+        for (int i = 0; i < 45 && page * 45 + i < actors.size(); i++) {
+            String name = actors.get(page * 45 + i);
+            ItemStack icon;
+            if (name.equalsIgnoreCase("CONSOLE") || name.equalsIgnoreCase("Server")) {
+                icon = button(Material.COMMAND_BLOCK, name, NamedTextColor.GOLD, "Commands run from the server console", "Click to see what was done");
+            } else {
+                icon = new ItemStack(Material.PLAYER_HEAD);
+                SkullMeta meta = (SkullMeta) icon.getItemMeta();
+                meta.setOwningPlayer(Bukkit.getOfflinePlayer(name));
+                meta.displayName(Component.text(name, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
+                meta.lore(List.of(Component.text("Click to see what " + name + " did", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)));
+                icon.setItemMeta(meta);
+            }
+            inv.setItem(i, icon);
+        }
+        if (page > 0) {
+            inv.setItem(45, button(Material.ARROW, "Previous page", NamedTextColor.WHITE));
+        }
+        inv.setItem(49, button(Material.BOOK, "All staff actions", NamedTextColor.AQUA, "Newest first, everyone together",
+            "Everything staff does is logged here", "so the server stays transparent."));
+        if (page < pages - 1) {
+            inv.setItem(53, button(Material.ARROW, "Next page", NamedTextColor.WHITE));
+        }
+        p.openInventory(inv);
+    }
+
+    private void openTrackerEntries(Player p, String actor, int page) {
+        page = Math.max(0, page);
+        List<Tracker.Entry> list = tracker.find(actor, page * 45, 46);
+        boolean more = list.size() > 45;
+        Gui gui = new Gui("tracker-entries", page);
+        gui.actor = actor;
+        Inventory inv = Bukkit.createInventory(gui, 54, Component.text((actor == null ? "All staff" : actor) + " - page " + (page + 1)));
+        gui.inventory = inv;
+        boolean coords = p.hasPermission("civnova.tracker.coords");
+        for (int i = 0; i < 45 && i < list.size(); i++) {
+            Tracker.Entry e = list.get(i);
+            String text = coords ? e.action() : e.publicAction();
+            String type = text.split(" ", 2)[0];
+            ItemStack item = new ItemStack(iconFor(type));
+            ItemMeta meta = item.getItemMeta();
+            meta.displayName(Component.text(e.actor() + " - " + type, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
+            List<Component> lore = new ArrayList<>();
+            lore.add(Component.text(e.time(), NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false));
+            for (String line : wrap(text, 40)) {
+                lore.add(Component.text(line, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
+            }
+            meta.lore(lore);
+            item.setItemMeta(meta);
+            inv.setItem(i, item);
+        }
+        if (page > 0) {
+            inv.setItem(45, button(Material.ARROW, "Newer", NamedTextColor.WHITE));
+        }
+        inv.setItem(49, button(Material.OAK_DOOR, "Back", NamedTextColor.WHITE));
+        if (more) {
+            inv.setItem(53, button(Material.ARROW, "Older", NamedTextColor.WHITE));
+        }
+        p.openInventory(inv);
+    }
+
+    private static Material iconFor(String type) {
+        return switch (type) {
+            case "CMD" -> Material.PAPER;
+            case "TELEPORT" -> Material.ENDER_PEARL;
+            case "GAMEMODE" -> Material.GRASS_BLOCK;
+            case "CREATIVE" -> Material.CHEST;
+            case "ENTER" -> Material.LIME_DYE;
+            case "EXIT" -> Material.RED_DYE;
+            case "BREAK" -> Material.IRON_PICKAXE;
+            case "PLACE" -> Material.BRICKS;
+            case "DROP" -> Material.DROPPER;
+            case "BUILD" -> Material.DIAMOND_PICKAXE;
+            default -> Material.MAP;
+        };
+    }
+
+    private static List<String> wrap(String text, int width) {
+        List<String> out = new ArrayList<>();
+        StringBuilder line = new StringBuilder();
+        for (String word : text.split(" ")) {
+            if (line.length() + word.length() + 1 > width && !line.isEmpty()) {
+                out.add(line.toString());
+                line.setLength(0);
+            }
+            if (!line.isEmpty()) {
+                line.append(' ');
+            }
+            line.append(word);
+        }
+        if (!line.isEmpty()) {
+            out.add(line.toString());
+        }
+        return out.size() > 12 ? out.subList(0, 12) : out;
+    }
+
+    private void handleTracker(Player p, Gui gui, InventoryClickEvent e) {
+        int slot = e.getRawSlot();
+        if (gui.type.equals("tracker")) {
+            if (slot == 45) {
+                openTrackerOverview(p, gui.page - 1);
+            } else if (slot == 53) {
+                openTrackerOverview(p, gui.page + 1);
+            } else if (slot == 49) {
+                openTrackerEntries(p, null, 0);
+            } else if (slot < 45 && e.getCurrentItem() != null) {
+                List<String> actors = tracker.actors();
+                int idx = gui.page * 45 + slot;
+                if (idx < actors.size()) {
+                    openTrackerEntries(p, actors.get(idx), 0);
+                }
+            }
+            return;
+        }
+        if (slot == 45) {
+            openTrackerEntries(p, gui.actor, gui.page - 1);
+        } else if (slot == 53) {
+            openTrackerEntries(p, gui.actor, gui.page + 1);
+        } else if (slot == 49) {
+            openTrackerOverview(p, 0);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player p)) {
             return;
         }
         Session s = sessions.get(p.getUniqueId());
+        if (event.getInventory().getHolder() instanceof Gui tg && tg.type.startsWith("tracker")) {
+            event.setCancelled(true);
+            if (event.getClickedInventory() == event.getView().getTopInventory()) {
+                handleTracker(p, tg, event);
+            }
+            return;
+        }
         if (event.getInventory().getHolder() instanceof Gui gui) {
             event.setCancelled(true);
             if (s == null || event.getClickedInventory() != event.getView().getTopInventory()) {

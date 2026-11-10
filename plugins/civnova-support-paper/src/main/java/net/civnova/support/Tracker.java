@@ -29,7 +29,18 @@ public final class Tracker {
         String format() {
             return TIME.format(time) + " " + actor + ": " + action;
         }
+
+        String time() {
+            return TIME.format(time);
+        }
+
+        /** Action text with world coordinates removed, for the public view. */
+        String publicAction() {
+            return COORDS.matcher(action).replaceAll("[coords hidden]");
+        }
     }
+
+    private static final java.util.regex.Pattern COORDS = java.util.regex.Pattern.compile("[A-Za-z0-9_]+ -?\\d+ -?\\d+ -?\\d+");
 
     private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final int MEMORY = 5000;
@@ -44,6 +55,7 @@ public final class Tracker {
         this.plugin = plugin;
         this.dir = new File(plugin.getDataFolder(), "tracker");
         this.dir.mkdirs();
+        loadRecent();
         // flush webhook queue every 5 seconds so Discord rate limits are not hit
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::flushWebhook, 100L, 100L);
     }
@@ -64,6 +76,48 @@ public final class Tracker {
         if (!webhookUrl().isEmpty()) {
             webhookQueue.add(e.format());
         }
+    }
+
+    /** Load the last 7 days from disk so the GUI survives restarts. */
+    private void loadRecent() {
+        for (int d = 6; d >= 0; d--) {
+            File f = new File(dir, LocalDate.now().minusDays(d) + ".log");
+            if (!f.isFile()) {
+                continue;
+            }
+            try {
+                for (String line : java.nio.file.Files.readAllLines(f.toPath(), StandardCharsets.UTF_8)) {
+                    if (line.length() < 21) {
+                        continue;
+                    }
+                    int colon = line.indexOf(": ", 20);
+                    if (colon < 0) {
+                        continue;
+                    }
+                    try {
+                        LocalDateTime t = LocalDateTime.parse(line.substring(0, 19), TIME);
+                        recent.addLast(new Entry(t, line.substring(20, colon), line.substring(colon + 2)));
+                    } catch (Exception ignored) {
+                        // skip malformed line
+                    }
+                }
+            } catch (IOException ex) {
+                plugin.getLogger().warning("Tracker could not read " + f.getName());
+            }
+        }
+        while (recent.size() > MEMORY) {
+            recent.removeFirst();
+        }
+    }
+
+    /** Distinct actors, most recently active first. */
+    public synchronized List<String> actors() {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        var it = recent.descendingIterator();
+        while (it.hasNext()) {
+            out.add(it.next().actor());
+        }
+        return new ArrayList<>(out);
     }
 
     /** Newest first. */

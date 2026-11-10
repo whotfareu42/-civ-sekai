@@ -15,8 +15,7 @@ commands:
     aliases: [ am, adminmode ]
     permission: civnova.duty.admin
   tracker:
-    description: Show logged staff actions
-    permission: civnova.tracker.view
+    description: See what staff did (transparency log)
 permissions:
   civnova.support:
     description: Use support mode
@@ -27,6 +26,6 @@ permissions:
   civnova.tracked:
     description: Everything this player does as staff is logged
     default: false
-  civnova.tracker.view:
-    description: Read the staff tracker
+  civnova.tracker.coords:
+    description: See coordinates in the staff tracker (everyone else sees them hidden)
     default: op
