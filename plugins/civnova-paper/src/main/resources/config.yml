@@ -3,6 +3,9 @@ discord: "https://discord.gg/3VvxepfbvA"
 # Wird beim Start gesetzt (PebbleHost ueberschreibt server.properties)
 max-players: 1000
 
+# Track fuer /promote und /demote
+rank-track: staff
+
 # Normale Spieler sehen beim Tabben nur Befehle dieser Plugins
 # (und nur, wenn sie die Rechte dafuer haben) plus die Befehle aus extra-commands.
 # Wer civnova.tab.all hat (Helper/Mod/Admin), sieht alles.

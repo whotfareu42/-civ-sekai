@@ -4,14 +4,22 @@ main: net.civnova.CivNovaPlugin
 api-version: 1.21.3
 authors: [ CivNova ]
 description: Civitas Nova server tweaks (tab filter, portal-finding ender eyes, discord)
-softdepend: [ EssenceGlue ]
+softdepend: [ EssenceGlue, LuckPerms ]
 commands:
   discord:
     description: Shows the Discord link
   civnova:
     description: Civitas Nova admin command
     permission: civnova.admin
+  promote:
+    description: Promote a player on a LuckPerms track (default staff)
+    permission: civnova.promote
+  demote:
+    description: Demote a player on a LuckPerms track (default staff)
+    permission: civnova.promote
 permissions:
+  civnova.promote:
+    default: op
   civnova.admin:
     default: op
   civnova.tab.all:

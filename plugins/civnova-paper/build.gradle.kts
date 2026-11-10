@@ -8,4 +8,5 @@ dependencies {
     paperweight {
         paperDevBundle(libs.versions.paper)
     }
+    compileOnly(libs.luckperms.api)
 }

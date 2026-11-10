@@ -303,6 +303,10 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (command.getName().equalsIgnoreCase("promote") || command.getName().equalsIgnoreCase("demote")) {
+            RankCommand.run(this, sender, args, command.getName().equalsIgnoreCase("promote"));
+            return true;
+        }
         if (command.getName().equalsIgnoreCase("discord")) {
             sendDiscord(sender);
             return true;
