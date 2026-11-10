@@ -43,8 +43,11 @@ tab-filter:
 # End-Portal-Bloecke in der Oberwelt fuehren in den Nether (Koordinaten / 8) und zurueck (* 8).
 # Auf der anderen Seite muss ebenfalls ein End-Portal-Feld stehen.
 # enabled: false = CivMC-Verhalten (SimpleAdminHacks PortalModifyHack, Nether 1:1)
+# scale 1 = Nether 1:1 (keine Abkuerzung), 8 = Vanilla-Verhaeltnis
 portal-link:
-  enabled: false
+  enabled: true
+  scale: 1
+  search: 32
   overworld: sekai
   nether: sekai_nether
 

@@ -326,9 +326,10 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         }
         Location here = event.getFrom();
         addPortal(here);
-        double f = toNether ? 0.125 : 8.0;
+        double scale = getConfig().getDouble("portal-link.scale", 8.0);
+        double f = toNether ? 1.0 / scale : scale;
         Location wanted = new Location(target, here.getX() * f, here.getY(), here.getZ() * f);
-        int search = getConfig().getInt("portal-link.search", toNether ? 32 : 256);
+        int search = getConfig().getInt("portal-link.search", 32);
         Location pad = null;
         double best = (double) search * search;
         for (Location l : portals) {

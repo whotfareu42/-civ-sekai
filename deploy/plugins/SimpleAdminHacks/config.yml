@@ -265,7 +265,7 @@ hacks:
   #This is a very specific hack made for CivMC, it is not recommended to enable
   #Unless you want to fully mimic their behaviour
   PortalModifyHack:
-    enabled: true
+    enabled: false
     targetWorld: sekai_nether
     homeWorld: sekai
   PortalSpawnModifier:
