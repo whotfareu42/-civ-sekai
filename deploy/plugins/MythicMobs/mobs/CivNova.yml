@@ -12,10 +12,12 @@ Sturmwind:
   Type: BREEZE
   Display: '&bSturmwind'
   Health: 60
-  Options:
-    PreventOtherDrops: true
   Skills:
   - addtag{tag=civnova_sturmwind} @self ~onSpawn
+  # Sturmboe: Schaden + Rueckstoss im Umkreis
+  - effect:particles{p=cloud;a=40;hs=2;vs=1;s=0.1} @self ~onTimer:40
+  - damage{a=4} @PlayersInRadius{r=4} ~onTimer:40
+  - throw{velocity=6;velocityY=3} @PlayersInRadius{r=4} ~onTimer:40
 
 # Seltener Boss-Breeze
 Kernwaechter:
@@ -26,11 +28,12 @@ Kernwaechter:
   Options:
     AlwaysShowName: true
     Glowing: true
-    PreventOtherDrops: true
     KnockbackResistance: 0.8
     MaxCombatDistance: 40
   Skills:
   - addtag{tag=civnova_kernwaechter} @self ~onSpawn
   - command{c="attribute <caster.uuid> minecraft:scale base set 2"} @self ~onSpawn
   - summon{type=Sturmwind;amount=2;radius=4;cooldown=30} @self ~onDamaged 0.25
+  - effect:particles{p=explosion;a=10;hs=3;vs=1} @self ~onTimer:60
+  - damage{a=7} @PlayersInRadius{r=6} ~onTimer:60
   - throw{velocity=12;velocityY=6} @PlayersInRadius{r=6} ~onTimer:100

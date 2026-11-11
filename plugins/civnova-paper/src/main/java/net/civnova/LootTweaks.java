@@ -160,7 +160,7 @@ final class LootTweaks implements Listener {
 
     // ---------------------------------------------------------------- tagged mob drops
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(EntityDeathEvent e) {
         LivingEntity ent = e.getEntity();
         ConfigurationSection drops = plugin.getConfig().getConfigurationSection("mob-drops");
