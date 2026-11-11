@@ -220,3 +220,11 @@ banned-book-enchants:
 - density
 - breach
 - wind_burst
+
+# ---------------------------------------------------------------- Custom Spawns
+# Ersetzt einen Teil der natuerlichen Spawns. Erster Treffer gewinnt (Reihenfolge wichtig).
+# entity: Vanilla-Mob  |  mythic: MythicMobs-Mob   (Test: /mm mobs spawn <Name>)
+custom-spawns:
+- {world: sekai, mythic: Kernwaechter, chance: 0.0004, outside: true, biomes: [WINDSWEPT_HILLS, WINDSWEPT_GRAVELLY_HILLS, JAGGED_PEAKS, FROZEN_PEAKS, STONY_PEAKS, SNOWY_SLOPES]}
+- {world: sekai, mythic: Sturmwind, chance: 0.04, outside: true, biomes: [WINDSWEPT_HILLS, WINDSWEPT_GRAVELLY_HILLS, JAGGED_PEAKS, FROZEN_PEAKS, STONY_PEAKS, SNOWY_SLOPES]}
+- {world: sekai_nether, entity: BLAZE, chance: 0.04}

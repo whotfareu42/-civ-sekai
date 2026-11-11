@@ -65,6 +65,7 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(lootTweaks, this);
         bans = new Bans(this);
         getServer().getPluginManager().registerEvents(bans, this);
+        getServer().getPluginManager().registerEvents(new CustomSpawns(this), this);
         applyMaxPlayers();
         getLogger().info("Loaded " + portals.size() + " known nether portals.");
     }
