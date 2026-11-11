@@ -272,6 +272,7 @@ public class BlockingSpawnSelector implements SpawnSelector {
             }
         }
 
+        logger.warning("RandomSpawn: no valid surface location found in 1000 attempts for " + world.getName() + ", using fallback corner");
         return new Location(world, xmin, 0, zmin);
     }
 

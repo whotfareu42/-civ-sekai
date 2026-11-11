@@ -17,6 +17,9 @@ commands:
 permissions:
   civnova.promote:
     default: op
+  civnova.banneditems.bypass:
+    description: Use/keep banned items (admin building)
+    default: false
   civnova.protected.bypass:
     description: Break natural protected blocks (soul sand)
     default: false

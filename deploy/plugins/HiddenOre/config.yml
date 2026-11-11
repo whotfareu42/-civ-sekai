@@ -436,6 +436,46 @@ drops:
     transformDropIfFails: false
     transformMaxDropsIfFails: 1
     state: normal
+  fossil_stone:
+    package: &id001
+    - ==: org.bukkit.inventory.ItemStack
+      v: 3839
+      type: PRISMARINE_SHARD
+      amount: 1
+      meta:
+        meta-type: UNSPECIFIC
+        ==: ItemMeta
+        display-name: §3Fossil
+        lore:
+        - Crack me in a factory for a prize!
+    tools: &id002
+    - stone_pickaxe
+    - iron_pickaxe
+    - golden_pickaxe
+    - diamond_pickaxe
+    - netherite_pickaxe
+    - wooden_pickaxe
+    minAmount: 1
+    maxAmount: 1
+    transformIfAble: false
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    minY: 1
+    maxY: 320
+    chance: 0.00125
+  fossil_deepslate:
+    package: *id001
+    tools: *id002
+    minAmount: 1
+    maxAmount: 1
+    transformIfAble: false
+    transformDropIfFails: false
+    transformMaxDropsIfFails: 1
+    state: normal
+    minY: -64
+    maxY: 0
+    chance: 0.010417
 blocks:
   stone:
     material: STONE
@@ -453,7 +493,7 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: &id001
+    dropList: &id003
     - iron_ore
     - deepslate_iron_ore
     - copper_ore
@@ -468,6 +508,8 @@ blocks:
     - deepslate_diamond_ore
     - emerald_ore
     - deepslate_emerald_ore
+    - fossil_stone
+    - fossil_deepslate
   deepslate:
     material: DEEPSLATE
     validTransforms:
@@ -484,7 +526,7 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: *id001
+    dropList: *id003
   tuff:
     material: TUFF
     validTransforms:
@@ -501,7 +543,7 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: *id001
+    dropList: *id003
   andesite:
     material: ANDESITE
     validTransforms:
@@ -518,7 +560,7 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: *id001
+    dropList: *id003
   diorite:
     material: DIORITE
     validTransforms:
@@ -535,7 +577,7 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: *id001
+    dropList: *id003
   granite:
     material: GRANITE
     validTransforms:
@@ -552,4 +594,4 @@ blocks:
       granite:
         material: GRANITE
     dropMultiple: false
-    dropList: *id001
+    dropList: *id003

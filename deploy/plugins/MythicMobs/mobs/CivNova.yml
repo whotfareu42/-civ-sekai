@@ -1,0 +1,35 @@
+# Civitas Nova Custom Mobs
+# Drops kommen aus CivNova (config.yml -> mob-drops), erkannt am Scoreboard-Tag.
+# Testen: /mm mobs spawn <Name> [Anzahl]   z.B. /mm mobs spawn Sturmwind
+
+# Normaler Blaze fuer den Nether (es gibt keine Festungen). Vanilla-Verhalten und Vanilla-Drops.
+NetherBlaze:
+  Type: BLAZE
+
+# Breeze in den Bergen
+Sturmwind:
+  Type: BREEZE
+  Display: '&bSturmwind'
+  Health: 60
+  Options:
+    PreventOtherDrops: true
+  Skills:
+  - addtag{tag=civnova_sturmwind} @self ~onSpawn
+
+# Seltener Boss-Breeze
+Kernwaechter:
+  Type: BREEZE
+  Display: '&6&lKernwaechter'
+  Health: 200
+  Damage: 6
+  Options:
+    AlwaysShowName: true
+    Glowing: true
+    PreventOtherDrops: true
+    KnockbackResistance: 0.8
+    MaxCombatDistance: 40
+  Skills:
+  - addtag{tag=civnova_kernwaechter} @self ~onSpawn
+  - command{c="attribute <caster.uuid> minecraft:scale base set 2"} @self ~onSpawn
+  - summon{type=Sturmwind;amount=2;radius=4;cooldown=30} @self ~onDamaged 0.25
+  - throw{velocity=12;velocityY=6} @PlayersInRadius{r=6} ~onTimer:100

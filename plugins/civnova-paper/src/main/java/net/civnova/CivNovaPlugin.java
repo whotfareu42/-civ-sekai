@@ -45,6 +45,8 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
 
     private final List<Location> portals = new ArrayList<>();
     private ProtectedBlocks protectedBlocks;
+    private LootTweaks lootTweaks;
+    private Bans bans;
     private File portalFile;
     private Set<String> allowedPlugins;
     private Set<String> extraCommands;
@@ -59,6 +61,10 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         protectedBlocks = new ProtectedBlocks(this);
         getServer().getPluginManager().registerEvents(protectedBlocks, this);
+        lootTweaks = new LootTweaks(this);
+        getServer().getPluginManager().registerEvents(lootTweaks, this);
+        bans = new Bans(this);
+        getServer().getPluginManager().registerEvents(bans, this);
         applyMaxPlayers();
         getLogger().info("Loaded " + portals.size() + " known nether portals.");
     }
@@ -457,6 +463,8 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
             loadPortals();
             applyMaxPlayers();
             protectedBlocks.reload();
+            lootTweaks.registerRecipes();
+            bans.reload();
             sender.sendMessage("CivNova reloaded.");
             return true;
         }
@@ -491,7 +499,25 @@ public final class CivNovaPlugin extends JavaPlugin implements Listener {
                 }
             }
         }
-        sender.sendMessage("/civnova reload | portal add | portal remove | portal list");
+        if (args.length >= 2 && args[0].equalsIgnoreCase("item")) {
+            ItemStack it = lootTweaks.item(args[1]);
+            Player target = args.length >= 3 ? Bukkit.getPlayerExact(args[2]) : (sender instanceof Player pl ? pl : null);
+            if (it == null || target == null) {
+                sender.sendMessage("Unknown item or player. Items: " + getConfig().getConfigurationSection("items").getKeys(false));
+                return true;
+            }
+            if (args.length >= 4) {
+                try {
+                    it.setAmount(Integer.parseInt(args[3]));
+                } catch (NumberFormatException ignored) {
+                    // keep 1
+                }
+            }
+            target.getInventory().addItem(it);
+            sender.sendMessage("Gave " + it.getAmount() + "x " + args[1] + " to " + target.getName());
+            return true;
+        }
+        sender.sendMessage("/civnova reload | portal add|remove|list | item <key> [player] [amount]");
         return true;
     }
 }

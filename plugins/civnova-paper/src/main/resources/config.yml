@@ -67,3 +67,156 @@ portal-eyes:
   enabled: true
   # Portale werden automatisch gespeichert, wenn sie entzuendet oder benutzt werden.
   # Admins: /civnova portal add|remove|list
+
+# ---------------------------------------------------------------- Items
+# Custom-Items, genau so serialisiert wie in FactoryMod (damit sie in Factories passen).
+# Geben: /civnova item <key> [spieler] [anzahl]
+items:
+  netherstar-shard:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: AMETHYST_SHARD
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §dNetherstar Shard
+      lore:
+      - Combine 9 in a crafting table
+      - to forge a Nether Star
+  fossil:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PRISMARINE_SHARD
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §3Fossil
+      lore:
+      - Crack me in a factory for a prize!
+  wind-essence:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §fWind Essence
+  trim-tricky:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Tricky Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+  trim-plains:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Plains Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+  trim-relic:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Relic Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+  trim-arid:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Arid Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+  trim-forest:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Forest Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+  trim-barren:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: PAPER
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: Barren Trim Fragment
+      lore:
+      - Used to produce trims in the Research Station
+
+# ---------------------------------------------------------------- Angeln
+# Vanilla: 85% Fisch, 10% Muell, 5% Schatz. Mit diesen Werten ca. 80% / 4% / 16%.
+fishing:
+  enabled: true
+  junk-to-treasure: 0.6
+  fish-to-treasure: 0.06
+  # Sonderfaenge (Chance pro Fang)
+  special:
+    trim-fragment:
+      chance: 0.005
+      items: [trim-tricky, trim-plains, trim-relic, trim-arid, trim-forest, trim-barren]
+    chorus-flower:
+      chance: 0.003
+      item: CHORUS_FLOWER
+    dragon-head:
+      chance: 0.0005
+      item: DRAGON_HEAD
+
+# ---------------------------------------------------------------- Mob-Drops
+# Zusaetzliche Drops fuer Mobs mit diesem Scoreboard-Tag (MythicMobs setzt den Tag beim Spawn).
+mob-drops:
+  civnova_sturmwind:
+    require-player-kill: true
+    clear-vanilla-drops: true
+    drops:
+    - {item: BREEZE_ROD, chance: 1.0, min: 1, max: 2}
+    - {item: wind-essence, chance: 0.25, min: 1, max: 1}
+    - {item: HEAVY_CORE, chance: 0.02, min: 1, max: 1}
+  civnova_kernwaechter:
+    require-player-kill: true
+    clear-vanilla-drops: true
+    drops:
+    - {item: HEAVY_CORE, chance: 1.0, min: 1, max: 1}
+    - {item: BREEZE_ROD, chance: 1.0, min: 3, max: 5}
+    - {item: wind-essence, chance: 1.0, min: 2, max: 2}
+
+# ---------------------------------------------------------------- Banns
+# Koennen nicht gecraftet, platziert, benutzt oder behalten werden (Bypass: civnova.banneditems.bypass)
+banned-items:
+- SHULKER_BOXES
+- ELYTRA
+- END_CRYSTAL
+- RESPAWN_ANCHOR
+# Diese Verzauberungen werden von Buechern entfernt (Items mit der Verzauberung bleiben erlaubt)
+banned-book-enchants:
+- mending
+- density
+- breach
+- wind_burst

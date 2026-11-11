@@ -41,7 +41,7 @@ public class RespawnListener implements Listener {
         List<String> spawnPointFlags = plugin.yamlHandler.worlds.getStringList(worldName + ".spawnpointson");
 
         if (event.isBedSpawn() && !randomSpawnFlags.contains("bedrespawn")) {
-            plugin.logDebug(playerName + " is spawned at his bed!");
+            plugin.getLogger().info(playerName + " respawns at bed/anchor " + event.getRespawnLocation());
             return;
         }
 
@@ -81,13 +81,14 @@ public class RespawnListener implements Listener {
             Location spawnLocation = plugin.getSpawnSelector().getRandomSpawnLocation(world);
 
             if (spawnLocation == null) {
-                plugin.logDebug(playerName + " got unlucky and was not successfully randomspawned. Default behavior will apply");
+                plugin.getLogger().warning(playerName + " could not be random spawned, default spawn used");
                 return;
             }
 
             plugin.sendGround(player, spawnLocation);
 
             event.setRespawnLocation(spawnLocation);
+            plugin.getLogger().info(playerName + " random respawn at " + spawnLocation.getBlockX() + " " + spawnLocation.getBlockY() + " " + spawnLocation.getBlockZ());
 
             player.setMetadata("lasttimerandomspawned", new FixedMetadataValue(plugin, System.currentTimeMillis()));
 

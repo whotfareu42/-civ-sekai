@@ -534,7 +534,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             inv.setItem(18, button(Material.ANVIL, "Ban a player", NamedTextColor.DARK_RED,
                 "Pick a player, then type the reason in chat"));
             inv.setItem(26, button(Material.BLAZE_ROD, "Smite", NamedTextColor.DARK_RED,
-                "DOUBLE-CLICK to take the smite rod.", "Hitting a player with it kills instantly.", "Every kill is logged."));
+                "DOUBLE-CLICK to take the smite rod.", "One hit kills any player or mob.", "Every kill is logged."));
         }
         inv.setItem(22, button(Material.BARRIER, "Leave " + s.label(), NamedTextColor.RED,
             "Restores your inventory and", "teleports you back to your start point"));
@@ -929,7 +929,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         ItemStack item = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = item.getItemMeta();
         meta.displayName(Component.text("Smite", NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false));
-        meta.lore(List.of(Component.text("Hit a player to kill them instantly", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
+        meta.lore(List.of(Component.text("One hit kills any player or mob", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
             Component.text("Logged in /tracker", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)));
         meta.setEnchantmentGlintOverride(true);
         meta.getPersistentDataContainer().set(smiteKey, PersistentDataType.BYTE, (byte) 1);
@@ -1036,15 +1036,17 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         }
         Session s = sessions.get(attacker.getUniqueId());
         if (s != null && event.getDamager() == attacker && isSmite(attacker.getInventory().getItemInMainHand())
-            && canModerate(s) && event.getEntity() instanceof Player victim) {
+            && canModerate(s) && event.getEntity() instanceof org.bukkit.entity.LivingEntity victim) {
             event.setCancelled(true);
             if (sessions.containsKey(victim.getUniqueId())) {
                 msg(attacker, "You cannot smite staff on duty.", NamedTextColor.RED);
                 return;
             }
             victim.setHealth(0);
-            s.kills.add(victim.getName());
-            tracker.log(attacker.getName(), "KILL " + victim.getName() + " with smite @ " + fmt(victim.getLocation()));
+            if (victim instanceof Player) {
+                s.kills.add(victim.getName());
+                tracker.log(attacker.getName(), "KILL " + victim.getName() + " with smite @ " + fmt(victim.getLocation()));
+            }
             return;
         }
         if (s != null) {
