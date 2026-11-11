@@ -5,6 +5,7 @@
 # Normaler Blaze fuer den Nether (es gibt keine Festungen). Vanilla-Verhalten und Vanilla-Drops.
 NetherBlaze:
   Type: BLAZE
+  Health: 20
 
 # Breeze in den Bergen
 Sturmwind:
