@@ -15864,7 +15864,7 @@ recipes:
           type: TERRACOTTA
           amount: 1
       vindicator:
-        chance: 0.00087707
+        chance: 0.00043853
         vindicator:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15873,7 +15873,7 @@ recipes:
           entity_data:
             id: minecraft:vindication_illager
       vex:
-        chance: 0.00087707
+        chance: 0.00043853
         vex:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15882,7 +15882,7 @@ recipes:
           entity_data:
             id: minecraft:vex
       silverfish:
-        chance: 0.00087707
+        chance: 0.00043853
         silverfish:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15891,7 +15891,7 @@ recipes:
           entity_data:
             id: minecraft:silverfish
       endermite:
-        chance: 0.00087707
+        chance: 0.00043853
         endermite:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15900,7 +15900,7 @@ recipes:
           entity_data:
             id: minecraft:endermite
       zombiehorse:
-        chance: 0.00087707
+        chance: 0.00043853
         zombiehorse:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15909,7 +15909,7 @@ recipes:
           entity_data:
             id: minecraft:zombie_horse
       skeletonhorse:
-        chance: 0.00087707
+        chance: 0.00043853
         skeletonhorse:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15918,7 +15918,7 @@ recipes:
           entity_data:
             id: minecraft:skeleton_horse
       donkey:
-        chance: 0.00087707
+        chance: 0.00043853
         donkey:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15927,7 +15927,7 @@ recipes:
           entity_data:
             id: minecraft:donkey
       polarbear:
-        chance: 0.00087707
+        chance: 0.00043853
         polarbear:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15936,7 +15936,7 @@ recipes:
           entity_data:
             id: minecraft:polar_bear
       parrot:
-        chance: 0.00087707
+        chance: 0.00043853
         parrot:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15945,7 +15945,7 @@ recipes:
           entity_data:
             id: minecraft:parrot
       llama:
-        chance: 0.00087707
+        chance: 0.00043853
         llama:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -15954,238 +15954,238 @@ recipes:
           entity_data:
             id: minecraft:llama
       fox:
-        chance: 0.00087707
+        chance: 0.00043853
         fox:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: FOX_SPAWN_EGG
           amount: 1
       cat:
-        chance: 0.00087707
+        chance: 0.00043853
         cat:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: CAT_SPAWN_EGG
           amount: 1
       mooshroom:
-        chance: 0.00087707
+        chance: 0.00043853
         mooshroom:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MOOSHROOM_SPAWN_EGG
           amount: 1
       horse:
-        chance: 0.00087707
+        chance: 0.00043853
         horse:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: HORSE_SPAWN_EGG
           amount: 1
       rabbit:
-        chance: 0.00087707
+        chance: 0.00043853
         rabbit:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: RABBIT_SPAWN_EGG
           amount: 1
       ocelot:
-        chance: 0.00087707
+        chance: 0.00043853
         ocelot:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: OCELOT_SPAWN_EGG
           amount: 1
       squid:
-        chance: 0.00087707
+        chance: 0.00043853
         squid:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: SQUID_SPAWN_EGG
           amount: 1
       wolf:
-        chance: 0.00087707
+        chance: 0.00043853
         wolf:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: WOLF_SPAWN_EGG
           amount: 1
       axolotl:
-        chance: 0.00087707
+        chance: 0.00043853
         axolotl:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: AXOLOTL_SPAWN_EGG
           amount: 1
       bee:
-        chance: 0.00087707
+        chance: 0.00043853
         bee:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: BEE_SPAWN_EGG
           amount: 1
       panda:
-        chance: 0.00087707
+        chance: 0.00043853
         panda:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: PANDA_SPAWN_EGG
           amount: 1
       dolphin:
-        chance: 0.00087707
+        chance: 0.00043853
         dolphin:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: DOLPHIN_SPAWN_EGG
           amount: 1
       stray:
-        chance: 0.00087707
+        chance: 0.00043853
         stray:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: STRAY_SPAWN_EGG
           amount: 1
       strider:
-        chance: 0.00087707
+        chance: 0.00043853
         strider:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: STRIDER_SPAWN_EGG
           amount: 1
       hoglin:
-        chance: 0.00087707
+        chance: 0.00043853
         hoglin:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: HOGLIN_SPAWN_EGG
           amount: 1
       creeper:
-        chance: 0.00087707
+        chance: 0.00043853
         creeper:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: CREEPER_SPAWN_EGG
           amount: 1
       zombie:
-        chance: 0.00087707
+        chance: 0.00043853
         zombie:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: ZOMBIE_SPAWN_EGG
           amount: 1
       skeleton:
-        chance: 0.00087707
+        chance: 0.00043853
         skeleton:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: SKELETON_SPAWN_EGG
           amount: 1
       spider:
-        chance: 0.00087707
+        chance: 0.00043853
         spider:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: SPIDER_SPAWN_EGG
           amount: 1
       blaze:
-        chance: 0.00087707
+        chance: 0.00043853
         blaze:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: BLAZE_SPAWN_EGG
           amount: 1
       ghast:
-        chance: 0.00087707
+        chance: 0.00043853
         ghast:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: GHAST_SPAWN_EGG
           amount: 1
       guardian:
-        chance: 0.00087707
+        chance: 0.00043853
         guardian:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: GUARDIAN_SPAWN_EGG
           amount: 1
       magmacube:
-        chance: 0.00087707
+        chance: 0.00043853
         magmacube:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MAGMA_CUBE_SPAWN_EGG
           amount: 1
       slime:
-        chance: 0.00087707
+        chance: 0.00043853
         slime:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: SLIME_SPAWN_EGG
           amount: 1
       witch:
-        chance: 0.00087707
+        chance: 0.00043853
         witch:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: WITCH_SPAWN_EGG
           amount: 1
       villager:
-        chance: 0.00087707
+        chance: 0.00043853
         villager:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: VILLAGER_SPAWN_EGG
           amount: 1
       cavespider:
-        chance: 0.00087707
+        chance: 0.00043853
         cavespider:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: CAVE_SPIDER_SPAWN_EGG
           amount: 1
       enderman:
-        chance: 0.00087707
+        chance: 0.00043853
         enderman:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: ENDERMAN_SPAWN_EGG
           amount: 1
       zombiepigman:
-        chance: 0.00087707
+        chance: 0.00043853
         zombiepigman:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: ZOMBIFIED_PIGLIN_SPAWN_EGG
           amount: 1
       Camel:
-        chance: 0.00087707
+        chance: 0.00043853
         Camel:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: CAMEL_SPAWN_EGG
           amount: 1
       Frog:
-        chance: 0.00087707
+        chance: 0.00043853
         Frog:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: FROG_SPAWN_EGG
           amount: 1
       Sniffer:
-        chance: 0.00087707
+        chance: 0.00043853
         Sniffer:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: SNIFFER_EGG
           amount: 1
       Armadillo:
-        chance: 0.00087707
+        chance: 0.00043853
         Armadillo:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: ARMADILLO_SPAWN_EGG
           amount: 1
       Bogged:
-        chance: 0.00087707
+        chance: 0.00043853
         bogged:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16194,259 +16194,259 @@ recipes:
           entity_data:
             id: minecraft:bogged
       record_13:
-        chance: 0.00091847
+        chance: 0.00045924
         record_13:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_13
           amount: 1
       record_cats:
-        chance: 0.00091847
+        chance: 0.00045924
         record_cats:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_CAT
           amount: 1
       record_blocks:
-        chance: 0.00091847
+        chance: 0.00045924
         record_blocks:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_BLOCKS
           amount: 1
       record_chirp:
-        chance: 0.00091847
+        chance: 0.00045924
         record_chirp:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_CHIRP
           amount: 1
       record_far:
-        chance: 0.00091847
+        chance: 0.00045924
         record_far:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_FAR
           amount: 1
       record_mall:
-        chance: 0.00091847
+        chance: 0.00045924
         record_mall:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_MALL
           amount: 1
       record_mellohi:
-        chance: 0.00091847
+        chance: 0.00045924
         record_mellohi:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_MELLOHI
           amount: 1
       record_stal:
-        chance: 0.00091847
+        chance: 0.00045924
         record_stal:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_STAL
           amount: 1
       record_strad:
-        chance: 0.00091847
+        chance: 0.00045924
         record_strad:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_STRAD
           amount: 1
       record_ward:
-        chance: 0.00091847
+        chance: 0.00045924
         record_ward:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_WARD
           amount: 1
       record_11:
-        chance: 0.00091847
+        chance: 0.00045924
         record_11:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_11
           amount: 1
       record_wait:
-        chance: 0.00091847
+        chance: 0.00045924
         record_wait:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_WAIT
           amount: 1
       record_pigstep:
-        chance: 0.00091847
+        chance: 0.00045924
         record_pigstep:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_PIGSTEP
           amount: 1
       record_otherside:
-        chance: 0.00091847
+        chance: 0.00045924
         record_otherside:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_OTHERSIDE
           amount: 1
       record_relic:
-        chance: 0.00091847
+        chance: 0.00045924
         record_relic:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_RELIC
           amount: 1
       record_5:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_5
           amount: 1
       record_precipice:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_PRECIPICE
           amount: 1
       record_creator:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_CREATOR
           amount: 1
       record_creator_music_box:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_CREATOR_MUSIC_BOX
           amount: 1
       record_tears:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_TEARS
           amount: 1
       record_lava_chicken:
-        chance: 0.00091847
+        chance: 0.00045924
         record_5:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: MUSIC_DISC_LAVA_CHICKEN
           amount: 1
       iron_ingot:
-        chance: 0.09840775
+        chance: 0.10417263
         iron_ingot:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: IRON_INGOT
           amount: 1
       Gold_ingot:
-        chance: 0.02411955
+        chance: 0.02553251
         iron_ingot:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: GOLD_INGOT
           amount: 1
       diamond:
-        chance: 0.00482391
+        chance: 0.0051065
         diamond:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: DIAMOND
           amount: 1
       lapis_lazuli:
-        chance: 0.02411955
+        chance: 0.02553251
         lapis_lazuli:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: LAPIS_LAZULI
           amount: 1
       Redstone_dust:
-        chance: 0.04823909
+        chance: 0.05106501
         Redstone_dust:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: REDSTONE
           amount: 1
       Copper_ingot:
-        chance: 0.07235864
+        chance: 0.07659752
         Copper_ingot:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: COPPER_INGOT
           amount: 1
       coal:
-        chance: 0.07235864
+        chance: 0.07659752
         coal:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: COAL
           amount: 1
       emerald:
-        chance: 0.00241195
+        chance: 0.00255325
         emerald:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: EMERALD
           amount: 1
       iron_block:
-        chance: 0.03256139
+        chance: 0.03446889
         iron_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: IRON_BLOCK
           amount: 1
       Gold_block:
-        chance: 0.02411955
+        chance: 0.02553251
         iron_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: GOLD_BLOCK
           amount: 1
       diamond_block:
-        chance: 0.00120598
+        chance: 0.00127663
         diamond_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: DIAMOND_BLOCK
           amount: 1
       lapis_block:
-        chance: 0.01205977
+        chance: 0.01276625
         lapis_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: LAPIS_BLOCK
           amount: 1
       Redstone_block:
-        chance: 0.01205977
+        chance: 0.01276625
         Redstone_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: REDSTONE_BLOCK
           amount: 1
       Copper_block:
-        chance: 0.02411955
+        chance: 0.02553251
         Copper_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: COPPER_BLOCK
           amount: 1
       coal_block:
-        chance: 0.02894346
+        chance: 0.03063901
         coal_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
           type: COAL_BLOCK
           amount: 1
       emerald_block:
-        chance: 0.00048239
+        chance: 0.00051065
         emerald_block:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16516,7 +16516,7 @@ recipes:
           type: DIAMOND_BOOTS
           amount: 1
       unbreaking_3_book:
-        chance: 0.00096478
+        chance: 0.0010213
         power_5_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16528,7 +16528,7 @@ recipes:
             stored-enchants:
               unbreaking: 3
       efficiency_5_book:
-        chance: 0.00096478
+        chance: 0.0010213
         efficiency_5_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16540,7 +16540,7 @@ recipes:
             stored-enchants:
               efficiency: 5
       silk_touch_book:
-        chance: 0.00096478
+        chance: 0.0010213
         silk_touch_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16552,7 +16552,7 @@ recipes:
             stored-enchants:
               silk_touch: 1
       sharpness_book:
-        chance: 0.00096478
+        chance: 0.0010213
         sharpness_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16564,7 +16564,7 @@ recipes:
             stored-enchants:
               sharpness: 5
       power_5_book:
-        chance: 0.00096478
+        chance: 0.0010213
         power_5_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16576,7 +16576,7 @@ recipes:
             stored-enchants:
               power: 5
       fortune_3_book:
-        chance: 0.00096478
+        chance: 0.0010213
         fortune_3_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16588,7 +16588,7 @@ recipes:
             stored-enchants:
               fortune: 3
       protection_4_book:
-        chance: 0.00096478
+        chance: 0.0010213
         protection_4_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16600,7 +16600,7 @@ recipes:
             stored-enchants:
               protection: 4
       depth_strider_3_book:
-        chance: 0.00096478
+        chance: 0.0010213
         depth_strider_3_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16612,7 +16612,7 @@ recipes:
             stored-enchants:
               depth_strider: 3
       aqua_affinity_book:
-        chance: 0.00096478
+        chance: 0.0010213
         aqua_affinity_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16624,7 +16624,7 @@ recipes:
             stored-enchants:
               aqua_affinity: 1
       infinity_book:
-        chance: 0.00096478
+        chance: 0.0010213
         infinity_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16636,7 +16636,7 @@ recipes:
             stored-enchants:
               infinity: 1
       looting_3_book:
-        chance: 0.00096478
+        chance: 0.0010213
         looting_3_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
@@ -16787,7 +16787,7 @@ recipes:
           type: JUKEBOX
           amount: 1
       swift_sneak_book:
-        chance: 0.001
+        chance: 0.00105858
         swift_sneak_book:
           v: 3839
           ==: org.bukkit.inventory.ItemStack
