@@ -1,28 +1,28 @@
 # Civitas Nova Custom Mobs
 # Drops kommen aus CivNova (config.yml -> mob-drops), erkannt am Scoreboard-Tag.
-# Testen: /mm mobs spawn <Name> [Anzahl]   z.B. /mm mobs spawn Sturmwind
+# Test: /mm mobs spawn <Name> [amount]   e.g. /mm mobs spawn Tempest
 
 # Normaler Blaze fuer den Nether (es gibt keine Festungen). Vanilla-Verhalten und Vanilla-Drops.
 NetherBlaze:
   Type: BLAZE
   Health: 20
 
-# Breeze in den Bergen
-Sturmwind:
+# Breeze in deserts and on the nether islands
+Tempest:
   Type: BREEZE
-  Display: '&bSturmwind'
+  Display: '&bTempest'
   Health: 60
   Skills:
-  - addtag{tag=civnova_sturmwind} @self ~onSpawn
-  # Sturmboe: Schaden + Rueckstoss im Umkreis
+  - addtag{tag=civnova_tempest} @self ~onSpawn
+  # Gust: damage + knockback around it
   - effect:particles{p=cloud;a=40;hs=2;vs=1;s=0.1} @self ~onTimer:40
   - damage{a=4} @PlayersInRadius{r=4} ~onTimer:40
   - throw{velocity=6;velocityY=3} @PlayersInRadius{r=4} ~onTimer:40
 
-# Seltener Boss-Breeze
-Kernwaechter:
+# Rare boss breeze
+CoreWarden:
   Type: BREEZE
-  Display: '&6&lKernwaechter'
+  Display: '&6&lCore Warden'
   Health: 200
   Damage: 6
   Options:
@@ -31,9 +31,9 @@ Kernwaechter:
     KnockbackResistance: 0.8
     MaxCombatDistance: 40
   Skills:
-  - addtag{tag=civnova_kernwaechter} @self ~onSpawn
+  - addtag{tag=civnova_corewarden} @self ~onSpawn
   - command{c="attribute <caster.uuid> minecraft:scale base set 2"} @self ~onSpawn
-  - summon{type=Sturmwind;amount=2;radius=4;cooldown=30} @self ~onDamaged 0.25
+  - summon{type=Tempest;amount=2;radius=4;cooldown=30} @self ~onDamaged 0.25
   - effect:particles{p=explosion;a=10;hs=3;vs=1} @self ~onTimer:60
   - damage{a=7} @PlayersInRadius{r=6} ~onTimer:60
   - throw{velocity=12;velocityY=6} @PlayersInRadius{r=6} ~onTimer:100

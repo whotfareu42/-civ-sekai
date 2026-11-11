@@ -66,6 +66,7 @@ import org.jetbrains.annotations.NotNull;
 public final class SupportPlugin extends JavaPlugin implements Listener {
 
     private static final int MAX_SPEED = 30;
+    private static final int TOOL_SLOT = 4; // hotbar slot 5
     private static final long COMBAT_MILLIS = 30_000;
     private static final Set<String> GIVE_COMMANDS = Set.of("give", "minecraft:give", "i", "item", "essentials:give", "customitem", "cmc:customitem");
 
@@ -138,6 +139,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         sessionDir.mkdirs();
         tracker = new Tracker(this);
         getServer().getPluginManager().registerEvents(this, this);
+        Bukkit.getScheduler().runTaskTimer(this, this::enforceTool, 20L, 20L);
         for (Player p : Bukkit.getOnlinePlayers()) {
             restoreFromFile(p);
         }
@@ -244,8 +246,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         // duty permissions are temporary (12h) so they expire even if the server crashes
         console("lp user " + p.getUniqueId() + " parent addtemp " + s.dutyGroup + " 12h");
         p.getInventory().clear();
-        p.getInventory().setItem(0, toolItem(s));
-        p.getInventory().setHeldItemSlot(0);
+        p.getInventory().setItem(TOOL_SLOT, toolItem(s));
+        p.getInventory().setHeldItemSlot(TOOL_SLOT);
         apply(p, s);
         p.setFlying(true);
         if (!s.wasVanished) {
@@ -736,9 +738,77 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             }
             return;
         }
+        if (s != null && involvesTool(p, event)) {
+            event.setCancelled(true);
+            return;
+        }
         if (s != null && s.mode == Mode.SUPPORT) {
             // support mode is look-only: no taking or moving items anywhere
             event.setCancelled(true);
+        }
+    }
+
+    private boolean involvesTool(Player p, InventoryClickEvent e) {
+        if (isTool(e.getCurrentItem()) || isTool(e.getCursor())) {
+            return true;
+        }
+        if (e.getView().getTopInventory() != p.getInventory() && e.getView().getTopInventory().getType() != org.bukkit.event.inventory.InventoryType.CRAFTING
+            && (isSmite(e.getCurrentItem()) || isSmite(e.getCursor()))) {
+            return true; // smite rod never goes into containers
+        }
+        if (e.getClick() == ClickType.NUMBER_KEY && e.getHotbarButton() >= 0
+            && isTool(p.getInventory().getItem(e.getHotbarButton()))) {
+            return true;
+        }
+        return e.getClick() == ClickType.SWAP_OFFHAND && isTool(p.getInventory().getItemInOffHand());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onSwapHands(org.bukkit.event.player.PlayerSwapHandItemsEvent event) {
+        if (isTool(event.getMainHandItem()) || isTool(event.getOffHandItem())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onCloseContainer(org.bukkit.event.inventory.InventoryCloseEvent event) {
+        if (event.getInventory().getHolder() instanceof Gui) {
+            return;
+        }
+        // a tool must never end up in a container
+        org.bukkit.inventory.Inventory top = event.getView().getTopInventory();
+        if (top != event.getPlayer().getInventory()) {
+            for (int i = 0; i < top.getSize(); i++) {
+                if (isTool(top.getItem(i)) || isSmite(top.getItem(i))) {
+                    top.setItem(i, null);
+                }
+            }
+        }
+    }
+
+    /** Keep exactly one tool in hotbar slot 5 for everyone on duty. */
+    private void enforceTool() {
+        for (Map.Entry<UUID, Session> en : sessions.entrySet()) {
+            Player p = Bukkit.getPlayer(en.getKey());
+            if (p == null) {
+                continue;
+            }
+            org.bukkit.inventory.PlayerInventory inv = p.getInventory();
+            for (int i = 0; i < inv.getSize(); i++) {
+                if (i != TOOL_SLOT && isTool(inv.getItem(i))) {
+                    inv.setItem(i, null);
+                }
+            }
+            if (isTool(p.getItemOnCursor())) {
+                p.setItemOnCursor(null);
+            }
+            if (!isTool(inv.getItem(TOOL_SLOT))) {
+                ItemStack old = inv.getItem(TOOL_SLOT);
+                inv.setItem(TOOL_SLOT, toolItem(en.getValue()));
+                if (old != null && !old.getType().isAir()) {
+                    inv.addItem(old).values().forEach(rest -> p.getWorld().dropItem(p.getLocation(), rest));
+                }
+            }
         }
     }
 
@@ -870,7 +940,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             return;
         }
         Session s = sessions.get(event.getWhoClicked().getUniqueId());
-        if (s != null && s.mode == Mode.SUPPORT) {
+        if (s != null && (s.mode == Mode.SUPPORT || isTool(event.getOldCursor()))) {
             event.setCancelled(true);
         }
     }

@@ -59,10 +59,11 @@ public class StarManager {
     public HoverEventSource<?> hover(Player player) {
         long firstPlayed = getJoined(player);
         String joined = firstPlayed == 0 ? "unknown" : FORMATTER.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(firstPlayed), ZoneId.systemDefault()));
-        String text = "Rank: " + rankName(player) + "\nJoined: " + joined;
-        if (player.hasPermission("rankedpvpstar")) {
-            text += "\nTop 10 in ranked PvP";
-        }
+        int kills = player.getStatistic(org.bukkit.Statistic.PLAYER_KILLS);
+        int deaths = player.getStatistic(org.bukkit.Statistic.DEATHS);
+        String kd = deaths == 0 ? String.valueOf(kills) : String.format(java.util.Locale.ROOT, "%.2f", kills / (double) deaths);
+        String text = "Rank: " + rankName(player) + "\nJoined: " + joined
+            + "\nKills: " + kills + "  Deaths: " + deaths + "  K/D: " + kd;
         return HoverEvent.showText(Component.text(text));
     }
 

@@ -44,6 +44,12 @@ final class CustomSpawns implements Listener {
                 && biomes.stream().noneMatch(b -> String.valueOf(b).equalsIgnoreCase(biome))) {
                 continue;
             }
+            if (m.get("ground") instanceof List<?> ground && !ground.isEmpty()) {
+                String below = loc.getBlock().getRelative(org.bukkit.block.BlockFace.DOWN).getType().name();
+                if (ground.stream().noneMatch(g -> String.valueOf(g).equalsIgnoreCase(below))) {
+                    continue;
+                }
+            }
             if (m.get("min-y") instanceof Number n && loc.getBlockY() < n.intValue()) {
                 continue;
             }
