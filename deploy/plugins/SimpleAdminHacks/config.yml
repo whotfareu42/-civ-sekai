@@ -471,22 +471,19 @@ hacks:
     follow: true
     contents:
       title: Welcome ${player}!
-      author: RedDevel
+      author: Civitas Nova
       pages:
-        - "&5    Welcome &2${player}!\n         &5to Civitas Nova!&r\n\nThis book will guide your first steps!\nIf you die or lose it you can open it via the /introbook command\n\nLet's begin your journey!"
-        - "You've just spawned near another player or town, say something in chat!\n\nIf nobody responds try out global chat instead by using the /global command!\n\nMany nations will want a potential new productive member.\nTake your pick!"
-        - "Maybe you've joined at a time of lower activity, and nobody is responding.\n\nThen you can join the official discord and take your pick of the nation ads there!\n\n      &9discord.gg/\n      3VvxepfbvA&r"
-        - "Is the nation you want to join far away?\nWell you're in luck!\n\nEvery new player in their first 24 hours on the server gets a singular free tp!\n\nSimply use the command below:\n\n    &c/ott to <player>&r"
-        - "Want to start your own settlement?\nVery possible! but incredibly difficult.\n\nNot just because of a lack of resources!\n\nKnowledge and connections are power in Civitas Nova. You'd be better off building those up first."
-        - "Joining a nation never ties you down. You can even join multiple at once! That's why it's important to remember that you can always start your own nation at a later time.\nThere's not rush!\nTake your time to learn the game first\n\nOn that note:"
-        - "          &5Plugins!&r\n\nCivitas Nova has many different features and mechanics that make it unique.\nAsk on our Discord if you need help!\n\n&9discord.gg/3VvxepfbvA&r"
-        - "When you join a nation the players there will likely explain some of the basic important plugins to you\n\nThese are:\nCitadel (protect your stuff)\nJukeAlert (know who's breaking your stuff)\nExilepearl (Jail people who broke your stuff)"
-        - "       &5AVOID DOING\n     THE FOLLOWING\n     IF YOU WANT TO\n         SURVIVE\n\n&r1. Breaking people's stuff\n2. Jumping into obsidian pits\n3. Crossing into excluded areas\n4. Anything people would kill you for."
-        - "  &5THEY WILL KILL YOU&r\nLeave the raiding until you understand how to get away with it.\nCameras are watching!\n\nLoot stolen without care is easily taken away, and damages your reputation with others!\nOr will find you killed and banished to the nether"
-        - "It is always important to remember this:\n\nOn Civitas Nova your actions have consequences.\n\nYou have 1 account. 1 name. Don't dirty it the first chance you get.\n\nThat is if you want to make something of yourself.\nWhatever that may be."
-        - "            &5TOS&r\nCivitas Nova is not complete anarchy. You can and will be banned if you break the server rules.\n (Find on the discord)\n\nRefrain from using hacks or spouting slurs.\nAct like a decent human being and all will be well."
-        - "      &5Bugs/Issues&r\n\nIf you've found a bug or have any other issues that require an admin.\nThen raise a ticket on our Discord.\n\n&9discord.gg/3VvxepfbvA&r"
-        - "        &5Goodluck!&r\nThere are many things to do on Civitas Nova. Let your ambitions run wild!\n\nLeave something behind people will remember for years to come.\n\nBe it your actions, your creations or your destruction..."
+        - "&5    Welcome &2${player}!\n         &5to Civitas Nova!&r\n\nThis book will guide your first steps.\n\nLost it? Open it again with &c/introbook&r\n\nLet's begin your journey!"
+        - "&5      Where am I?&r\n\nYou spawned at a random spot. There is no spawn town and no protection.\n\nFind a quiet place, gather wood, stone and food, and get a &2bed&r. Without one you respawn somewhere random."
+        - "&5        Talk!&r\n\nNormal chat only reaches players near you.\nUse &c/global&r to talk to everyone and &c/local&r to switch back.\n\nNations are always looking for new members. Ask around!"
+        - "&5    Free teleport&r\n\nFound a nation far away?\nIn your first 24 hours you get one free teleport to a player:\n\n   &c/ott to <player>&r"
+        - "&5  Protect your stuff&r\n\nMake a group: &c/nl&r\nReinforce blocks: &c/ctr <group>&r\nCheck a block: &c/cti&r\n\nReinforced chests and doors can only be opened by your group."
+        - "&5   Know your enemy&r\n\n&2Snitches&r log everyone who walks past.\n&2Bastions&r stop enemies from building near you.\n&2Prison pearls&r: whoever kills you with a pearl in the hotbar exiles you to the nether."
+        - "&5     STAY ALIVE&r\n\nAvoid these if you want to survive:\n\n1. Breaking other people's stuff\n2. Walking into obsidian pits\n3. Crossing marked borders\n4. Anything people would kill you for"
+        - "&5   Consequences&r\n\nOn Civitas Nova your actions follow you.\n\nYou have &cone account&r and one name. Alts are not allowed.\n\nBuild a reputation you can be proud of."
+        - "&5        Rules&r\n\nRaids, wars and scams are part of the game.\n\nNot allowed: hacks, x-ray, exploits, alts, lag machines, slurs and real-life threats.\n\nFull rules on our Discord."
+        - "&5    Help & Discord&r\n\n&c/help&r  guides and wiki\n&c/events&r  running events\n&c/tracker&r  what staff did\n\nBugs or problems? Open a ticket on Discord:\n\n&9discord.gg/3VvxepfbvA&r"
+        - "&5       Good luck!&r\n\nThere is a lot to discover: fossils, factories, custom mobs and more.\n\nLeave something behind that people will remember, be it your creations or your destruction..."
   NewfriendAssist:
     enabled: true
     announce: '&f%Player% is brand new!'
@@ -498,14 +495,14 @@ hacks:
       enabled: true
       contents:
        - ==: org.bukkit.inventory.ItemStack
-         type: COOKIE
-         amount: 32
+         type: BREAD
+         amount: 16
          v: 3839
          meta:
            ==: ItemMeta
            meta-type: UNSPECIFIC
            lore:
-            - "Gift from the Admins as you"
+            - "A gift from the admins as you"
             - "begin your journey on Civitas Nova"
        - ==: org.bukkit.inventory.ItemStack
          type: RED_BED
@@ -516,8 +513,36 @@ hacks:
            meta-type: UNSPECIFIC
            lore:
             - "This world is unforgiving."
-            - "Be sure to get a good night's"
-            - "rest soon."
+            - "Sleep in it so you don't respawn"
+            - "somewhere random."
+       - ==: org.bukkit.inventory.ItemStack
+         type: STONE_PICKAXE
+         amount: 1
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "Every empire starts with a hole"
+            - "in the ground."
+       - ==: org.bukkit.inventory.ItemStack
+         type: STONE_AXE
+         amount: 1
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "Wood first, everything else later."
+       - ==: org.bukkit.inventory.ItemStack
+         type: TORCH
+         amount: 8
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "Light keeps the monsters away."
        - ==: org.bukkit.inventory.ItemStack
          type: OAK_BOAT
          amount: 1
@@ -526,17 +551,7 @@ hacks:
            ==: ItemMeta
            meta-type: UNSPECIFIC
            lore:
-            - "The world is your oyster"
-       - ==: org.bukkit.inventory.ItemStack
-         type: MINECART
-         amount: 1
-         v: 3839
-         meta:
-           ==: ItemMeta
-           meta-type: UNSPECIFIC
-           lore:
-            - "This will help you"
-            - "get on track."
+            - "The world is your oyster."
   ReinforcedChestBreak:
     enabled: true
     # in seconds
