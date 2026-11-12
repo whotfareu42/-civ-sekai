@@ -182,7 +182,10 @@ public class Introbook extends SimpleHack<IntrobookConfig> implements Listener, 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("giveintrobook")) {
-            if (args.length < 1) return false;
+            if (args.length < 1) {
+                if (!(sender instanceof Player self)) return false;
+                args = new String[] {self.getName()};
+            }
 
             Player p = plugin().getServer().getPlayer(args[0]);
 
@@ -206,7 +209,10 @@ public class Introbook extends SimpleHack<IntrobookConfig> implements Listener, 
 
             return true;
         } else if (command.getName().equalsIgnoreCase("introbook")) {
-            Player player = (Player) sender;
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(ChatColor.RED + "Players only. Use /giveintrobook <player>.");
+                return true;
+            }
 
             player.openBook(config.getIntroBook(player));
 

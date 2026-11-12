@@ -265,7 +265,10 @@ public class NewfriendAssist extends SimpleHack<NewfriendAssistConfig> implement
             return true;
         }
 
-        if (args.length < 1) return false;
+        if (args.length < 1) {
+            if (!(sender instanceof Player self)) return false;
+            args = new String[] {self.getName()};
+        }
 
         Player p = plugin().getServer().getPlayer(args[0]);
 

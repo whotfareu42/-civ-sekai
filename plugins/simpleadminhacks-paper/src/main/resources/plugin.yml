@@ -27,11 +27,11 @@ commands:
     usage: /<command>
     permission: simpleadmin.serialize
   introkit:
-    description: Give a player the currently configured introkit
+    description: Give yourself or a player the currently configured introkit
     usage: /<command> [playername|UUID]
     permission: simpleadmin.kit
   giveintrobook:
-    description: Give a player the currently configured intro book
+    description: Give yourself or a player the currently configured intro book
     usage: /<command> [playername|UUID]
     permission: simpleadmin.givebook
   introbook:
@@ -103,6 +103,7 @@ permissions:
       simpleadmin.chestmod: true
       simpleadmin.kit: true
       simpleadmin.book: true
+      simpleadmin.givebook: true
       simpleadmin.broadcast: true
       simpleadmin.bots: true
       simpleadmin.timings: true
@@ -127,7 +128,10 @@ permissions:
       description: Gives ability to gift starting kit
       default: op
     simpleadmin.book:
-      description: Gives ability to gift starting book
+      description: Open the intro book with /introbook
+      default: true
+    simpleadmin.givebook:
+      description: Give yourself or a player the intro book
       default: op
     simpleadmin.broadcast:
       description: Gives the holder the ability to receive broadcasts
