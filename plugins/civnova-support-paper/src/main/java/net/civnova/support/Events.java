@@ -54,8 +54,9 @@ public final class Events implements Listener {
     static final int MAX_MULT = 10;
     static final long STEP = 30L * 60_000L;          // 30 minutes
     static final long BIG_STEP = 6L * 60L * 60_000L; // 6 hours (shift-click)
+    static final long DAY_STEP = 24L * 60L * 60_000L; // 1 day (right-click)
     static final long MIN_DURATION = STEP;
-    static final long MAX_DURATION = 7L * 24L * 60L * 60_000L;
+    static final long MAX_DURATION = 30L * 24L * 60L * 60_000L;
 
     static final class State {
         int mult = 2;

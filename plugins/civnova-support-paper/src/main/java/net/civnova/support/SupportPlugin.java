@@ -955,8 +955,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             inv.setItem(9 + col, button(Material.LIME_STAINED_GLASS_PANE, "Multiplier +1", NamedTextColor.GREEN, "Now x" + st.mult + " (max x" + Events.MAX_MULT + ")"));
             inv.setItem(18 + col, button(Material.RED_STAINED_GLASS_PANE, "Multiplier -1", NamedTextColor.RED, "Now x" + st.mult + " (min x" + Events.MIN_MULT + ")"));
             String len = on ? Events.time(st.endsAt - System.currentTimeMillis()) + " left" : Events.time(st.duration);
-            inv.setItem(27 + col, button(Material.CLOCK, "Longer +30m", NamedTextColor.GREEN, "Shift-click: +6h", "Now " + len));
-            inv.setItem(36 + col, button(Material.COMPASS, "Shorter -30m", NamedTextColor.RED, "Shift-click: -6h", "Now " + len));
+            inv.setItem(27 + col, button(Material.CLOCK, "Longer +30m", NamedTextColor.GREEN, "Shift-click: +6h", "Right-click: +1 day", "Now " + len));
+            inv.setItem(36 + col, button(Material.COMPASS, "Shorter -30m", NamedTextColor.RED, "Shift-click: -6h", "Right-click: -1 day", "Now " + len));
         }
         inv.setItem(49, button(Material.OAK_DOOR, "Back", NamedTextColor.WHITE));
         p.openInventory(inv);
@@ -978,7 +978,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             return;
         }
         Events.Type t = types[col];
-        long step = e.isShiftClick() ? Events.BIG_STEP : Events.STEP;
+        long step = e.isRightClick() ? Events.DAY_STEP : e.isShiftClick() ? Events.BIG_STEP : Events.STEP;
         switch (row) {
             case 0 -> events.toggle(p, t);
             case 1 -> events.changeMult(p, t, 1);
