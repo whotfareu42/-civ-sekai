@@ -6,6 +6,10 @@ import org.bukkit.entity.Player;
 
 public class RewardManager {
 
+    /** Set by CivNova events (x1 = normal). */
+    public static volatile int loginMultiplier = 1;
+    public static volatile int voteMultiplier = 1;
+
     private final Rewarder rewarder;
     private final int dailyReward;
     private final int voteReward;
@@ -17,13 +21,15 @@ public class RewardManager {
     }
 
     public void giveLoginReward(Player p, int streak) {
-        p.sendMessage(ChatColor.GREEN + "You've received your daily login reward");
-        rewarder.reward(p, dailyReward * streak);
+        int mult = Math.max(1, loginMultiplier);
+        p.sendMessage(ChatColor.GREEN + "You've received your daily login reward" + (mult > 1 ? ChatColor.GOLD + " (event x" + mult + ")" : ""));
+        rewarder.reward(p, dailyReward * streak * mult);
     }
 
     public void giveVoteReward(Player p, String page) {
-        p.sendMessage(ChatColor.GREEN + "You received a reward for voting on " + page);
-        rewarder.reward(p, voteReward);
+        int mult = Math.max(1, voteMultiplier);
+        p.sendMessage(ChatColor.GREEN + "You received a reward for voting on " + page + (mult > 1 ? ChatColor.GOLD + " (event x" + mult + ")" : ""));
+        rewarder.reward(p, voteReward * mult);
     }
 
 }

@@ -113,6 +113,12 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         }
     }
 
+    private Events events;
+
+    void trackerLog(String actor, String text) {
+        tracker.log(actor, text);
+    }
+
     private static final class Gui implements InventoryHolder {
         final String type;
         final int page;
@@ -138,6 +144,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         sessionDir = new File(getDataFolder(), "sessions");
         sessionDir.mkdirs();
         tracker = new Tracker(this);
+        events = new Events(this);
+        getServer().getPluginManager().registerEvents(events, this);
         getServer().getPluginManager().registerEvents(this, this);
         Bukkit.getScheduler().runTaskTimer(this, this::enforceTool, 20L, 20L);
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -177,6 +185,10 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (command.getName().equalsIgnoreCase("tracker")) {
             return trackerCommand(sender, args);
+        }
+        if (command.getName().equalsIgnoreCase("events")) {
+            events.listFor(sender);
+            return true;
         }
         if (!(sender instanceof Player p)) {
             sender.sendMessage("Players only.");
@@ -540,6 +552,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             boolean creative = p.getGameMode() == GameMode.CREATIVE;
             inv.setItem(13, toggle(Material.GRASS_BLOCK, "Creative", creative, "Click to switch creative/survival", "(logged)"));
             inv.setItem(20, toggle(Material.DIAMOND_PICKAXE, "Build (break/place blocks)", s.build, "Off: you cannot break or place blocks", "Every change is logged"));
+            inv.setItem(24, button(Material.FIREWORK_ROCKET, "Events", NamedTextColor.LIGHT_PURPLE,
+                "Start server events like x2 essence,", "ore rush or XP boost"));
         }
         ItemStack speed = button(Material.SUGAR, "Speed: " + s.speed + " / " + MAX_SPEED, NamedTextColor.AQUA,
             "Left-click: +1   Right-click: -1", "Shift-click: +/-5", "Affects flying and running");
@@ -750,6 +764,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             }
             if (gui.type.equals("main")) {
                 handleMain(p, s, event);
+            } else if (gui.type.equals("events")) {
+                handleEvents(p, s, event);
             } else {
                 handlePlayers(p, s, gui, event);
             }
@@ -876,6 +892,12 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 openPlayers(p, 0);
                 return;
             }
+            case 24 -> {
+                if (s.mode == Mode.ADMIN) {
+                    openEvents(p);
+                }
+                return;
+            }
             case 16 -> {
                 if (s.returnLocation != null) {
                     internalAction.add(p.getUniqueId());
@@ -898,6 +920,76 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         }
         apply(p, s);
         openMain(p);
+    }
+
+    // ------------------------------------------------------------------ events GUI
+    // One column per event: icon (start/stop), multiplier +/-, duration +/-.
+
+    private void openEvents(Player p) {
+        Gui gui = new Gui("events", 0);
+        Inventory inv = Bukkit.createInventory(gui, 54, Component.text("Server events"));
+        gui.inventory = inv;
+        Events.Type[] types = Events.Type.values();
+        for (int i = 0; i < types.length; i++) {
+            Events.Type t = types[i];
+            Events.State st = events.state(t);
+            int col = i + 1;
+            boolean on = st.active();
+            List<String> lore = new ArrayList<>();
+            lore.add(t.what + " x" + st.mult);
+            if (on) {
+                lore.add("RUNNING - " + Events.time(st.endsAt - System.currentTimeMillis()) + " left");
+                lore.add("Click to stop now");
+            } else {
+                lore.add("Off - would run for " + Events.time(st.duration));
+                lore.add("Click to start");
+            }
+            ItemStack icon = button(t.icon, t.title + " x" + st.mult, on ? NamedTextColor.GREEN : NamedTextColor.GRAY, lore.toArray(String[]::new));
+            icon.setAmount(st.mult);
+            if (on) {
+                ItemMeta m = icon.getItemMeta();
+                m.setEnchantmentGlintOverride(true);
+                icon.setItemMeta(m);
+            }
+            inv.setItem(col, icon);
+            inv.setItem(9 + col, button(Material.LIME_STAINED_GLASS_PANE, "Multiplier +1", NamedTextColor.GREEN, "Now x" + st.mult + " (max x" + Events.MAX_MULT + ")"));
+            inv.setItem(18 + col, button(Material.RED_STAINED_GLASS_PANE, "Multiplier -1", NamedTextColor.RED, "Now x" + st.mult + " (min x" + Events.MIN_MULT + ")"));
+            String len = on ? Events.time(st.endsAt - System.currentTimeMillis()) + " left" : Events.time(st.duration);
+            inv.setItem(27 + col, button(Material.CLOCK, "Longer +30m", NamedTextColor.GREEN, "Shift-click: +6h", "Now " + len));
+            inv.setItem(36 + col, button(Material.COMPASS, "Shorter -30m", NamedTextColor.RED, "Shift-click: -6h", "Now " + len));
+        }
+        inv.setItem(49, button(Material.OAK_DOOR, "Back", NamedTextColor.WHITE));
+        p.openInventory(inv);
+    }
+
+    private void handleEvents(Player p, Session s, InventoryClickEvent e) {
+        if (s.mode != Mode.ADMIN) {
+            return;
+        }
+        int slot = e.getRawSlot();
+        if (slot == 49) {
+            openMain(p);
+            return;
+        }
+        int col = slot % 9;
+        int row = slot / 9;
+        Events.Type[] types = Events.Type.values();
+        if (col < 1 || col > types.length || row > 4) {
+            return;
+        }
+        Events.Type t = types[col - 1];
+        long step = e.isShiftClick() ? Events.BIG_STEP : Events.STEP;
+        switch (row) {
+            case 0 -> events.toggle(p, t);
+            case 1 -> events.changeMult(p, t, 1);
+            case 2 -> events.changeMult(p, t, -1);
+            case 3 -> events.changeDuration(p, t, step);
+            case 4 -> events.changeDuration(p, t, -step);
+            default -> {
+                return;
+            }
+        }
+        openEvents(p);
     }
 
     private void handlePlayers(Player p, Session s, Gui gui, InventoryClickEvent e) {

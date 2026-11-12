@@ -4,7 +4,7 @@ main: net.civnova.support.SupportPlugin
 api-version: 1.21.3
 authors: [ CivNova ]
 description: Support/admin duty modes and staff action tracker for Civitas Nova
-softdepend: [ SuperVanish, PremiumVanish, InvSeePlusPlus, LuckPerms ]
+softdepend: [ SuperVanish, PremiumVanish, InvSeePlusPlus, LuckPerms, EssenceGlue, HiddenOre ]
 commands:
   support:
     description: Toggle support mode or open the support tools
@@ -16,6 +16,9 @@ commands:
     permission: civnova.duty.admin
   tracker:
     description: See what staff did (transparency log)
+  events:
+    description: Show running server events
+    aliases: [ event ]
 permissions:
   civnova.support:
     description: Use support mode

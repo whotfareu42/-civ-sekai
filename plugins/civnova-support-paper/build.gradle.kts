@@ -8,4 +8,6 @@ dependencies {
     paperweight {
         paperDevBundle(libs.versions.paper)
     }
+    compileOnly(project(":plugins:essenceglue-paper"))
+    compileOnly(project(":plugins:hiddenore-paper"))
 }
