@@ -39,6 +39,9 @@ jobs:
           cp build.log versions.txt javap.txt /tmp/out/ 2>/dev/null || true
           grep -E "error:|FAILED|What went wrong|Could not" build.log | head -800 > /tmp/out/errors.txt || true
           cp plugins/*-paper/build/libs/*.jar /tmp/out/jars/ 2>/dev/null || true
+          mkdir -p /tmp/out/jars/thirdparty
+          GH_TOKEN="${{ github.token }}" gh release download --repo NuVotifier/NuVotifier --pattern "*.jar" -D /tmp/out/jars/thirdparty 2>&1 || true
+          ls -la /tmp/out/jars/thirdparty || true
           cd /tmp/out
           git init -q -b build-output
           git config user.name "github-actions"
