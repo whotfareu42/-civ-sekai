@@ -26,7 +26,7 @@ rewards:
         - Activity reward used to fuel pearls
 
 login_reward: 4
-voting_reward: 1
+voting_reward: 2
 
 voting_sites: {}
 database:
