@@ -483,6 +483,7 @@ hacks:
         - "&5   Consequences&r\n\nOn Civitas Nova your actions follow you.\n\nYou have &cone account&r and one name. Alts are not allowed.\n\nBuild a reputation you can be proud of."
         - "&5        Rules&r\n\nRaids, wars and scams are part of the game.\n\nNot allowed: hacks, x-ray, exploits, alts, lag machines, slurs and real-life threats.\n\nFull rules on our Discord."
         - "&5    Help & Discord&r\n\n&c/help&r  guides and wiki\n&c/events&r  running events\n&c/tracker&r  what staff did\n\nBugs or problems? Open a ticket on Discord:\n\n&9discord.gg/3VvxepfbvA&r"
+        - "&5        Credits&r\n\nCivitas Nova is built on the open-source Civ plugins by &2CivMC&r and the Civ community (MIT license):\n\n&9github.com/CivMC/Civ&r\n\nThank you! We are not affiliated with CivMC."
         - "&5       Good luck!&r\n\nThere is a lot to discover: fossils, factories, custom mobs and more.\n\nLeave something behind that people will remember, be it your creations or your destruction..."
   NewfriendAssist:
     enabled: true
