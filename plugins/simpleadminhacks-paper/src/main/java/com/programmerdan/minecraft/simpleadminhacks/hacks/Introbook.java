@@ -106,6 +106,16 @@ public class Introbook extends SimpleHack<IntrobookConfig> implements Listener, 
         this.hasBook.remove(puid);
     }
 
+    /** The intro book always goes into hotbar slot 1; whatever was there moves to another slot. */
+    private static void putInFirstSlot(Player player, org.bukkit.inventory.ItemStack book) {
+        org.bukkit.inventory.PlayerInventory inv = player.getInventory();
+        org.bukkit.inventory.ItemStack old = inv.getItem(0);
+        inv.setItem(0, book);
+        if (old != null && !old.getType().isAir()) {
+            inv.addItem(old).values().forEach(rest -> player.getWorld().dropItem(player.getLocation(), rest));
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void determineBookRespawn(PlayerRespawnEvent event) {
         if (!config.isEnabled() || !config.doesFollow()) return;
@@ -117,8 +127,7 @@ public class Introbook extends SimpleHack<IntrobookConfig> implements Listener, 
         if (puid == null) return;
 
         if (this.hasBook.remove(puid)) {
-            Inventory inv = dead.getInventory();
-            inv.addItem(config.getIntroBook(dead));
+            putInFirstSlot(dead, config.getIntroBook(dead));
         }
     }
 
@@ -136,8 +145,7 @@ public class Introbook extends SimpleHack<IntrobookConfig> implements Listener, 
 
         if (!alive.hasPlayedBefore() || this.hasBook.contains(puid)) {
             this.hasBook.remove(puid);
-            Inventory inv = alive.getInventory();
-            inv.addItem(config.getIntroBook(alive));
+            putInFirstSlot(alive, config.getIntroBook(alive));
             Introbook.bookGiftCount++;
             plugin().debug("Gave {0} an introbook", alive.getName());
         }
