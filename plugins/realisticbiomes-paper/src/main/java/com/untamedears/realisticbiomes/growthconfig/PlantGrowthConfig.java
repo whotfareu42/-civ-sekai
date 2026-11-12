@@ -35,6 +35,9 @@ public class PlantGrowthConfig extends AbstractGrowthConfig {
     private static Random rng = new Random();
     private static final byte MAX_LIGHT = 15;
     private static final long INFINITE_TIME = TimeUnit.DAYS.toMillis(365L * 1000L);
+
+    /** Set by CivNova events (x1 = normal). Plants grow this many times faster. */
+    public static volatile int growthMultiplier = 1;
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     private ItemStack item;
@@ -241,6 +244,9 @@ public class PlantGrowthConfig extends AbstractGrowthConfig {
                 baseTime /= lightMultiplier;
             }
         }
+        if (baseTime < INFINITE_TIME && growthMultiplier > 1) {
+            baseTime /= growthMultiplier;
+        }
         return (long) baseTime;
     }
 
@@ -347,6 +353,7 @@ public class PlantGrowthConfig extends AbstractGrowthConfig {
         }
         chance *= (1.0 + getSoilBonus(block));
         chance *= getLightMultiplier(block);
+        chance *= Math.max(1, growthMultiplier);
         if (rng.nextDouble() > chance) {
             event.setCancelled(true);
         }

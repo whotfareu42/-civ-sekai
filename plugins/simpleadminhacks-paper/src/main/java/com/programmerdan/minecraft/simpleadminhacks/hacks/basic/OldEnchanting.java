@@ -119,6 +119,9 @@ public final class OldEnchanting extends BasicHack {
     @AutoLoad
     private int expPerBottle;
 
+    /** Set by CivNova events (x1 = normal). Bottles and emeralds give this many times more XP. */
+    public static volatile int expMultiplier = 1;
+
     @AutoLoad
     private boolean allowExpRecovery;
 
@@ -342,7 +345,7 @@ public final class OldEnchanting extends BasicHack {
             final ProjectileSource thrower = bottle.getShooter();
             if (thrower instanceof Player) {
                 final Player player = (Player) thrower;
-                player.giveExp(event.getExperience());
+                player.giveExp(event.getExperience() * Math.max(1, expMultiplier));
                 // Play the experience sound as no experience orbs will be spawned
                 // Credit to Team CoFH for the random pitch generator, see their code below
                 // https://github.com/CoFH/ThermalFoundation/blob/1.12/src/main/java/cofh/thermalfoundation/item/tome/ItemTomeExperience.java#L268
@@ -398,12 +401,12 @@ public final class OldEnchanting extends BasicHack {
                 experience += RANDOM.nextInt(11 - 3 + 1) + 3;
             }
         }
-        player.giveExp(experience);
+        player.giveExp(experience * Math.max(1, expMultiplier));
         inventory.setItem(slot, ItemUtils.decrementItem(held));
         event.setCancelled(true); // Give the emerald leveling precedence
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerExpRecovery(final PlayerInteractEvent event) {
         if (!this.allowExpRecovery
             || this.expPerBottle == -1 // If bottle xp is random
@@ -420,6 +423,11 @@ public final class OldEnchanting extends BasicHack {
         final PlayerInventory inventory = player.getInventory();
         final ItemStack held = inventory.getItemInMainHand();
         if (held.getType() != Material.GLASS_BOTTLE) {
+            return;
+        }
+        if (expMultiplier > 1) {
+            // stops XP -> bottles -> more XP loops while an XP event runs
+            player.sendMessage(net.kyori.adventure.text.Component.text("You can't bottle XP while Emerald Rush is running.", net.kyori.adventure.text.format.NamedTextColor.RED));
             return;
         }
         final int totalExp = computeCurrentXP(player);

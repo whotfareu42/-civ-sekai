@@ -553,7 +553,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             inv.setItem(13, toggle(Material.GRASS_BLOCK, "Creative", creative, "Click to switch creative/survival", "(logged)"));
             inv.setItem(20, toggle(Material.DIAMOND_PICKAXE, "Build (break/place blocks)", s.build, "Off: you cannot break or place blocks", "Every change is logged"));
             inv.setItem(24, button(Material.FIREWORK_ROCKET, "Events", NamedTextColor.LIGHT_PURPLE,
-                "Start server events like x2 essence,", "ore rush or XP boost"));
+                "Start server events like x2 essence,", "ore rush or growth spurt"));
         }
         ItemStack speed = button(Material.SUGAR, "Speed: " + s.speed + " / " + MAX_SPEED, NamedTextColor.AQUA,
             "Left-click: +1   Right-click: -1", "Shift-click: +/-5", "Affects flying and running");
@@ -933,7 +933,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         for (int i = 0; i < types.length; i++) {
             Events.Type t = types[i];
             Events.State st = events.state(t);
-            int col = i + 1;
+            int col = i;
             boolean on = st.active();
             List<String> lore = new ArrayList<>();
             lore.add(t.what + " x" + st.mult);
@@ -974,10 +974,10 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         int col = slot % 9;
         int row = slot / 9;
         Events.Type[] types = Events.Type.values();
-        if (col < 1 || col > types.length || row > 4) {
+        if (col >= types.length || row > 4) {
             return;
         }
-        Events.Type t = types[col - 1];
+        Events.Type t = types[col];
         long step = e.isShiftClick() ? Events.BIG_STEP : Events.STEP;
         switch (row) {
             case 0 -> events.toggle(p, t);

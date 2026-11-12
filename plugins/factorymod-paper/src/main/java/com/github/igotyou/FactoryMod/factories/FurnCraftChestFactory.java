@@ -55,6 +55,9 @@ import vg.civcraft.mc.namelayer.permission.PermissionType;
 public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvider {
 
     protected int currentProductionTimer = 0;
+
+    /** Set by CivNova events (x1 = normal). Factories finish recipes this many times faster. */
+    public static volatile int speedMultiplier = 1;
     protected List<IRecipe> recipes;
     protected IRecipe currentRecipe;
     protected Map<IRecipe, Integer> runCount;
@@ -526,7 +529,7 @@ public class FurnCraftChestFactory extends Factory implements IIOFInventoryProvi
                             pm.increasePowerCounter(updateTime);
                         }
                         // increase the production timer
-                        currentProductionTimer += updateTime;
+                        currentProductionTimer += updateTime * Math.max(1, speedMultiplier);
                         // schedule next update
                         scheduleUpdate();
                     }

@@ -21,7 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,7 +35,9 @@ public final class Events implements Listener {
         FOSSIL_FEVER("Fossil Fever", Material.BONE_BLOCK, "Fossils found while mining"),
         FISHING_FRENZY("Fishing Frenzy", Material.FISHING_ROD, "Everything caught while fishing"),
         MOB_LOOT("Monster Loot", Material.ROTTEN_FLESH, "Drops from mobs killed by players"),
-        XP_BOOST("XP Boost", Material.EXPERIENCE_BOTTLE, "Experience picked up");
+        EMERALD_RUSH("Emerald Rush", Material.EMERALD, "XP from emeralds and XP bottles"),
+        FACTORY_OVERDRIVE("Factory Overdrive", Material.BLAST_FURNACE, "Factory speed (less fuel per recipe)"),
+        GROWTH_SPURT("Growth Spurt", Material.WHEAT, "Crop, tree and animal growth speed");
 
         final String title;
         final Material icon;
@@ -85,7 +86,7 @@ public final class Events implements Listener {
                 plugin.getLogger().warning("Could not hook HiddenOre for events: " + t);
             }
         }
-        pushEssence();
+        pushBoosts();
     }
 
     State state(Type t) {
@@ -113,7 +114,7 @@ public final class Events implements Listener {
             plugin.trackerLog(admin.getName(), "EVENT START " + t.name() + " x" + s.mult + " for " + time(s.duration));
         }
         save();
-        pushEssence();
+        pushBoosts();
     }
 
     void changeMult(Player admin, Type t, int delta) {
@@ -125,7 +126,7 @@ public final class Events implements Listener {
             plugin.trackerLog(admin.getName(), "EVENT " + t.name() + " multiplier x" + old + " -> x" + s.mult);
         }
         save();
-        pushEssence();
+        pushBoosts();
     }
 
     void changeDuration(Player admin, Type t, long delta) {
@@ -153,19 +154,32 @@ public final class Events implements Listener {
         }
         if (changed) {
             save();
-            pushEssence();
+            pushBoosts();
         }
     }
 
-    private void pushEssence() {
-        if (!Bukkit.getPluginManager().isPluginEnabled("EssenceGlue")) {
+    /** Hands the multipliers to the Civ plugins that apply them. */
+    private void pushBoosts() {
+        push("EssenceGlue", () -> {
+            com.github.maxopoly.essenceglue.RewardManager.loginMultiplier = mult(Type.LOGIN_ESSENCE);
+            com.github.maxopoly.essenceglue.RewardManager.voteMultiplier = mult(Type.VOTE_ESSENCE);
+        });
+        push("SimpleAdminHacks", () ->
+            com.programmerdan.minecraft.simpleadminhacks.hacks.basic.OldEnchanting.expMultiplier = mult(Type.EMERALD_RUSH));
+        push("FactoryMod", () ->
+            com.github.igotyou.FactoryMod.factories.FurnCraftChestFactory.speedMultiplier = mult(Type.FACTORY_OVERDRIVE));
+        push("RealisticBiomes", () ->
+            com.untamedears.realisticbiomes.growthconfig.PlantGrowthConfig.growthMultiplier = mult(Type.GROWTH_SPURT));
+    }
+
+    private void push(String pluginName, Runnable r) {
+        if (!Bukkit.getPluginManager().isPluginEnabled(pluginName)) {
             return;
         }
         try {
-            com.github.maxopoly.essenceglue.RewardManager.loginMultiplier = mult(Type.LOGIN_ESSENCE);
-            com.github.maxopoly.essenceglue.RewardManager.voteMultiplier = mult(Type.VOTE_ESSENCE);
+            r.run();
         } catch (Throwable t) {
-            plugin.getLogger().warning("Could not set EssenceGlue multipliers: " + t);
+            plugin.getLogger().warning("Could not set " + pluginName + " event multiplier: " + t);
         }
     }
 
@@ -273,14 +287,6 @@ public final class Events implements Listener {
         List<ItemStack> boosted = multiply(new ArrayList<>(event.getDrops()), mult);
         event.getDrops().clear();
         event.getDrops().addAll(boosted);
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onExp(PlayerExpChangeEvent event) {
-        int mult = mult(Type.XP_BOOST);
-        if (mult > 1 && event.getAmount() > 0) {
-            event.setAmount(event.getAmount() * mult);
-        }
     }
 
     /** Separate class so the plugin still loads when HiddenOre is missing. */

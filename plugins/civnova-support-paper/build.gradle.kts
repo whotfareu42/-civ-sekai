@@ -10,4 +10,7 @@ dependencies {
     }
     compileOnly(project(":plugins:essenceglue-paper"))
     compileOnly(project(":plugins:hiddenore-paper"))
+    compileOnly(project(":plugins:simpleadminhacks-paper"))
+    compileOnly(project(":plugins:factorymod-paper"))
+    compileOnly(project(":plugins:realisticbiomes-paper"))
 }
