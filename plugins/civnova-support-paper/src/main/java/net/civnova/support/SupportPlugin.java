@@ -156,6 +156,23 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
 
     // ------------------------------------------------------------------ commands
 
+    /**
+     * Another plugin also registers /am, so the alias from plugin.yml loses. Rewrite our short
+     * aliases to the full command before Bukkit looks them up.
+     */
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onAliasRewrite(org.bukkit.event.player.PlayerCommandPreprocessEvent event) {
+        String msg = event.getMessage();
+        int space = msg.indexOf(' ');
+        String label = (space < 0 ? msg.substring(1) : msg.substring(1, space)).toLowerCase(Locale.ROOT);
+        String rest = space < 0 ? "" : msg.substring(space);
+        switch (label) {
+            case "am", "adminmode" -> event.setMessage("/civnovasupport:admin" + rest);
+            case "sm" -> event.setMessage("/civnovasupport:support" + rest);
+            default -> { }
+        }
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (command.getName().equalsIgnoreCase("tracker")) {
