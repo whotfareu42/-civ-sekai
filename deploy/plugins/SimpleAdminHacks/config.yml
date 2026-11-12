@@ -503,47 +503,8 @@ hacks:
            ==: ItemMeta
            meta-type: UNSPECIFIC
            lore:
-            - "A gift from the admins as you"
+            - "Gift from the Admins as you"
             - "begin your journey on Civitas Nova"
-       - ==: org.bukkit.inventory.ItemStack
-         type: RED_BED
-         amount: 1
-         v: 3839
-         meta:
-           ==: ItemMeta
-           meta-type: UNSPECIFIC
-           lore:
-            - "This world is unforgiving."
-            - "Sleep in it so you don't respawn"
-            - "somewhere random."
-       - ==: org.bukkit.inventory.ItemStack
-         type: STONE_PICKAXE
-         amount: 1
-         v: 3839
-         meta:
-           ==: ItemMeta
-           meta-type: UNSPECIFIC
-           lore:
-            - "Every empire starts with a hole"
-            - "in the ground."
-       - ==: org.bukkit.inventory.ItemStack
-         type: STONE_AXE
-         amount: 1
-         v: 3839
-         meta:
-           ==: ItemMeta
-           meta-type: UNSPECIFIC
-           lore:
-            - "Wood first, everything else later."
-       - ==: org.bukkit.inventory.ItemStack
-         type: TORCH
-         amount: 8
-         v: 3839
-         meta:
-           ==: ItemMeta
-           meta-type: UNSPECIFIC
-           lore:
-            - "Light keeps the monsters away."
        - ==: org.bukkit.inventory.ItemStack
          type: OAK_BOAT
          amount: 1
@@ -553,6 +514,26 @@ hacks:
            meta-type: UNSPECIFIC
            lore:
             - "The world is your oyster."
+       - ==: org.bukkit.inventory.ItemStack
+         type: MINECART
+         amount: 1
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "This will help you"
+            - "get on track."
+       - ==: org.bukkit.inventory.ItemStack
+         type: COMPASS
+         amount: 1
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "Not all who wander are lost."
+            - "You might be, though."
   ReinforcedChestBreak:
     enabled: true
     # in seconds
