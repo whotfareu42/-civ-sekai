@@ -506,6 +506,17 @@ hacks:
             - "Gift from the Admins as you"
             - "begin your journey on Civitas Nova"
        - ==: org.bukkit.inventory.ItemStack
+         type: RED_BED
+         amount: 1
+         v: 3839
+         meta:
+           ==: ItemMeta
+           meta-type: UNSPECIFIC
+           lore:
+            - "This world is unforgiving."
+            - "Be sure to get a good night's"
+            - "rest soon."
+       - ==: org.bukkit.inventory.ItemStack
          type: OAK_BOAT
          amount: 1
          v: 3839
