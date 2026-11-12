@@ -80,6 +80,8 @@ public final class Events implements Listener {
         }
         load();
         Bukkit.getScheduler().runTaskTimer(plugin, this::tick, 100L, 100L);
+        long every = Math.max(1, plugin.getConfig().getLong("events.reminder-minutes", 15)) * 60L * 20L;
+        Bukkit.getScheduler().runTaskTimer(plugin, this::remind, every / 2, every);
         if (Bukkit.getPluginManager().isPluginEnabled("HiddenOre")) {
             try {
                 Bukkit.getPluginManager().registerEvents(new HiddenOreHook(this), plugin);
@@ -187,6 +189,22 @@ public final class Events implements Listener {
     private static void announce(Component text) {
         Bukkit.broadcast(Component.text("[Event] ", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .append(text.decoration(TextDecoration.BOLD, false)));
+    }
+
+    /** Regular chat reminder about running events, in the style of the other server tips. */
+    private void remind() {
+        List<String> parts = new ArrayList<>();
+        for (Type t : Type.values()) {
+            State s = states.get(t);
+            if (s.active()) {
+                parts.add(t.title + " x" + s.mult + " (" + time(s.endsAt - System.currentTimeMillis()) + " left)");
+            }
+        }
+        if (parts.isEmpty()) {
+            return;
+        }
+        Bukkit.broadcast(Component.text("[CivNova] ", NamedTextColor.GOLD)
+            .append(Component.text("Active events: " + String.join(", ", parts) + ". More info: /events", NamedTextColor.GREEN)));
     }
 
     // ------------------------------------------------------------------ /events

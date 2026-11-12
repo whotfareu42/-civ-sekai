@@ -12,3 +12,7 @@ tracker:
   discord-webhook: ""
   # Diese Befehle werden NICHT geloggt (private Nachrichten / Chat)
   ignored-commands: [msg, tell, m, pm, w, whisper, r, reply, g, gc, groupc, groupchat, gchat, global, globalchat, local, localchat, exit, afk, me]
+
+# Server-Events: so oft (Minuten) kommt eine Chat-Info zu laufenden Events
+events:
+  reminder-minutes: 15
