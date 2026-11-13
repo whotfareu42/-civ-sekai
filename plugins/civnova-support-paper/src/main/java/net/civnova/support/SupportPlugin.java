@@ -136,6 +136,62 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * One-shot launch wipe. If plugins/CivNovaSupport/WIPE_DATABASE exists and contains "confirm",
+     * every table in the Civ database (credentials from Citadel's config) is dropped before any
+     * plugin enables, so all plugins start with empty data. The trigger file is deleted afterwards.
+     */
+    @Override
+    public void onLoad() {
+        File trigger = new File(getDataFolder(), "WIPE_DATABASE");
+        if (!trigger.isFile()) {
+            return;
+        }
+        try {
+            String content = java.nio.file.Files.readString(trigger.toPath()).trim();
+            if (!content.equalsIgnoreCase("confirm")) {
+                getLogger().warning("WIPE_DATABASE found but does not contain 'confirm', ignoring");
+                return;
+            }
+            YamlConfiguration cit = YamlConfiguration.loadConfiguration(new File(getDataFolder().getParentFile(), "Citadel/config.yml"));
+            org.bukkit.configuration.ConfigurationSection db = null;
+            for (String key : cit.getKeys(true)) {
+                if (cit.isConfigurationSection(key) && cit.getConfigurationSection(key).contains("host")
+                    && cit.getConfigurationSection(key).contains("database")) {
+                    db = cit.getConfigurationSection(key);
+                    break;
+                }
+            }
+            if (db == null) {
+                getLogger().severe("WIPE: no database section found in Citadel config, nothing dropped");
+                return;
+            }
+            String url = "jdbc:mysql://" + db.getString("host") + ":" + db.getInt("port", 3306) + "/" + db.getString("database");
+            int dropped = 0;
+            try (java.sql.Connection c = java.sql.DriverManager.getConnection(url, db.getString("user"), db.getString("password"));
+                 java.sql.Statement st = c.createStatement()) {
+                List<String> tables = new ArrayList<>();
+                try (java.sql.ResultSet rs = st.executeQuery("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'")) {
+                    while (rs.next()) {
+                        tables.add(rs.getString(1));
+                    }
+                }
+                st.execute("SET FOREIGN_KEY_CHECKS=0");
+                for (String t : tables) {
+                    st.execute("DROP TABLE `" + t.replace("`", "") + "`");
+                    dropped++;
+                }
+                st.execute("SET FOREIGN_KEY_CHECKS=1");
+            }
+            getLogger().warning("WIPE: dropped " + dropped + " tables from " + db.getString("database"));
+            if (!trigger.delete()) {
+                getLogger().severe("WIPE: could not delete trigger file, remove WIPE_DATABASE by hand!");
+            }
+        } catch (Exception e) {
+            getLogger().severe("WIPE failed: " + e);
+        }
+    }
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
