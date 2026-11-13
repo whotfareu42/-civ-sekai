@@ -187,7 +187,11 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             return trackerCommand(sender, args);
         }
         if (command.getName().equalsIgnoreCase("events")) {
-            events.listFor(sender);
+            if (sender instanceof Player pl) {
+                openEventsView(pl);
+            } else {
+                events.listFor(sender);
+            }
             return true;
         }
         if (!(sender instanceof Player p)) {
@@ -761,6 +765,10 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             }
             return;
         }
+        if (event.getInventory().getHolder() instanceof Gui vg && vg.type.equals("eventsview")) {
+            event.setCancelled(true);
+            return;
+        }
         if (event.getInventory().getHolder() instanceof Gui gui) {
             event.setCancelled(true);
             if (s == null || event.getClickedInventory() != event.getView().getTopInventory()) {
@@ -924,6 +932,42 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         }
         apply(p, s);
         openMain(p);
+    }
+
+    // ------------------------------------------------------------------ /events (player view)
+
+    private void openEventsView(Player p) {
+        Gui gui = new Gui("eventsview", 0);
+        Inventory inv = Bukkit.createInventory(gui, 27, Component.text("Running events"));
+        gui.inventory = inv;
+        List<Events.Type> running = new ArrayList<>();
+        for (Events.Type t : Events.Type.values()) {
+            if (events.state(t).active()) {
+                running.add(t);
+            }
+        }
+        if (running.isEmpty()) {
+            inv.setItem(13, button(Material.BARRIER, "No events running", NamedTextColor.GRAY,
+                "Watch Discord and chat", "for upcoming events."));
+        } else {
+            int[] slots = running.size() <= 7 ? new int[] {10, 11, 12, 13, 14, 15, 16} : new int[] {9, 10, 11, 12, 13, 14, 15, 16, 17};
+            int start = running.size() <= 7 ? (7 - running.size()) / 2 : 0;
+            for (int i = 0; i < running.size() && start + i < slots.length; i++) {
+                Events.Type t = running.get(i);
+                Events.State st = events.state(t);
+                ItemStack it = button(t.icon, t.title + " x" + st.mult, NamedTextColor.GOLD,
+                    t.what,
+                    "",
+                    "Multiplier: x" + st.mult,
+                    "Time left: " + Events.time(st.endsAt - System.currentTimeMillis()));
+                ItemMeta meta = it.getItemMeta();
+                meta.setEnchantmentGlintOverride(true);
+                meta.addItemFlags(org.bukkit.inventory.ItemFlag.values());
+                it.setItemMeta(meta);
+                inv.setItem(slots[start + i], it);
+            }
+        }
+        p.openInventory(inv);
     }
 
     // ------------------------------------------------------------------ events GUI

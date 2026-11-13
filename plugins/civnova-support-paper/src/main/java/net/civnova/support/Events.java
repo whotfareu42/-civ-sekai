@@ -193,18 +193,28 @@ public final class Events implements Listener {
 
     /** Regular chat reminder about running events, in the style of the other server tips. */
     private void remind() {
-        List<String> parts = new ArrayList<>();
+        List<Type> running = new ArrayList<>();
         for (Type t : Type.values()) {
-            State s = states.get(t);
-            if (s.active()) {
-                parts.add(t.title + " x" + s.mult + " (" + time(s.endsAt - System.currentTimeMillis()) + " left)");
+            if (states.get(t).active()) {
+                running.add(t);
             }
         }
-        if (parts.isEmpty()) {
+        if (running.isEmpty()) {
             return;
         }
+        String text;
+        if (running.size() == 1) {
+            Type t = running.get(0);
+            State s = states.get(t);
+            text = "Event active: " + t.title + " x" + s.mult + " (" + time(s.endsAt - System.currentTimeMillis())
+                + " left). More info: /events";
+        } else {
+            text = running.size() + " events are active right now! Type /events to see them all.";
+        }
         Bukkit.broadcast(Component.text("[CivNova] ", NamedTextColor.GOLD)
-            .append(Component.text("Active events: " + String.join(", ", parts) + ". More info: /events", NamedTextColor.GREEN)));
+            .append(Component.text(text, NamedTextColor.GREEN)
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/events"))
+                .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(Component.text("Click to open the events")))));
     }
 
     // ------------------------------------------------------------------ /events

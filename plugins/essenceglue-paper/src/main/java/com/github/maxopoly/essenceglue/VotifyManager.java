@@ -94,6 +94,15 @@ public class VotifyManager implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLogin(PlayerLoginEvent event) {
         Player p = event.getPlayer();
+        // Wait 5 minutes so new arrivals are not flooded with links right away.
+        Bukkit.getScheduler().runTaskLater(EssenceGluePlugin.instance(), () -> {
+            if (p.isOnline()) {
+                showSites(p);
+            }
+        }, 5L * 60L * 20L);
+    }
+
+    private void showSites(Player p) {
         if (!EssenceGluePlugin.instance().getStreakManager().getShowSitesOnLogin(p.getUniqueId())) {
             return;
         }
@@ -109,9 +118,7 @@ public class VotifyManager implements Listener {
                     new ClickEvent(ClickEvent.Action.OPEN_URL, site.getVotingUrl().replace("%PLAYER%", p.getName())));
                 text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                     new Text("Click to open the voting link for " + site.getName())));
-                Bukkit.getScheduler().runTaskLater(EssenceGluePlugin.instance(), () -> {
-                    p.sendMessage(text);
-                }, 20L);
+                p.sendMessage(text);
             }
         }
     }
