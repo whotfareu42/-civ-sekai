@@ -1,0 +1,486 @@
+
+Welcome to Gradle 9.7.1!
+
+Here are the highlights of this release:
+ - Isolated Projects graduates to incubating
+ - Broader Configuration Cache compatibility
+ - Resilient Sync helps you fix broken builds
+ - More source locations in problem reports
+
+For more details see https://docs.gradle.org/9.7.1/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :libraries:namelayer-sync:compileJava FROM-CACHE
+> Task :libraries:name-api:compileJava FROM-CACHE
+> Task :libraries:name-api:processResources NO-SOURCE
+> Task :libraries:name-api:classes UP-TO-DATE
+> Task :libraries:namelayer-sync:processResources NO-SOURCE
+> Task :libraries:namelayer-sync:classes UP-TO-DATE
+> Task :libraries:namelayer-sync:jar
+> Task :libraries:name-api:jar
+> Task :libraries:namelayer-sync:javadoc FROM-CACHE
+> Task :libraries:name-api:javadoc FROM-CACHE
+> Task :libraries:namelayer-sync:javadocJar
+> Task :libraries:namelayer-sync:sourcesJar
+> Task :libraries:namelayer-sync:assemble
+> Task :libraries:namelayer-sync:check
+> Task :libraries:namelayer-sync:build
+> Task :libraries:name-api:javadocJar
+> Task :libraries:name-api:sourcesJar
+> Task :libraries:name-api:assemble
+> Task :libraries:name-api:check
+> Task :libraries:name-api:build
+
+> Task :plugins:banstick-paper:paperweightUserdevSetup
+Skipping applyPaperclipPatch (up-to-date)
+Completed setup in 444ms
+Copied artifacts to project cache in 16ms
+
+> Task :plugins:bastion-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 20ms
+
+> Task :plugins:namelayer-paper:paperweightUserdevSetup
+Completed setup in 18ms
+Copied artifacts to project cache in 37ms
+
+> Task :plugins:civmodcore-paper:paperweightUserdevSetup
+Completed setup in 441ms
+Copied artifacts to project cache in 36ms
+
+> Task :plugins:citadel-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 15ms
+
+> Task :plugins:castlegates-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 21ms
+
+> Task :plugins:jukealert-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 12ms
+
+> Task :plugins:banstick-paper:processResources
+> Task :plugins:castlegates-paper:processResources
+> Task :plugins:bastion-paper:processResources
+> Task :plugins:bastion-paper:sourcesJar
+> Task :plugins:bastion-paper:check
+> Task :plugins:castlegates-paper:sourcesJar
+> Task :plugins:castlegates-paper:check
+> Task :plugins:banstick-paper:sourcesJar
+> Task :plugins:banstick-paper:check
+> Task :plugins:citadel-paper:processResources
+> Task :plugins:citadel-paper:sourcesJar
+> Task :plugins:citadel-paper:check
+
+> Task :plugins:civchat2-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 21ms
+
+> Task :plugins:civduties-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 18ms
+
+> Task :plugins:civchat2-paper:processResources
+> Task :plugins:civchat2-paper:sourcesJar
+> Task :plugins:civchat2-paper:check
+
+> Task :plugins:combattagplus-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 13ms
+
+> Task :plugins:civduties-paper:processResources
+> Task :plugins:civduties-paper:sourcesJar
+> Task :plugins:civduties-paper:check
+
+> Task :plugins:civnova-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 13ms
+
+> Task :plugins:civnova-support-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 27ms
+
+> Task :plugins:essenceglue-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 37ms
+
+> Task :plugins:exilepearl-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 22ms
+
+> Task :plugins:randomspawn-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 20ms
+
+> Task :plugins:factorymod-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 22ms
+
+> Task :plugins:civmodcore-paper:compileJava FROM-CACHE
+
+> Task :plugins:heliodor-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 24ms
+
+> Task :plugins:civmodcore-paper:processResources
+> Task :plugins:civmodcore-paper:classes
+> Task :plugins:civmodcore-paper:jar
+> Task :plugins:civmodcore-paper:javadoc SKIPPED
+> Task :plugins:civmodcore-paper:javadocJar
+> Task :plugins:namelayer-paper:compileJava FROM-CACHE
+> Task :plugins:civmodcore-paper:sourcesJar
+> Task :plugins:banstick-paper:compileJava FROM-CACHE
+> Task :plugins:banstick-paper:classes
+> Task :plugins:combattagplus-paper:compileJava FROM-CACHE
+> Task :plugins:citadel-paper:compileJava FROM-CACHE
+> Task :plugins:banstick-paper:jar
+> Task :plugins:banstick-paper:javadoc SKIPPED
+> Task :plugins:banstick-paper:javadocJar
+> Task :plugins:banstick-paper:assemble
+> Task :plugins:civchat2-paper:compileJava FROM-CACHE
+> Task :plugins:banstick-paper:shadowJar FROM-CACHE
+> Task :plugins:banstick-paper:build
+> Task :plugins:citadel-paper:classes
+> Task :plugins:citadel-paper:jar
+> Task :plugins:citadel-paper:javadoc SKIPPED
+> Task :plugins:citadel-paper:javadocJar
+> Task :plugins:citadel-paper:assemble
+> Task :plugins:citadel-paper:build
+> Task :plugins:civchat2-paper:classes
+> Task :plugins:bastion-paper:compileJava FROM-CACHE
+> Task :plugins:bastion-paper:classes
+> Task :plugins:civchat2-paper:jar
+> Task :plugins:civchat2-paper:javadoc SKIPPED
+> Task :plugins:civchat2-paper:javadocJar
+> Task :plugins:civchat2-paper:assemble
+> Task :plugins:civchat2-paper:build
+> Task :plugins:bastion-paper:jar
+> Task :plugins:bastion-paper:javadoc SKIPPED
+> Task :plugins:jukealert-paper:compileJava FROM-CACHE
+> Task :plugins:bastion-paper:javadocJar
+> Task :plugins:bastion-paper:assemble
+> Task :plugins:bastion-paper:build
+> Task :plugins:civmodcore-paper:assemble
+> Task :plugins:civmodcore-paper:check
+> Task :plugins:civduties-paper:compileJava FROM-CACHE
+> Task :plugins:civduties-paper:classes
+> Task :plugins:civmodcore-paper:shadowJar FROM-CACHE
+> Task :plugins:civmodcore-paper:build
+> Task :plugins:castlegates-paper:compileJava FROM-CACHE
+> Task :plugins:castlegates-paper:classes
+> Task :plugins:civduties-paper:jar
+> Task :plugins:civduties-paper:javadoc SKIPPED
+> Task :plugins:civduties-paper:javadocJar
+> Task :plugins:civduties-paper:assemble
+> Task :plugins:civduties-paper:build
+> Task :plugins:castlegates-paper:jar
+> Task :plugins:castlegates-paper:javadoc SKIPPED
+> Task :plugins:castlegates-paper:javadocJar
+> Task :plugins:castlegates-paper:assemble
+> Task :plugins:castlegates-paper:build
+> Task :plugins:randomspawn-paper:compileJava FROM-CACHE
+> Task :plugins:heliodor-paper:compileJava FROM-CACHE
+
+> Task :plugins:hiddenore-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 13ms
+
+> Task :plugins:realisticbiomes-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 13ms
+
+> Task :plugins:hiddenore-paper:compileJava FROM-CACHE
+> Task :plugins:realisticbiomes-paper:compileJava FROM-CACHE
+> Task :plugins:exilepearl-paper:compileJava FROM-CACHE
+> Task :plugins:civnova-support-paper:processResources
+
+> Task :plugins:simpleadminhacks-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 17ms
+
+> Task :plugins:civnova-support-paper:sourcesJar
+> Task :plugins:civnova-support-paper:check
+> Task :plugins:zorweth-paper:compileJava FROM-CACHE
+> Task :plugins:combattagplus-paper:processResources
+> Task :plugins:combattagplus-paper:classes
+> Task :plugins:combattagplus-paper:jar
+> Task :plugins:combattagplus-paper:javadoc SKIPPED
+> Task :plugins:combattagplus-paper:javadocJar
+> Task :plugins:combattagplus-paper:sourcesJar
+> Task :plugins:combattagplus-paper:assemble
+> Task :plugins:combattagplus-paper:check
+> Task :plugins:combattagplus-paper:build
+> Task :plugins:donum-paper:compileJava FROM-CACHE
+> Task :plugins:donum-paper:processResources
+> Task :plugins:donum-paper:classes
+> Task :plugins:factorymod-paper:compileJava FROM-CACHE
+> Task :plugins:donum-paper:jar
+> Task :plugins:donum-paper:javadoc SKIPPED
+> Task :plugins:donum-paper:javadocJar
+> Task :plugins:donum-paper:sourcesJar
+> Task :plugins:donum-paper:assemble
+> Task :plugins:donum-paper:check
+> Task :plugins:donum-paper:build
+> Task :plugins:exilepearl-paper:processResources
+> Task :plugins:exilepearl-paper:classes
+> Task :plugins:exilepearl-paper:jar
+> Task :plugins:exilepearl-paper:javadoc SKIPPED
+> Task :plugins:exilepearl-paper:javadocJar
+> Task :plugins:exilepearl-paper:sourcesJar
+> Task :plugins:exilepearl-paper:assemble
+> Task :plugins:exilepearl-paper:check
+> Task :plugins:exilepearl-paper:build
+> Task :plugins:factorymod-paper:processResources
+> Task :plugins:factorymod-paper:classes
+> Task :plugins:factorymod-paper:jar
+> Task :plugins:factorymod-paper:javadoc SKIPPED
+> Task :plugins:factorymod-paper:javadocJar
+> Task :plugins:factorymod-paper:sourcesJar
+> Task :plugins:factorymod-paper:assemble
+> Task :plugins:factorymod-paper:check
+> Task :plugins:factorymod-paper:build
+
+> Task :plugins:finale-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 11ms
+
+> Task :plugins:finale-paper:compileJava FROM-CACHE
+> Task :plugins:finale-paper:processResources
+> Task :plugins:finale-paper:classes
+> Task :plugins:finale-paper:jar
+> Task :plugins:finale-paper:javadoc SKIPPED
+> Task :plugins:finale-paper:javadocJar
+> Task :plugins:finale-paper:sourcesJar
+> Task :plugins:finale-paper:assemble
+> Task :plugins:finale-paper:check
+> Task :plugins:finale-paper:build
+> Task :plugins:heliodor-paper:processResources
+> Task :plugins:heliodor-paper:classes
+> Task :plugins:heliodor-paper:jar
+> Task :plugins:heliodor-paper:javadoc SKIPPED
+> Task :plugins:heliodor-paper:javadocJar
+> Task :plugins:heliodor-paper:sourcesJar
+> Task :plugins:heliodor-paper:assemble
+> Task :plugins:heliodor-paper:check
+> Task :plugins:heliodor-paper:build
+> Task :plugins:hiddenore-paper:processResources
+> Task :plugins:hiddenore-paper:classes
+> Task :plugins:hiddenore-paper:jar
+> Task :plugins:hiddenore-paper:javadoc SKIPPED
+> Task :plugins:hiddenore-paper:javadocJar
+> Task :plugins:hiddenore-paper:sourcesJar
+> Task :plugins:hiddenore-paper:assemble
+> Task :plugins:hiddenore-paper:check
+> Task :plugins:hiddenore-paper:build
+
+> Task :plugins:itemexchange-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 12ms
+
+> Task :plugins:itemexchange-paper:compileJava FROM-CACHE
+> Task :plugins:itemexchange-paper:processResources
+> Task :plugins:itemexchange-paper:classes
+> Task :plugins:itemexchange-paper:jar
+> Task :plugins:itemexchange-paper:javadoc SKIPPED
+> Task :plugins:itemexchange-paper:javadocJar
+> Task :plugins:itemexchange-paper:sourcesJar
+> Task :plugins:itemexchange-paper:assemble
+> Task :plugins:itemexchange-paper:check
+> Task :plugins:itemexchange-paper:build
+> Task :plugins:jukealert-paper:processResources
+> Task :plugins:jukealert-paper:classes
+> Task :plugins:jukealert-paper:jar
+> Task :plugins:jukealert-paper:javadoc SKIPPED
+> Task :plugins:jukealert-paper:javadocJar
+> Task :plugins:jukealert-paper:sourcesJar
+> Task :plugins:jukealert-paper:assemble
+> Task :plugins:jukealert-paper:check
+> Task :plugins:jukealert-paper:shadowJar FROM-CACHE
+> Task :plugins:jukealert-paper:build
+
+> Task :plugins:kirabukkitgateway-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 11ms
+
+> Task :plugins:kirabukkitgateway-paper:compileJava FROM-CACHE
+> Task :plugins:kirabukkitgateway-paper:processResources
+> Task :plugins:kirabukkitgateway-paper:classes
+> Task :plugins:kirabukkitgateway-paper:jar
+> Task :plugins:kirabukkitgateway-paper:javadoc SKIPPED
+> Task :plugins:kirabukkitgateway-paper:javadocJar
+> Task :plugins:kirabukkitgateway-paper:sourcesJar
+> Task :plugins:kirabukkitgateway-paper:assemble
+> Task :plugins:kirabukkitgateway-paper:check
+> Task :plugins:kirabukkitgateway-paper:shadowJar FROM-CACHE
+> Task :plugins:kirabukkitgateway-paper:build
+
+> Task :plugins:namecolors-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 25ms
+
+> Task :plugins:namecolors-paper:compileJava FROM-CACHE
+> Task :plugins:namecolors-paper:processResources
+> Task :plugins:namecolors-paper:classes
+> Task :plugins:namecolors-paper:jar
+> Task :plugins:namecolors-paper:javadoc SKIPPED
+> Task :plugins:namecolors-paper:javadocJar
+> Task :plugins:namecolors-paper:sourcesJar
+> Task :plugins:namecolors-paper:assemble
+> Task :plugins:namecolors-paper:check
+> Task :plugins:namecolors-paper:build
+> Task :plugins:namelayer-paper:processResources
+> Task :plugins:namelayer-paper:classes
+> Task :plugins:namelayer-paper:jar
+> Task :plugins:namelayer-paper:javadoc SKIPPED
+> Task :plugins:namelayer-paper:javadocJar
+> Task :plugins:namelayer-paper:sourcesJar
+> Task :plugins:namelayer-paper:assemble
+> Task :plugins:namelayer-paper:check
+> Task :plugins:namelayer-paper:shadowJar FROM-CACHE
+> Task :plugins:namelayer-paper:build
+
+> Task :plugins:railswitch-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 11ms
+
+> Task :plugins:railswitch-paper:compileJava FROM-CACHE
+> Task :plugins:railswitch-paper:processResources
+> Task :plugins:railswitch-paper:classes
+> Task :plugins:railswitch-paper:jar
+> Task :plugins:railswitch-paper:javadoc SKIPPED
+> Task :plugins:railswitch-paper:javadocJar
+> Task :plugins:railswitch-paper:sourcesJar
+> Task :plugins:railswitch-paper:assemble
+> Task :plugins:railswitch-paper:check
+> Task :plugins:railswitch-paper:build
+> Task :plugins:randomspawn-paper:processResources
+> Task :plugins:randomspawn-paper:classes
+> Task :plugins:randomspawn-paper:jar
+> Task :plugins:randomspawn-paper:javadoc SKIPPED
+> Task :plugins:randomspawn-paper:javadocJar
+> Task :plugins:randomspawn-paper:sourcesJar
+> Task :plugins:randomspawn-paper:assemble
+> Task :plugins:randomspawn-paper:check
+> Task :plugins:randomspawn-paper:build
+> Task :plugins:realisticbiomes-paper:processResources
+> Task :plugins:realisticbiomes-paper:classes
+> Task :plugins:realisticbiomes-paper:jar
+> Task :plugins:realisticbiomes-paper:javadoc SKIPPED
+> Task :plugins:realisticbiomes-paper:javadocJar
+> Task :plugins:realisticbiomes-paper:sourcesJar
+> Task :plugins:realisticbiomes-paper:assemble
+> Task :plugins:realisticbiomes-paper:check
+> Task :plugins:realisticbiomes-paper:build
+
+> Task :plugins:realisticbiomes2-paper:paperweightUserdevSetup
+Completed setup in 0ms
+Copied artifacts to project cache in 20ms
+
+> Task :plugins:realisticbiomes2-paper:compileJava FROM-CACHE
+> Task :plugins:realisticbiomes2-paper:processResources
+> Task :plugins:realisticbiomes2-paper:classes
+> Task :plugins:realisticbiomes2-paper:jar
+> Task :plugins:realisticbiomes2-paper:javadoc SKIPPED
+> Task :plugins:realisticbiomes2-paper:javadocJar
+
+> Task :plugins:civnova-paper:compileJava
+/home/runner/work/civ-sekai/civ-sekai/plugins/civnova-paper/src/main/java/net/civnova/LootTweaks.java:71: warning: [removal] ExactChoice(ItemStack) in ExactChoice has been deprecated and marked for removal
+        star.setIngredient('S', new RecipeChoice.ExactChoice(shard));
+                                ^
+
+> Task :plugins:realisticbiomes2-paper:sourcesJar
+> Task :plugins:realisticbiomes2-paper:assemble
+> Task :plugins:realisticbiomes2-paper:check
+> Task :plugins:realisticbiomes2-paper:build
+> Task :plugins:secureboot-paper:compileJava FROM-CACHE
+> Task :plugins:secureboot-paper:processResources
+> Task :plugins:secureboot-paper:classes
+> Task :plugins:secureboot-paper:jar
+> Task :plugins:secureboot-paper:javadoc SKIPPED
+> Task :plugins:secureboot-paper:javadocJar
+
+> Task :plugins:essenceglue-paper:compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :plugins:secureboot-paper:sourcesJar
+> Task :plugins:secureboot-paper:assemble
+> Task :plugins:secureboot-paper:check
+> Task :plugins:secureboot-paper:build
+> Task :plugins:zorweth-paper:processResources
+> Task :plugins:zorweth-paper:classes
+> Task :plugins:zorweth-paper:jar
+> Task :plugins:zorweth-paper:javadoc SKIPPED
+> Task :plugins:zorweth-paper:javadocJar
+> Task :plugins:zorweth-paper:sourcesJar
+> Task :plugins:zorweth-paper:assemble
+> Task :plugins:zorweth-paper:check
+> Task :plugins:zorweth-paper:shadowJar FROM-CACHE
+> Task :plugins:zorweth-paper:build
+
+> Task :plugins:simpleadminhacks-paper:compileJava
+/home/runner/work/civ-sekai/civ-sekai/plugins/simpleadminhacks-paper/src/main/java/com/programmerdan/minecraft/simpleadminhacks/framework/SimpleHackConfig.java:103: warning: [dep-ann] deprecated item is not annotated with @Deprecated
+    public void setEnabled(final boolean enabled) {
+                ^
+
+> Task :plugins:civnova-paper:compileJava
+Note: /home/runner/work/civ-sekai/civ-sekai/plugins/civnova-paper/src/main/java/net/civnova/Bans.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+
+> Task :plugins:essenceglue-paper:processResources
+> Task :plugins:essenceglue-paper:classes
+> Task :plugins:essenceglue-paper:jar
+> Task :plugins:essenceglue-paper:javadoc SKIPPED
+> Task :plugins:civnova-paper:processResources
+> Task :plugins:civnova-paper:classes
+> Task :plugins:essenceglue-paper:javadocJar
+> Task :plugins:civnova-paper:jar
+> Task :plugins:civnova-paper:javadoc SKIPPED
+> Task :plugins:essenceglue-paper:sourcesJar
+> Task :plugins:essenceglue-paper:assemble
+> Task :plugins:essenceglue-paper:check
+> Task :plugins:essenceglue-paper:build
+> Task :plugins:civnova-paper:javadocJar
+> Task :plugins:civnova-paper:sourcesJar
+> Task :plugins:civnova-paper:assemble
+> Task :plugins:civnova-paper:check
+> Task :plugins:civnova-paper:build
+
+> Task :plugins:simpleadminhacks-paper:compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+
+> Task :plugins:simpleadminhacks-paper:processResources
+> Task :plugins:simpleadminhacks-paper:classes
+> Task :plugins:simpleadminhacks-paper:jar
+> Task :plugins:simpleadminhacks-paper:javadoc SKIPPED
+> Task :plugins:simpleadminhacks-paper:javadocJar
+> Task :plugins:simpleadminhacks-paper:sourcesJar
+> Task :plugins:simpleadminhacks-paper:assemble
+> Task :plugins:simpleadminhacks-paper:check
+> Task :plugins:simpleadminhacks-paper:build
+
+> Task :plugins:civnova-support-paper:compileJava
+Note: /home/runner/work/civ-sekai/civ-sekai/plugins/civnova-support-paper/src/main/java/net/civnova/support/SupportPlugin.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :plugins:civnova-support-paper:classes
+> Task :plugins:civnova-support-paper:jar
+> Task :plugins:civnova-support-paper:javadoc SKIPPED
+> Task :plugins:civnova-support-paper:javadocJar
+> Task :plugins:civnova-support-paper:assemble
+> Task :plugins:civnova-support-paper:build
+
+[Incubating] Problems report is available at: file:///home/runner/work/civ-sekai/civ-sekai/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 31s
+187 actionable tasks: 152 executed, 35 from cache
