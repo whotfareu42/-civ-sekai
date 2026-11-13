@@ -120,6 +120,25 @@ public final class Events implements Listener {
         pushBoosts();
     }
 
+    /** Ends every running event at once. Returns how many were stopped. */
+    int stopAll(Player admin) {
+        int n = 0;
+        for (Type t : Type.values()) {
+            State s = states.get(t);
+            if (s.active()) {
+                s.endsAt = 0;
+                n++;
+            }
+        }
+        if (n > 0) {
+            announce(Component.text(n == 1 ? "The running event has ended." : "All " + n + " running events have ended.", NamedTextColor.GOLD));
+            plugin.trackerLog(admin.getName(), "EVENT STOP ALL (" + n + ")");
+            save();
+            pushBoosts();
+        }
+        return n;
+    }
+
     void changeMult(Player admin, Type t, int delta) {
         State s = states.get(t);
         int old = s.mult;

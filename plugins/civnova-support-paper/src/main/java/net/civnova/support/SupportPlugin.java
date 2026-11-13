@@ -1007,6 +1007,8 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             inv.setItem(36 + col, button(Material.COMPASS, "Shorter -30m", NamedTextColor.RED, "Shift-click: -6h", "Right-click: -1 day", "Now " + len));
         }
         inv.setItem(49, button(Material.OAK_DOOR, "Back", NamedTextColor.WHITE));
+        inv.setItem(53, button(Material.BARRIER, "Stop all events now", NamedTextColor.RED,
+            "Ends every running event immediately", "To stop just one, click its icon"));
         p.openInventory(inv);
     }
 
@@ -1017,6 +1019,14 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         int slot = e.getRawSlot();
         if (slot == 49) {
             openMain(p);
+            return;
+        }
+        if (slot == 53) {
+            int n = events.stopAll(p);
+            if (n == 0) {
+                msg(p, "No events are running.", NamedTextColor.GRAY);
+            }
+            openEvents(p);
             return;
         }
         int col = slot % 9;
