@@ -612,6 +612,10 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
         p.openInventory(inv);
     }
 
+    private static boolean isStaff(Player p) {
+        return p.isOp() || p.hasPermission("civnova.support") || p.hasPermission("civnova.duty.admin");
+    }
+
     // ------------------------------------------------------------------ tracker GUI (for everyone)
 
     private void openTrackerOverview(Player p, int page) {
@@ -1294,6 +1298,12 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 restoreFromFile(p);
             }
         }, 5L);
+        // Staff must never keep admin-mode night vision after a relog, crash or restart.
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            if (p.isOnline() && !sessions.containsKey(p.getUniqueId()) && isStaff(p)) {
+                p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            }
+        }, 20L);
     }
 
     // ------------------------------------------------------------------ tracker
