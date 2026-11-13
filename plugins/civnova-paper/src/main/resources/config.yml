@@ -171,6 +171,59 @@ items:
       display-name: Barren Trim Fragment
       lore:
       - Used to produce trims in the Research Station
+  storm-eye:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ECHO_SHARD
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §bStorm Eye
+      lore:
+      - Crackling with captured lightning
+      - Used in the Research Station
+  stormsong:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: MUSIC_DISC_RELIC
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §bStormsong
+      lore:
+      - Trophy of a fallen Stormcaller
+  book-feather-falling-4:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        feather_falling: 4
+  book-channeling:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        channeling: 1
+  book-loyalty-3:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        loyalty: 3
 
 # ---------------------------------------------------------------- Angeln
 # Vanilla: 85% Fisch, 10% Muell, 5% Schatz. Mit diesen Werten ca. 80% / 4% / 16%.
@@ -207,6 +260,19 @@ mob-drops:
     - {item: HEAVY_CORE, chance: 1.0, min: 1, max: 1}
     - {item: BREEZE_ROD, chance: 1.0, min: 3, max: 5}
     - {item: wind-essence, chance: 1.0, min: 2, max: 2}
+  civnova_stormcaller:
+    require-player-kill: true
+    clear-vanilla-drops: true
+    drops:
+    - {item: PHANTOM_MEMBRANE, chance: 1.0, min: 3, max: 6}
+    - {item: wind-essence, chance: 1.0, min: 1, max: 3}
+    - {item: storm-eye, chance: 0.3, min: 1, max: 1}
+    - {item: netherstar-shard, chance: 0.07, min: 1, max: 2}
+    - {item: HEART_OF_THE_SEA, chance: 0.05, min: 1, max: 1}
+    - {item: book-feather-falling-4, chance: 0.03, min: 1, max: 1}
+    - {item: book-channeling, chance: 0.03, min: 1, max: 1}
+    - {item: book-loyalty-3, chance: 0.03, min: 1, max: 1}
+    - {item: stormsong, chance: 0.01, min: 1, max: 1}
 
 # ---------------------------------------------------------------- Banns
 # Koennen nicht gecraftet, platziert, benutzt oder behalten werden (Bypass: civnova.banneditems.bypass)
@@ -226,6 +292,8 @@ banned-book-enchants:
 # Ersetzt einen Teil der natuerlichen Spawns. Erster Treffer gewinnt (Reihenfolge wichtig).
 # entity: Vanilla-Mob  |  mythic: MythicMobs-Mob   (Test: /mm mobs spawn <Name>)
 custom-spawns:
+# Gewitter: Stormcaller ueberall an der Oberflaeche (vor den anderen Eintraegen, damit er Vorrang hat)
+- {world: sekai, mythic: Stormcaller, chance: 0.002, outside: true, thunder: true}
 # Wueste (Oberflaeche)
 - {world: sekai, mythic: CoreWarden, chance: 0.0004, outside: true, biomes: [DESERT]}
 - {world: sekai, mythic: Tempest, chance: 0.04, outside: true, biomes: [DESERT]}

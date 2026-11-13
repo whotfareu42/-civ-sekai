@@ -50,6 +50,9 @@ final class CustomSpawns implements Listener {
                     continue;
                 }
             }
+            if (Boolean.TRUE.equals(m.get("thunder")) && !loc.getWorld().isThundering()) {
+                continue;
+            }
             if (m.get("min-y") instanceof Number n && loc.getBlockY() < n.intValue()) {
                 continue;
             }

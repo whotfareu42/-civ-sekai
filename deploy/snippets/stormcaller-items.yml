@@ -1,0 +1,53 @@
+  storm-eye:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ECHO_SHARD
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §bStorm Eye
+      lore:
+      - Crackling with captured lightning
+      - Used in the Research Station
+  stormsong:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: MUSIC_DISC_RELIC
+    amount: 1
+    meta:
+      meta-type: UNSPECIFIC
+      ==: ItemMeta
+      display-name: §bStormsong
+      lore:
+      - Trophy of a fallen Stormcaller
+  book-feather-falling-4:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        feather_falling: 4
+  book-channeling:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        channeling: 1
+  book-loyalty-3:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3839
+    type: ENCHANTED_BOOK
+    amount: 1
+    meta:
+      meta-type: ENCHANTED
+      ==: ItemMeta
+      stored-enchants:
+        loyalty: 3

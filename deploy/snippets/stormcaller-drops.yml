@@ -1,0 +1,13 @@
+  civnova_stormcaller:
+    require-player-kill: true
+    clear-vanilla-drops: true
+    drops:
+    - {item: PHANTOM_MEMBRANE, chance: 1.0, min: 3, max: 6}
+    - {item: wind-essence, chance: 1.0, min: 1, max: 3}
+    - {item: storm-eye, chance: 0.3, min: 1, max: 1}
+    - {item: netherstar-shard, chance: 0.07, min: 1, max: 2}
+    - {item: HEART_OF_THE_SEA, chance: 0.05, min: 1, max: 1}
+    - {item: book-feather-falling-4, chance: 0.03, min: 1, max: 1}
+    - {item: book-channeling, chance: 0.03, min: 1, max: 1}
+    - {item: book-loyalty-3, chance: 0.03, min: 1, max: 1}
+    - {item: stormsong, chance: 0.01, min: 1, max: 1}

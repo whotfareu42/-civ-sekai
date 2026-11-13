@@ -37,3 +37,25 @@ CoreWarden:
   - effect:particles{p=explosion;a=10;hs=3;vs=1} @self ~onTimer:60
   - damage{a=7} @PlayersInRadius{r=6} ~onTimer:60
   - throw{velocity=12;velocityY=6} @PlayersInRadius{r=6} ~onTimer:100
+
+# Storm phantom: only during thunderstorms, at the surface everywhere
+Stormcaller:
+  Type: PHANTOM
+  Display: '&3&lStormcaller'
+  Health: 150
+  Damage: 8
+  Options:
+    AlwaysShowName: true
+    PreventSunburn: true
+    KnockbackResistance: 0.6
+    MaxCombatDistance: 48
+    FollowRange: 48
+  Skills:
+  - addtag{tag=civnova_stormcaller} @self ~onSpawn
+  - command{c="attribute <caster.uuid> minecraft:scale base set 2.5"} @self ~onSpawn
+  - effect:particles{p=electric_spark;a=30;hs=1.5;vs=0.5;s=0.2} @self ~onTimer:20
+  # Dive hit lifts the player so they cannot just stand still under it
+  - potion{type=LEVITATION;duration=30;level=1} @trigger ~onAttack
+  # Lightning strikes on and around players in range
+  - lightning{damage=5} @PlayersInRadius{r=24} ~onTimer:120 0.6
+  - effect:lightning @RandomLocationsNearTargets{a=3;r=6} ~onTimer:80

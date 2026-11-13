@@ -1,0 +1,109 @@
+  forge_trident:
+    type: PRODUCTION
+    name: Forge Trident
+    production_time: 16s
+    input:
+      storm_eye:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: ECHO_SHARD
+        amount: 2
+        meta:
+          meta-type: UNSPECIFIC
+          ==: ItemMeta
+          display-name: §bStorm Eye
+          lore:
+          - Crackling with captured lightning
+          - Used in the Research Station
+      diamond:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: DIAMOND
+        amount: 2
+      prismarine_shard:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: PRISMARINE_SHARD
+        amount: 16
+    output:
+      trident:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: TRIDENT
+        amount: 1
+  bind_channeling_book:
+    type: PRODUCTION
+    name: Bind Channeling Book
+    production_time: 12s
+    input:
+      storm_eye:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: ECHO_SHARD
+        amount: 1
+        meta:
+          meta-type: UNSPECIFIC
+          ==: ItemMeta
+          display-name: §bStorm Eye
+          lore:
+          - Crackling with captured lightning
+          - Used in the Research Station
+      book:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: BOOK
+        amount: 1
+      lapis:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: LAPIS_LAZULI
+        amount: 16
+    output:
+      channeling_book:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: ENCHANTED_BOOK
+        amount: 1
+        meta:
+          meta-type: ENCHANTED
+          ==: ItemMeta
+          stored-enchants:
+            channeling: 1
+  bind_riptide_book:
+    type: PRODUCTION
+    name: Bind Riptide III Book
+    production_time: 12s
+    input:
+      storm_eye:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: ECHO_SHARD
+        amount: 2
+        meta:
+          meta-type: UNSPECIFIC
+          ==: ItemMeta
+          display-name: §bStorm Eye
+          lore:
+          - Crackling with captured lightning
+          - Used in the Research Station
+      book:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: BOOK
+        amount: 1
+      lapis:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: LAPIS_LAZULI
+        amount: 32
+    output:
+      riptide_book:
+        v: 3839
+        ==: org.bukkit.inventory.ItemStack
+        type: ENCHANTED_BOOK
+        amount: 1
+        meta:
+          meta-type: ENCHANTED
+          ==: ItemMeta
+          stored-enchants:
+            riptide: 3
