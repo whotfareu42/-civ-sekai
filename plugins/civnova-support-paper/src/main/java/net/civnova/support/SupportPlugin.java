@@ -153,22 +153,34 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 getLogger().warning("WIPE_DATABASE found but does not contain 'confirm', ignoring");
                 return;
             }
-            YamlConfiguration cit = YamlConfiguration.loadConfiguration(new File(getDataFolder().getParentFile(), "Citadel/config.yml"));
-            org.bukkit.configuration.ConfigurationSection db = null;
-            for (String key : cit.getKeys(true)) {
-                if (cit.isConfigurationSection(key) && cit.getConfigurationSection(key).contains("host")
-                    && cit.getConfigurationSection(key).contains("database")) {
-                    db = cit.getConfigurationSection(key);
-                    break;
-                }
-            }
-            if (db == null) {
+            // Parse by hand: the section is a CivModCore-serialized object that cannot be deserialized yet.
+            String cfg = java.nio.file.Files.readString(new File(getDataFolder().getParentFile(), "Citadel/config.yml").toPath());
+            int at = cfg.indexOf("DatabaseCredentials");
+            if (at < 0) {
                 getLogger().severe("WIPE: no database section found in Citadel config, nothing dropped");
                 return;
             }
-            String url = "jdbc:mysql://" + db.getString("host") + ":" + db.getInt("port", 3306) + "/" + db.getString("database");
+            String block = cfg.substring(Math.max(0, at - 600), Math.min(cfg.length(), at + 1500));
+            java.util.function.Function<String, String> val = k -> {
+                java.util.regex.Matcher mt = java.util.regex.Pattern.compile("(?m)^\\s+" + k + ":\\s*(.*)$").matcher(block);
+                if (!mt.find()) {
+                    return null;
+                }
+                String v = mt.group(1).trim();
+                if (v.length() >= 2 && (v.startsWith("'") && v.endsWith("'") || v.startsWith("\"") && v.endsWith("\""))) {
+                    v = v.substring(1, v.length() - 1);
+                }
+                return v;
+            };
+            String host = val.apply("host"), port = val.apply("port"), database = val.apply("database");
+            String user = val.apply("user"), password = val.apply("password");
+            if (host == null || database == null || user == null) {
+                getLogger().severe("WIPE: incomplete database settings in Citadel config, nothing dropped");
+                return;
+            }
+            String url = "jdbc:mysql://" + host + ":" + (port == null ? "3306" : port) + "/" + database;
             int dropped = 0;
-            try (java.sql.Connection c = java.sql.DriverManager.getConnection(url, db.getString("user"), db.getString("password"));
+            try (java.sql.Connection c = java.sql.DriverManager.getConnection(url, user, password);
                  java.sql.Statement st = c.createStatement()) {
                 List<String> tables = new ArrayList<>();
                 try (java.sql.ResultSet rs = st.executeQuery("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'")) {
@@ -183,7 +195,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
                 }
                 st.execute("SET FOREIGN_KEY_CHECKS=1");
             }
-            getLogger().warning("WIPE: dropped " + dropped + " tables from " + db.getString("database"));
+            getLogger().warning("WIPE: dropped " + dropped + " tables from " + database);
             if (!trigger.delete()) {
                 getLogger().severe("WIPE: could not delete trigger file, remove WIPE_DATABASE by hand!");
             }
