@@ -162,7 +162,7 @@ public final class SupportPlugin extends JavaPlugin implements Listener {
             }
             String block = cfg.substring(Math.max(0, at - 600), Math.min(cfg.length(), at + 1500));
             java.util.function.Function<String, String> val = k -> {
-                java.util.regex.Matcher mt = java.util.regex.Pattern.compile("(?m)^\\s+" + k + ":\\s*(.*)$").matcher(block);
+                java.util.regex.Matcher mt = java.util.regex.Pattern.compile("(?m)^[ \\t]+" + k + ":[ \\t]*(\\S.*)$").matcher(block);
                 if (!mt.find()) {
                     return null;
                 }
